@@ -1,4 +1,3 @@
-```yaml
 name: DEP_CHECK
 
 on:
@@ -113,4 +112,3 @@ jobs:
       - name: Run Tests
         run: npm test
         continue-on-error: true
-```
