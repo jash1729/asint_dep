@@ -6,6 +6,6 @@ try {
 
     console.log("UI build completed");
 } catch (err) {
-    console.error("Build failed");
+    console.error("UI build failed");
     process.exit(1);
 }

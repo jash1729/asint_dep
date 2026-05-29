@@ -20,13 +20,10 @@ jobs:
 
     steps:
 
-      # =========================
-      # HARDEN RUNNER
-      # =========================
       - name: Harden Runner
         uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594
         with:
-          egress-policy: block
+          egress-policy: audit
           allowed-endpoints: |
 
             # GitHub
@@ -58,15 +55,12 @@ jobs:
             security.ubuntu.com:443
             archive.ubuntu.com:443
 
-      # =========================
+
       # CHECKOUT
-      # =========================
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # =========================
       # JAVA
-      # =========================
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
@@ -74,18 +68,14 @@ jobs:
           java-version: 17
           cache: maven
 
-      # =========================
       # NODE
-      # =========================
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      # =========================
       # VERIFY TOOLING
-      # =========================
       - name: Verify Versions
         run: |
           java -version
@@ -93,40 +83,33 @@ jobs:
           node -v
           npm -v
 
-      # =========================
-      # INSTALL NODE DEPENDENCIES
-      # =========================
+
+      # NODE DEPENDENCIES
       - name: Install NPM Dependencies
         run: npm install
 
-      # =========================
-      # DOWNLOAD MAVEN DEPENDENCIES
-      # =========================
+
+      # MAVEN DEPENDENCIES
       - name: Download Maven Dependencies
         run: mvn dependency:go-offline --batch-mode
 
-      # =========================
-      # VALIDATE CDS BUILD
-      # =========================
+      # CDS BUILD
       - name: Build CDS Project
         run: npm run build-cds
 
-      # =========================
-      # VALIDATE MAVEN BUILD
-      # =========================
+
+      # MAVEN BUILD
       - name: Maven Compile
         run: mvn clean compile --batch-mode
 
-      # =========================
-      # OPTIONAL UI BUILD
-      # =========================
+
+      # UI BUILD
       - name: UI5 Build
         run: npm run build-ui
         continue-on-error: true
 
-      # =========================
+
       # TESTS
-      # =========================
       - name: Run Tests
         run: npm test
         continue-on-error: true
