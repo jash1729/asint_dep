@@ -1,0 +1,133 @@
+```yaml
+name: DEP_CHECK
+
+on:
+  push:
+    branches: [ "main" ]
+
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+
+      # =========================
+      # HARDEN RUNNER
+      # =========================
+      - name: Harden Runner
+        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594
+        with:
+          egress-policy: block
+          allowed-endpoints: |
+
+            # GitHub
+            github.com:443
+            api.github.com:443
+            objects.githubusercontent.com:443
+            objects-origin.githubusercontent.com:443
+            uploads.github.com:443
+            github-releases.githubusercontent.com:443
+            pkg-containers.githubusercontent.com:443
+            hosted-compute-watchdog-prod-iad-01.githubapp.com:443
+
+            # Maven
+            repo.maven.apache.org:443
+            repo1.maven.org:443
+
+            # Node / NPM
+            registry.npmjs.org:443
+            nodejs.org:443
+
+            # SAP
+            tools.hana.ondemand.com:443
+
+            # Java
+            api.adoptium.net:443
+
+            # Ubuntu
+            deb.debian.org:443
+            security.ubuntu.com:443
+            archive.ubuntu.com:443
+
+      # =========================
+      # CHECKOUT
+      # =========================
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # =========================
+      # JAVA
+      # =========================
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      # =========================
+      # NODE
+      # =========================
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # =========================
+      # VERIFY TOOLING
+      # =========================
+      - name: Verify Versions
+        run: |
+          java -version
+          mvn -version
+          node -v
+          npm -v
+
+      # =========================
+      # INSTALL NODE DEPENDENCIES
+      # =========================
+      - name: Install NPM Dependencies
+        run: npm install
+
+      # =========================
+      # DOWNLOAD MAVEN DEPENDENCIES
+      # =========================
+      - name: Download Maven Dependencies
+        run: mvn dependency:go-offline --batch-mode
+
+      # =========================
+      # VALIDATE CDS BUILD
+      # =========================
+      - name: Build CDS Project
+        run: npm run build-cds
+
+      # =========================
+      # VALIDATE MAVEN BUILD
+      # =========================
+      - name: Maven Compile
+        run: mvn clean compile --batch-mode
+
+      # =========================
+      # OPTIONAL UI BUILD
+      # =========================
+      - name: UI5 Build
+        run: npm run build-ui
+        continue-on-error: true
+
+      # =========================
+      # TESTS
+      # =========================
+      - name: Run Tests
+        run: npm test
+        continue-on-error: true
+```
