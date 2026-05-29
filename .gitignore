@@ -1,0 +1,104 @@
+
+# GENERAL
+.DS_Store
+Thumbs.db
+*.log
+logs/
+*.tmp
+*.temp
+
+
+# NODE / NPM
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+
+# JAVA / MAVEN
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+
+# SPRING BOOT
+application-local.yml
+application-local.yaml
+application-local.properties
+
+
+# SAP CAP / CDS
+gen/
+resources/
+cds_gen/
+.sqlite
+*.db
+
+
+# SAP HANA / HDI
+default-env.json
+
+
+# MTA BUILD
+mta_archives/
+mta-op*/
+*.mtar
+
+
+# UI5 BUILD OUTPUT
+dist/
+coverage/
+.nyc_output/
+
+
+# TESTING
+junit/
+test-output/
+
+
+# CLOUDFOUNDRY
+.cf/
+cf-html/
+
+
+# SECURITY / SECRETS
+
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+*.keystore
+
+# CLINIC.JS PROFILING
+.clinic/
+*.clinic*
+
+
+# TEMP FILES
+tmp/
+temp/
+.cache/
+
+# SAP UI5 TOOLING
+.ui5/

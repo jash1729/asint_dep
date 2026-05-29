@@ -1,0 +1,10 @@
+{
+  "build": {
+    "target": "gen"
+  },
+  "requires": {
+    "db": {
+      "kind": "hana"
+    }
+  }
+}

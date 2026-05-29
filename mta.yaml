@@ -1,0 +1,17 @@
+_schema-version: "3.3"
+ID: asint-ais
+version: 0.0.1
+
+modules:
+
+  - name: asint-ais-srv
+    type: nodejs
+    path: .
+    parameters:
+      memory: 512M
+      disk-quota: 1024M
+
+resources:
+
+  - name: asint-db
+    type: com.sap.xs.hdi-container

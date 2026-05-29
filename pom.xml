@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.1</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.asint</groupId>
+    <artifactId>asint_dep</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>asint_dep</name>
+    <description>ASINT Dependency Project</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <cds.services.version>3.8.0</cds.services.version>
+        <cds.install-cdsdk.version>8.7.1</cds.install-cdsdk.version>
+        <node.url>https://nodejs.org/dist/</node.url>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- CDS SERVICES BOM -->
+            <dependency>
+                <groupId>com.sap.cds</groupId>
+                <artifactId>cds-services-bom</artifactId>
+                <version>${cds.services.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SAP SDK BOM -->
+            <dependency>
+                <groupId>com.sap.cloud.sdk</groupId>
+                <artifactId>sdk-bom</artifactId>
+                <version>5.11.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- SAP Cloud SDK -->
+        <dependency>
+            <groupId>com.sap.cloud.sdk</groupId>
+            <artifactId>cloudplatform-core</artifactId>
+        </dependency>
+
+        <!-- SAP XSA -->
+        <dependency>
+            <groupId>com.sap.xsa</groupId>
+            <artifactId>xsa-core</artifactId>
+            <version>1.9.0</version>
+        </dependency>
+
+        <!-- CDS Services -->
+        <dependency>
+            <groupId>com.sap.cds</groupId>
+            <artifactId>cds-services-impl</artifactId>
+            <version>${cds.services.version}</version>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- Java compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <parameters>true</parameters>
+                    <useIncrementalCompilation>true</useIncrementalCompilation>
+                    <fork>true</fork>
+                    <compilerArgs>
+                        <arg>-J-Xms512m</arg>
+                        <arg>-J-Xmx2400m</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!-- Enforcer -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>Project Structure Checks</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.6.3</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>17</version>
+                                </requireJavaVersion>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

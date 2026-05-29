@@ -1,0 +1,65 @@
+{
+    "name": "asint-ais-dep",
+    "version": "0.0.1",
+    "description": "AsInt Asset Intelligence Suites",
+    "license": "ISC",
+    "repository": "",
+    "private": true,
+    "engines": {
+        "node": ">=20.0.0 <21.0.0"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "profile:heap": "clinic heapprofiler -- node --max-old-space-size=1024 ./node_modules/@sap/cds-dk/bin/cds.js serve",
+        "clean": "rimraf resources* mta_archives mta-op*",
+        "build": "mbt build --mtar archive",
+        "build-ui": "node build-ui.js",
+        "build-cds": "cds build --production",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+        "redeploy": "npm run clean && npm run build && npm run deploy",
+        "redeploy-new": "npm run clean && npm run build-ui && npm run build && npm run deploy",
+        "undeploy": "cf undeploy asint-ais",
+        "test": "jest",
+        "coverage": "jest --coverage"
+    },
+    "dependencies": {
+        "@sap-cloud-sdk/mail-client": "^3.24.0",
+        "@sap/cds": "^8.7.1",
+        "@sap/hana-client": "^2.22.32",
+        "@sap/xssec": "^3.6.1",
+        "bottleneck": "^2.19.5",
+        "express": "^4",
+        "fs": "^0.0.1-security",
+        "passport": "^0.7.0"
+    },
+    "devDependencies": {
+        "@sap/approuter": "10.9.2",
+        "@sap/cds-dk": "^8.7.1",
+        "@sap/hdi-deploy": "^4.9.5",
+        "@sap/ui5-builder-webide-extension": "^1.1.9",
+        "@sap/ux-ui5-tooling": "1.16.2",
+        "@ui5/cli": "^3.11.5",
+        "clinic": "^13.0.0",
+        "cross-env": "^10.1.0",
+        "eslint": "9.16.0",
+        "htmlhint": "^1.1.4",
+        "jest": "^30.2.0",
+        "mbt": "^1.2.29",
+        "rimraf": "5.0.5",
+        "stylelint": "16.11.0",
+        "stylelint-config-standard": "36.0.1",
+        "ui5-middleware-simpleproxy": "^3.2.16",
+        "ui5-task-zipper": "^3.3.1",
+        "@ui5/middleware-code-coverage": "^2.0.1",
+        "http-server": "^14.1.1",
+        "nyc": "^17.1.0",
+        "ui5-middleware-code-coverage": "^3.0.0"
+    },
+    "cds": {
+        "cdsc": {
+            "severities": {
+                "odata-spec-violation-no-key": "Warning"
+            }
+        }
+    }
+}
