@@ -6,11 +6,9 @@
   "license": "ISC",
   "repository": "",
   "private": true,
-
   "engines": {
     "node": ">=20.0.0 <21.0.0"
   },
-
   "scripts": {
     "start": "cds serve --port 4004",
     "profile:heap": "clinic heapprofiler -- node --max-old-space-size=1024 ./node_modules/@sap/cds-dk/bin/cds.js serve",
@@ -76,3 +74,4 @@
     }
   }
 }
+
