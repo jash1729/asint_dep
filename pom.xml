@@ -23,6 +23,7 @@
         <java.version>17</java.version>
         <cds.services.version>3.8.0</cds.services.version>
         <cds.install-cdsdk.version>8.7.1</cds.install-cdsdk.version>
+        <cloud.sdk.version>5.11.0</cloud.sdk.version>
         <node.url>https://nodejs.org/dist/</node.url>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -63,6 +64,7 @@
         <dependency>
             <groupId>com.sap.cloud.sdk</groupId>
             <artifactId>cloudplatform-core</artifactId>
+            <version>${cloud.sdk.version}</version>
         </dependency>
 
         <!-- SAP XSA -->
