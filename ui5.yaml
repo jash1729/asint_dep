@@ -1,0 +1,12 @@
+specVersion: "2.0"
+metadata:
+  name: asint-ais-app
+  version: 1.0.0
+type: application
+framework:
+  name: OpenUI5
+  version: "1.120.0"
+resources:
+  configuration:
+    paths:
+      webapp: app/webapp
