@@ -1,5 +1,7 @@
 package com.asint.asint_dep.config;
 
+// COMMENTED OUT - Requires SAP CDS Services dependency
+/*
 import com.sap.cds.services.CdsRuntime;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
@@ -12,3 +14,4 @@ public class CDSConfig {
         return CdsRuntime.getInstance();
     }
 }
+*/

@@ -1,5 +1,7 @@
 package com.asint.asint_dep.config;
 
+// COMMENTED OUT - Requires SAP Cloud SDK dependency
+/*
 import com.sap.cloud.sdk.cloudplatform.CloudPlatform;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
@@ -12,3 +14,4 @@ public class SAPCloudConfig {
         return CloudPlatform.INSTANCE;
     }
 }
+*/

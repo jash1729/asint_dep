@@ -1,5 +1,7 @@
 package com.asint.asint_dep.service;
 
+// COMMENTED OUT - Requires SAP dependencies
+/*
 import com.sap.cds.services.CdsRuntime;
 import com.sap.cloud.sdk.cloudplatform.CloudPlatform;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,3 +32,4 @@ public class DependencyCheckService {
         return status.toString();
     }
 }
+*/

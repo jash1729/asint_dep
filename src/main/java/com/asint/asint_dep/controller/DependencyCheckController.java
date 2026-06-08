@@ -1,5 +1,7 @@
 package com.asint.asint_dep.controller;
 
+// COMMENTED OUT - Depends on DependencyCheckService which requires SAP dependencies
+/*
 import com.asint.asint_dep.service.DependencyCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,3 +21,4 @@ public class DependencyCheckController {
         return ResponseEntity.ok(dependencyCheckService.checkDependencies());
     }
 }
+*/

@@ -47,23 +47,23 @@
     <dependencyManagement>
         <dependencies>
 
-            <!-- CDS SERVICES BOM -->
-            <dependency>
+            <!-- CDS SERVICES BOM - COMMENTED OUT (requires SAP credentials) -->
+            <!-- <dependency>
                 <groupId>com.sap.cds</groupId>
                 <artifactId>cds-services-bom</artifactId>
                 <version>${cds.services.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+            </dependency> -->
 
-            <!-- SAP SDK BOM -->
-            <dependency>
+            <!-- SAP SDK BOM - COMMENTED OUT (requires SAP credentials) -->
+            <!-- <dependency>
                 <groupId>com.sap.cloud.sdk</groupId>
                 <artifactId>sdk-bom</artifactId>
                 <version>5.11.0</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+            </dependency> -->
 
         </dependencies>
     </dependencyManagement>
@@ -81,26 +81,26 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- SAP Cloud SDK -->
-        <dependency>
+        <!-- SAP Cloud SDK - COMMENTED OUT (requires SAP credentials) -->
+        <!-- <dependency>
             <groupId>com.sap.cloud.sdk</groupId>
             <artifactId>cloudplatform-core</artifactId>
             <version>${cloud.sdk.version}</version>
-        </dependency>
+        </dependency> -->
 
-        <!-- SAP XSA -->
-        <dependency>
+        <!-- SAP XSA - COMMENTED OUT (requires SAP credentials) -->
+        <!-- <dependency>
             <groupId>com.sap.xsa</groupId>
             <artifactId>xsa-core</artifactId>
             <version>1.9.0</version>
-        </dependency>
+        </dependency> -->
 
-        <!-- CDS Services -->
-        <dependency>
+        <!-- CDS Services - COMMENTED OUT (requires SAP credentials) -->
+        <!-- <dependency>
             <groupId>com.sap.cds</groupId>
             <artifactId>cds-services-impl</artifactId>
             <version>${cds.services.version}</version>
-        </dependency>
+        </dependency> -->
 
         <!-- Test -->
         <dependency>
