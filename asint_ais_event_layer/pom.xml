@@ -26,7 +26,8 @@
 	</properties>
 
 	<modules>
-		<module>../asint_ais_backend</module>
+		<module>asint_ais_backend</module>
+		<module>asint_ais_event_layer</module>
 	</modules>
 
 	<dependencyManagement>

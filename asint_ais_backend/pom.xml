@@ -76,6 +76,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- CDS STARTER CLOUDFOUNDRY -->
 		<dependency>
 			<groupId>com.sap.cds</groupId>
 			<artifactId>cds-starter-cloudfoundry</artifactId>
@@ -130,7 +131,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-activemq</artifactId>
-			<version>3.4.2</version>
+			<version>3.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.activemq</groupId>

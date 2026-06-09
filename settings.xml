@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+          http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    
+    <!-- This file should be placed in ~/.m2/settings.xml for global Maven config -->
+    <!-- Or use mvn -s ./settings.xml to specify this file -->
+    
+    <servers>
+        <!-- Add your SAP Nexus credentials here -->
+        <server>
+            <id>sap-nexus</id>
+            <username>YOUR_SAP_USERNAME</username>
+            <password>YOUR_SAP_PASSWORD</password>
+        </server>
+    </servers>
+
+    <profiles>
+        <profile>
+            <id>dependency-check</id>
+            <repositories>
+                <!-- Central Repository -->
+                <repository>
+                    <id>central</id>
+                    <name>Central Repository</name>
+                    <url>https://repo.maven.apache.org/maven2</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+
+                <!-- SAP Nexus Repository for SAP SDK and CDS -->
+                <repository>
+                    <id>sap-nexus</id>
+                    <name>SAP Nexus Repository</name>
+                    <url>https://nexus.wdf.sap.corp:8443/nexus/content/groups/build.snapshots.external/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                    </snapshots>
+                </repository>
+
+                <!-- Alternative SAP Maven Repository -->
+                <repository>
+                    <id>sap-releases</id>
+                    <name>SAP Releases Repository</name>
+                    <url>https://maven.wdf.sap.corp/nexus/content/repositories/releases/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <name>Central Repository</name>
+                    <url>https://repo.maven.apache.org/maven2</url>
+                </pluginRepository>
+
+                <pluginRepository>
+                    <id>sap-nexus</id>
+                    <name>SAP Nexus Plugin Repository</name>
+                    <url>https://nexus.wdf.sap.corp:8443/nexus/content/groups/build.snapshots.external/</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>dependency-check</activeProfile>
+    </activeProfiles>
+
+</settings>
