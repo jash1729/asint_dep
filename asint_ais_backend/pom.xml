@@ -20,11 +20,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!-- CDS SPRING BOOT STARTER - COMMENTED OUT (requires SAP credentials) -->
-		<!-- <dependency>
+		<!-- CDS SPRING BOOT STARTER -->
+		<dependency>
 			<groupId>com.sap.cds</groupId>
 			<artifactId>cds-starter-spring-boot</artifactId>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
@@ -64,22 +64,22 @@
 			<artifactId>javafx-graphics</artifactId>
 			<version>11</version>
 		</dependency>
-		<!-- ODATA PROTOCOL ADAPTER - COMMENTED OUT (requires SAP credentials) -->
-		<!-- <dependency>
+		<!-- ODATA PROTOCOL ADAPTER -->
+		<dependency>
 			<groupId>com.sap.cds</groupId>
 			<artifactId>cds-adapter-odata-v4</artifactId>
 			<scope>runtime</scope>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- CDS STARTER CLOUDFOUNDRY - COMMENTED OUT (requires SAP credentials) -->
-		<!-- <dependency>
+		<!-- CDS STARTER CLOUDFOUNDRY -->
+		<dependency>
 			<groupId>com.sap.cds</groupId>
 			<artifactId>cds-starter-cloudfoundry</artifactId>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>org.apache.olingo</groupId>
 			<artifactId>olingo-odata2-api</artifactId>
@@ -157,8 +157,8 @@
 			<version>6.1.5</version>
 		</dependency>
 
-		<!-- REMOTE SERVICE / CF DESTINATION CONSUMPTION DEPENDENCIES - COMMENTED OUT (requires SAP credentials) -->
-		<!-- <dependency>
+		<!-- REMOTE SERVICE / CF DESTINATION CONSUMPTION DEPENDENCIES -->
+		<dependency>
 			<groupId>com.sap.cds</groupId>
 			<artifactId>cds-feature-remote-odata</artifactId>
 			<scope>runtime</scope>
@@ -172,7 +172,7 @@
 			<groupId>com.sap.cloud.sdk</groupId>
 			<artifactId>sdk-core</artifactId>
 			<version>5.11.0</version>
-		</dependency> -->
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
