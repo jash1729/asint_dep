@@ -63,16 +63,16 @@
         <!-- SAP Cloud SDK -->
         <dependency>
             <groupId>com.sap.cloud.sdk</groupId>
-            <artifactId>cloudplatform-core</artifactId>
-            <version>${cloud.sdk.version}</version>
+            <artifactId>sdk-core</artifactId>
         </dependency>
 
-        <!-- SAP XSA -->
+        <!-- SAP XSA (Commented out because it is proprietary and not used in the root project code)
         <dependency>
             <groupId>com.sap.xsa</groupId>
             <artifactId>xsa-core</artifactId>
             <version>1.9.0</version>
         </dependency>
+        -->
 
         <!-- CDS Services -->
         <dependency>
@@ -89,6 +89,13 @@
         </dependency>
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>sap-releases</id>
+            <url>https://repositories.sap.com/maven/</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>

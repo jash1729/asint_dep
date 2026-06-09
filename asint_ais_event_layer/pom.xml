@@ -26,10 +26,7 @@
 	</properties>
 
 	<modules>
-		<module>asint_ais_backend</module>
-		<module>asint_ais_event_layer</module>
-		<!-- <module>asint_ais_integration_test</module> -->
-        <module>asint_ais_performance_test</module>
+		<module>../asint_ais_backend</module>
 	</modules>
 
 	<dependencyManagement>
@@ -52,8 +49,7 @@
 				<scope>import</scope>
 			</dependency>
 
-			<!-- CDS SDK BOM -->
-			<!-- Will stick to latest patch of v4 for Java 1.8 -->
+			<!-- SAP Cloud SDK BOM -->
 			<dependency>
 				<groupId>com.sap.cloud.sdk</groupId>
 				<artifactId>sdk-bom</artifactId>

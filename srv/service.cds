@@ -1,11 +1,7 @@
-using { cuid } from '@sap/cds/common';
+using { asint.db as db } from '../db/schema';
 
 service AssetService {
 
-    entity Assets : cuid {
-        name : String(100);
-        type : String(50);
-        status : String(30);
-    }
+    entity Assets as projection on db.Assets;
 
-}
+}

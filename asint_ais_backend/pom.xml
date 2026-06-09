@@ -6,6 +6,7 @@
 		<artifactId>asint_ais_backend-parent</artifactId>
 		<groupId>com.asint</groupId>
 		<version>${revision}</version>
+		<relativePath>../asint_ais_event_layer/pom.xml</relativePath>
 	</parent>
 	
 	<artifactId>asint_ais_backend</artifactId>
@@ -120,9 +121,6 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId></dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 		<dependency>
@@ -143,10 +141,6 @@
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-kahadb-store</artifactId>
 			<version>6.1.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-activemq</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-client -->
@@ -274,6 +268,10 @@
 				<groupId>com.sap.cds</groupId>
 				<artifactId>cds-maven-plugin</artifactId>
 				<version>${cds.services.version}</version>
+				<configuration>
+					<workingDirectory>${project.basedir}/..</workingDirectory>
+					<csnFile>${project.basedir}/../gen/srv/src/main/resources/edmx/csn.json</csnFile>
+				</configuration>
 				<executions>
 					<execution>
 						<id>cds.clean</id>
