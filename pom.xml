@@ -42,6 +42,11 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
+        <repository>
+            <id>sap-releases</id>
+            <url>https://repositories.sap.com/maven/</url>
+        </repository>
     </repositories>
 
     <dependencyManagement>
@@ -110,13 +115,6 @@
         </dependency>
 
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>sap-releases</id>
-            <url>https://repositories.sap.com/maven/</url>
-        </repository>
-    </repositories>
 
     <build>
         <plugins>
