@@ -1,0 +1,542 @@
+[
+    {
+        "pickListId": "854c7cd7-6818-4b4e-90a2-07f0252bbfd6",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Bundle Process Safety Conseq Cat",
+        "status": "active"
+    },
+    {
+        "pickListId": "974fee06-10bd-4307-bab2-848d914c328b",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus FE Equipment Inventory Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "3c319061-9b97-4cdd-b08c-494eaff41046",
+        "pickListVersion": 2,
+        "pickListDec": "RBI Plus FE Equipment Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "26561680-c97a-46d0-9cb1-7c022fbec8cd",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Criticality Rating",
+        "status": "active"
+    },
+    {
+        "pickListId": "d94b3151-c917-414b-ad40-372b9cf93167",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Coating/Lining Rem Life Fraction",
+        "status": "active"
+    },
+    {
+        "pickListId": "b9115609-5a88-48ee-8053-8e7bef41dc9a",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus FE Consequence Category",
+        "status": "active"
+    },
+    {
+        "pickListId": "85598410-5252-44d5-bcf1-d87239d366a5",
+        "pickListVersion": 2,
+        "pickListDec": "RBI Plus FE Detect and Mitigation Systems",
+        "status": "active"
+    },
+    {
+        "pickListId": "269a6475-0f82-4f3a-b78d-83aab949a68a",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Equipment Design Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "031a2462-15bd-4c30-b3f0-147cf57760f4",
+        "pickListVersion": 1,
+        "pickListDec": "Allowable Stress UI",
+        "status": "active"
+    },
+    {
+        "pickListId": "005331c8-0ea6-4354-89bf-fd56b23e788e",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Coating/Lining Quality- Expected Life",
+        "status": "active"
+    },
+    {
+        "pickListId": "2f5d382c-6236-48e5-89e1-1e916b67c6f6",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD Operating Pressure",
+        "status": "active"
+    },
+    {
+        "pickListId": "5007a64f-e656-4cc9-9a88-10506ed0014a",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Bundle Toxic Process Safety Conseq Cat",
+        "status": "active"
+    },
+    {
+        "pickListId": "718bd11f-0cb2-4179-b4fd-b13d49434278",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Component Enter Water or Soil",
+        "status": "active"
+    },
+    {
+        "pickListId": "4a3c246b-b231-4170-8a83-1f13e3020349",
+        "pickListVersion": 2,
+        "pickListDec": "RBI Plus Interval Factor Bundles",
+        "status": "active"
+    },
+    {
+        "pickListId": "24e888b4-022f-4c26-a9e3-df09b7120338",
+        "pickListVersion": 3,
+        "pickListDec": "RBI Plus FE Representative Fluid",
+        "status": "active"
+    },
+    {
+        "pickListId": "78b0ecee-7565-4027-a81c-cb8a482fdbed",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Atmospheric Condition",
+        "status": "active"
+    },
+    {
+        "pickListId": "4b2192c8-d1bf-44f1-a86b-6daf33a5161e",
+        "pickListVersion": 2,
+        "pickListDec": "RBI Plus FE Final Phase Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "da4e2b93-7ba7-48c7-9dc3-1c46c21c6dd4",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus FE Population Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "f33c4e86-11a4-4c7b-babf-cc98045bd53d",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus FE Range Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "8b41a389-57f2-4572-89ac-e594a06603ed",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Conditional Probability",
+        "status": "active"
+    },
+    {
+        "pickListId": "8fd6a975-4ab4-464a-9c18-be48d4e953ea",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus DF Severity Index",
+        "status": "active"
+    },
+    {
+        "pickListId": "e990575c-55e6-42f9-a06e-d58c66b5fa8e",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus FE Plant Inventory Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "b00db409-c4ef-46c6-a00e-b232216ba5b7",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus FE Operating Pressure Range",
+        "status": "active"
+    },
+    {
+        "pickListId": "0cd98826-b896-429c-af39-576212548b81",
+        "pickListVersion": 2,
+        "pickListDec": "RBI Plus Interval Factor Vessels",
+        "status": "active"
+    },
+    {
+        "pickListId": "80b38aa5-7535-429c-ae33-aa8a1f4e7f83",
+        "pickListVersion": 2,
+        "pickListDec": "RBI Plus DF SCC Damage Factors",
+        "status": "active"
+    },
+    {
+        "pickListId": "a8dad813-5c94-478a-8e70-3edf96117570",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus Corrosion Rate Confidence",
+        "status": "active"
+    },
+    {
+        "pickListId": "26c3a933-14c7-4b3b-a90d-4bc4ad9d446a",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative CUI Inspection and Condition",
+        "status": "active"
+    },
+    {
+        "pickListId": "af298090-35e2-4195-9f39-bec33cad71ba",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Confidence Questions and Factors",
+        "status": "active"
+    },
+    {
+        "pickListId": "73e70dbc-f3b2-4a9d-9a9d-1542378c67d6",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Detail Flammability",
+        "status": "active"
+    },
+    {
+        "pickListId": "9259a67b-45ed-4a8e-88d8-906637d5f803",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Detail Gas Emission",
+        "status": "active"
+    },
+    {
+        "pickListId": "08f9d4db-f9cf-4892-a03b-6ec141be9701",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative CUI Stainless Steel",
+        "status": "active"
+    },
+    {
+        "pickListId": "fa8df398-7acb-4c71-a469-a96350ca0768",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Detail Toxic",
+        "status": "active"
+    },
+    {
+        "pickListId": "ec025f69-d655-4baa-a074-d3937066279e",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Probability Class Plot",
+        "status": "active"
+    },
+    {
+        "pickListId": "5f765d1a-648f-4ed0-ab0a-8e2c8d21d084",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Consequence Rating Plot",
+        "status": "active"
+    },
+    {
+        "pickListId": "45134ea2-0eff-4695-9ca9-eae85ce099a5",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Consequence Rating",
+        "status": "active"
+    },
+    {
+        "pickListId": "ef7b63dd-d885-4abb-a413-e30fcf8f7d79",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative CUI Carbon and Low Alloy Steel",
+        "status": "active"
+    },
+    {
+        "pickListId": "e5d6905e-53af-4e0e-b756-898f266841c3",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Interval Factor Not Bundles",
+        "status": "active"
+    },
+    {
+        "pickListId": "999a9f36-5ace-4616-b900-6ccb08e778ac",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Detail Explosion",
+        "status": "active"
+    },
+    {
+        "pickListId": "0e493412-1a7b-449c-b98e-a78d2d68cc93",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Consequence probability",
+        "status": "active"
+    },
+    {
+        "pickListId": "e445ef31-6297-433c-b045-a3a2d4ff4341",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Process Monitoring for Non-Age",
+        "status": "active"
+    },
+    {
+        "pickListId": "d58e2017-371a-4af2-9521-01cc570050b2",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Consequence Direct",
+        "status": "active"
+    },
+    {
+        "pickListId": "07495df4-3c8f-4c77-a4b7-44c3fa704ff9",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Detail Mitigation",
+        "status": "active"
+    },
+    {
+        "pickListId": "4e334162-b25d-4a4d-8542-e60336916f5a",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Detail Liquid Spills",
+        "status": "active"
+    },
+    {
+        "pickListId": "a255a7b4-a8cb-4c6f-a976-c970502e9570",
+        "pickListVersion": 1,
+        "pickListDec": "OMV Qualitative Failure Mode Table",
+        "status": "active"
+    },
+    {
+        "pickListId": "0ddecf30-09dc-4827-b492-19d202e7cf75",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD Consequence Category Based on Cost",
+        "status": "active"
+    },
+    {
+        "pickListId": "910dd419-250c-47dd-8bd3-a5d7e8c2e6f7",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD Pressure Ratio and Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "b1c710b4-7dd9-4c1c-aedb-e28bd316d9b8",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD Leak Duration",
+        "status": "active"
+    },
+    {
+        "pickListId": "bc40e031-a94e-4fe9-ad04-74674ca9a183",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD Leak Environmental Factors",
+        "status": "active"
+    },
+    {
+        "pickListId": "b8840f45-28cd-4f95-a269-0bdcf93d1a67",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD PoF Category",
+        "status": "active"
+    },
+    {
+        "pickListId": "de64050a-6389-4bbb-92d0-d40d8b46f6fd",
+        "pickListVersion": 1,
+        "pickListDec": "Allowable Stress 2",
+        "status": "active"
+    },
+    {
+        "pickListId": "7dbe18e1-f8e1-42ef-b27b-53cc3116d379",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD Estimated Challenge Rate",
+        "status": "active"
+    },
+    {
+        "pickListId": "0379c59f-f000-4b01-b07a-1a078c7bc2f3",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD Discharge Location",
+        "status": "active"
+    },
+    {
+        "pickListId": "e23a62fb-1c0b-4bf9-9bbe-02d117e8bbc3",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD Operating Temperature",
+        "status": "active"
+    },
+    {
+        "pickListId": "cc4a7b9e-4a3b-47b2-a9c2-67e47814f801",
+        "pickListVersion": 1,
+        "pickListDec": "RBI Plus PRD Challenge Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "4ccad06f-7473-4a6d-ad33-3de2271f8174",
+        "pickListVersion": 1,
+        "pickListDec": "Online monitoring External DF",
+        "status": "active"
+    },
+    {
+        "pickListId": "f2ff0ca8-27b4-4a87-80a8-e18e5a1fd694",
+        "pickListVersion": 2,
+        "pickListDec": "Allowable Stress 2",
+        "status": "active"
+    },
+    {
+        "pickListId": "43956ec2-106f-441d-ad8c-7a26bf00de4f",
+        "pickListVersion": 1,
+        "pickListDec": "loc acid and casdic",
+        "status": "active"
+    },
+    {
+        "pickListId": "34bfe0a4-f363-4fa8-b1b7-4fff33f7b2b1",
+        "pickListVersion": 1,
+        "pickListDec": "Damage State",
+        "status": "active"
+    },
+    {
+        "pickListId": "fa31c4b1-ff94-4321-b2c8-8ea75f75c186",
+        "pickListVersion": 1,
+        "pickListDec": "COF Personnel Injury Flammable Consequence",
+        "status": "active"
+    },
+    {
+        "pickListId": "698c4e95-6ff7-40d3-890d-e49e83bfbba1",
+        "pickListVersion": 1,
+        "pickListDec": "Brittle Fracture Component Not Subject PWHT",
+        "status": "active"
+    },
+    {
+        "pickListId": "019941dc-9507-48e7-aebc-b37a02325d57",
+        "pickListVersion": 1,
+        "pickListDec": "Gas Release Toxic Conseq Equ Constants H2S",
+        "status": "active"
+    },
+    {
+        "pickListId": "375d8721-386e-4c27-8460-3fc3e9f701cc",
+        "pickListVersion": 1,
+        "pickListDec": "Damage Rate",
+        "status": "active"
+    },
+    {
+        "pickListId": "9baf40b9-3376-46ec-9475-c8e86fe3dcb2",
+        "pickListVersion": 1,
+        "pickListDec": "Gas Release Toxic Conseq Equ Constants Chlorine",
+        "status": "active"
+    },
+    {
+        "pickListId": "da0eb1d2-a8e9-498c-bfdd-66b1e0cf3056",
+        "pickListVersion": 1,
+        "pickListDec": "Brittle Fracture Component Subject PWHT",
+        "status": "active"
+    },
+    {
+        "pickListId": "0b0d7ca2-87c9-4a6c-a505-d55a9d548448",
+        "pickListVersion": 1,
+        "pickListDec": "Lining Condition Adjustment",
+        "status": "active"
+    },
+    {
+        "pickListId": "58cf518e-3d1a-4269-a9b7-2cf0e03cef4d",
+        "pickListVersion": 2,
+        "pickListDec": "COF Component Generic Failure Frequencies",
+        "status": "active"
+    },
+    {
+        "pickListId": "b6b901dc-f148-4799-822a-4ea6d8560ecb",
+        "pickListVersion": 1,
+        "pickListDec": "Lining Damage Factors",
+        "status": "active"
+    },
+    {
+        "pickListId": "d04fb707-7ef8-4bd9-9f9f-1df9f641bfad",
+        "pickListVersion": 1,
+        "pickListDec": "Gas Release Toxic Conseq Equ Constants Ammonia",
+        "status": "active"
+    },
+    {
+        "pickListId": "99f15390-c9c3-4086-b131-8cfe20d4a8e5",
+        "pickListVersion": 1,
+        "pickListDec": "External Cracking SCC Suscep external ClSCC",
+        "status": "active"
+    },
+    {
+        "pickListId": "01b80a35-59e3-42df-9f64-9b6ecf0fffd1",
+        "pickListVersion": 1,
+        "pickListDec": "Cracking Severity Index",
+        "status": "active"
+    },
+    {
+        "pickListId": "75e9e0bb-66a1-4a9d-89ed-4b240a6c2baf",
+        "pickListVersion": 1,
+        "pickListDec": "Pressure Variance",
+        "status": "active"
+    },
+    {
+        "pickListId": "b684f9a8-2357-4dd0-82e6-1be00a4d5357",
+        "pickListVersion": 1,
+        "pickListDec": "COF Equipment Flammable Consequence",
+        "status": "active"
+    },
+    {
+        "pickListId": "b580b956-523c-4e11-9e38-833fb54a4890",
+        "pickListVersion": 1,
+        "pickListDec": "External Cracking SCC Susceptibility – CUI ClSCC",
+        "status": "active"
+    },
+    {
+        "pickListId": "9766e09f-69b9-418e-9655-3d7d490de425",
+        "pickListVersion": 1,
+        "pickListDec": "Cracking SCC Damage Factors",
+        "status": "active"
+    },
+    {
+        "pickListId": "0cea1e27-312d-4ce4-9890-b47d095f9c55",
+        "pickListVersion": 1,
+        "pickListDec": "Geometry Type Thinning DF",
+        "status": "active"
+    },
+    {
+        "pickListId": "af358478-3479-437e-a5d1-266dff339720",
+        "pickListVersion": 2,
+        "pickListDec": "COF Representative Fluids",
+        "status": "active"
+    },
+    {
+        "pickListId": "4fa4c8ae-0bd0-432d-900c-d6775b56ad8b",
+        "pickListVersion": 1,
+        "pickListDec": "Brittle Fracture Chromium ASME Exemption",
+        "status": "active"
+    },
+    {
+        "pickListId": "6704215d-4299-4e78-918a-a090c66ec3fc",
+        "pickListVersion": 1,
+        "pickListDec": "Gas Release Toxic Conseq Equ Constants HF Acid",
+        "status": "active"
+    },
+    {
+        "pickListId": "fced3c3f-474b-40f9-96b5-3d25b1564689",
+        "pickListVersion": 2,
+        "pickListDec": "Brittle Fracture Carbon ASME Exemption",
+        "status": "active"
+    },
+    {
+        "pickListId": "28ed9212-0113-4c3b-a231-d69896e5cbe0",
+        "pickListVersion": 1,
+        "pickListDec": "COF Detection Isolation Systems",
+        "status": "active"
+    },
+    {
+        "pickListId": "2e15edf8-c495-4700-abbc-d75873b447a2",
+        "pickListVersion": 1,
+        "pickListDec": "Allowable Stress UI",
+        "status": "active"
+    },
+    {
+        "pickListId": "67df0828-5e98-4817-8ad6-ac05777af71f",
+        "pickListVersion": 1,
+        "pickListDec": "Conditional Probabilities",
+        "status": "active"
+    },
+    {
+        "pickListId": "ade5c822-fffc-41d6-b009-ce99f06b9883",
+        "pickListVersion": 2,
+        "pickListDec": "Condition based PRD Fluid Service Category",
+        "status": "active"
+    },
+    {
+        "pickListId": "70df6ed4-f90e-4678-9138-5bc0f83178cb",
+        "pickListVersion": 5,
+        "pickListDec": "RBI Plus Representative Fluid",
+        "status": "active"
+    },
+    {
+        "pickListId": "343f61f0-e044-4f89-a86d-0dce5405050e",
+        "pickListVersion": 1,
+        "pickListDec": "Condition Based PRD Business Impact UI",
+        "status": "active"
+    },
+    {
+        "pickListId": "caa9f30d-af3a-4af6-90f1-78467d4d8668",
+        "pickListVersion": 1,
+        "pickListDec": "Condition Based PRD Higher Alloy Internals UI",
+        "status": "active"
+    },
+    {
+        "pickListId": "fa35069a-2da9-4fb2-9c8e-8a62b943e685",
+        "pickListVersion": 2,
+        "pickListDec": "Availability",
+        "status": "active"
+    },
+    {
+        "pickListId": "a0aa0c2c-71b5-4034-9e2e-7863cb5877e0",
+        "pickListVersion": 2,
+        "pickListDec": "CML Corrosion Factor",
+        "status": "active"
+    },
+    {
+        "pickListId": "ad91a9ea-0d63-4c33-a7b7-5cb57bef657b",
+        "pickListVersion": 2,
+        "pickListDec": "CML Calculator Question",
+        "status": "active"
+    },
+    {
+        "pickListId": "4efc3f43-152a-4fa3-a53c-393905f99788",
+        "pickListVersion": 3,
+        "pickListDec": "RBI Plus FE Leak Size Factor",
+        "status": "active"
+    }
+]

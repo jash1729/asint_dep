@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <Dialog title="{i18n>asint.cml.detail.page.overallReading.copy.dialog.title.text}" titleAlignment="Center" contentWidth="40%" draggable="true" afterOpen="fnSetTextAreaCount">
+    <f:SimpleForm editable="true" columnsM="1" columnsL="1" columnsXL="1" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" layout="ResponsiveGridLayout" maxContainerCols="1">
+        <f:content>
+            <Label required="true" text="{i18n>asint.cml.detail.page.overallReading.copy.name.text}"/>
+            <Input value="{mCMLModel>/data/detailPage/copyPaste/sameAssestEdit/name}" />
+            <Label required="true" text="{i18n>asint.cml.detail.page.overallReading.copy.description.text}"/>
+            <TextArea id="idCMLEditDesc" rows="3" showExceededText="true" maxLength="500" value="{mCMLModel>/data/detailPage/copyPaste/sameAssestEdit/desc}"
+                liveChange="onTextAreaLiveChange" change="onTextAreaLiveChange"></TextArea>
+        </f:content>
+    </f:SimpleForm>
+    <buttons>
+        <Button type="Emphasized" text="{i18n>asint.reusable.button.save.text}" press="onSaveEditNameSameAsset"/>
+        <Button type="Transparent" text="{i18n>asint.reusable.button.cancel.text}" press="onCancelEditNameSameAsset"/>
+    </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:u="sap.ui.unified">
+	<Dialog resizable="true" title="Errors"  contentHeight="300px" contentWidth="500px" verticalScrolling="false">
+		<content>
+			<MessageView id="idAsintMessageView" showDetailsPageHeader="false" items="{mCMLModel>/data/CMLTabSection/Errors}" itemSelect="onMessageViewItemselect">
+				<MessageItem type="{mCMLModel>type}" title="{mCMLModel>message}" subtitle="{mCMLModel>additionalText}" description="{mCMLModel>description}"></MessageItem>
+			</MessageView>
+		</content>
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Text text="Error"></Text>
+				</contentMiddle>
+				<contentLeft>
+					<Button id="idAsintMessageBoxBackBtn" type="Transparent" icon="sap-icon://nav-back"  visible="false" press="onMessageBoxBack"/>
+				</contentLeft>
+			</Bar>
+		</customHeader>
+		<buttons>
+			<Button type="Transparent" text="{i18n>asint.cml.detail.page.Error.messageBox.Ok}" press="onMessageBoxCancel"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

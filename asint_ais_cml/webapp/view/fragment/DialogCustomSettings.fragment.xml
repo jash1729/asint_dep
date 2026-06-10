@@ -1,0 +1,82 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog id="settingsDialogCustomTab"
+		confirm="handleConfirm" reset="handleReset">
+		<customTabs>
+			<ViewSettingsCustomTab id="app-settings" icon="sap-icon://action-settings"
+				title="Settings" tooltip="Application Settings">
+				<content>
+					<Panel height="386px">
+						<Label text="Custom Filter" design="Bold" id="VSDThemeLabel" />
+						<Select change="onFilterbyColorDetail"
+							forceSelection="false" selectedKey="{mCMLModel>/data/detailPage/setSelectedKey}" selectedItemId="{mCMLModel>/data/detailPage/selectedItemId}"
+							id="selectColor" width="100%">
+							<core:ListItem id="idClearColor" key="All" text="All"
+								icon="sap-icon://circle-task-2">
+								<core:customData>
+									<core:CustomData key="iconcolor" value=""
+										writeToDom="true" />
+								</core:customData>
+							</core:ListItem>
+							<core:ListItem id="idErrorColor" key="Below Tmin"
+								text="Below Tmin" icon="sap-icon://circle-task-2">
+								<core:customData>
+									<core:CustomData key="iconcolor" value="red"
+										writeToDom="true" />
+								</core:customData>
+							</core:ListItem>
+							<core:ListItem id="idGrowthColor" key="Growth"
+								text="Growth" icon="sap-icon://circle-task-2">
+								<core:customData>
+									<core:CustomData key="iconcolor" value="yellow"
+										writeToDom="true" />
+								</core:customData>
+							</core:ListItem>
+							<core:ListItem id="idNewColor" key="New" text="New"
+								icon="sap-icon://circle-task-2">
+								<core:customData>
+									<core:CustomData key="iconcolor" value="green"
+										writeToDom="true" />
+								</core:customData>
+							</core:ListItem>
+							<core:ListItem id="idtenPercentageTminColor"
+								key="10% Tmin" text="10% Tmin"
+								icon="sap-icon://circle-task-2">
+								<core:customData>
+									<core:CustomData key="iconcolor" value="blue"
+										writeToDom="true" />
+								</core:customData>
+							</core:ListItem>
+							<core:ListItem id="idBaselineColor" key="Baseline"
+								text="Baseline" icon="sap-icon://circle-task-2">
+								<core:customData>
+									<core:CustomData key="iconcolor" value="purple"
+										writeToDom="true" />
+								</core:customData>
+							</core:ListItem>
+						</Select>
+						<Label class="sapUiSmallMarginTop" text="Group Filter" design="Bold"
+							id="VSDThemeLabel1" />
+						<MultiComboBox
+							selectedKeys="{mCMLModel>/data/detailPage/selectedGroup}"
+							width="350px"
+							items="{
+								path: 'mCMLModel>/data/detailPage/cmlGroups',
+								sorter: { path: 'groupName' }
+							}">
+							<core:Item key="{mCMLModel>groupName}" text="{mCMLModel>groupName}" />
+						</MultiComboBox>
+						<Label class="sapUiSmallMarginTop" text="{i18n>asint.cml.list.table.column.name.label.componentType}" design="Bold"/>
+						<MultiComboBox
+							selectedKeys="{mCMLModel>/data/detailPage/selectedComponentType}"
+							width="350px"
+							items="{path: 'mCMLModel>/data/aUniqueComponentType'}">
+							<core:Item key="{mCMLModel>componentType}" text="{mCMLModel>componentType}" />
+						</MultiComboBox>
+					</Panel>
+				</content>
+			</ViewSettingsCustomTab>
+		</customTabs>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

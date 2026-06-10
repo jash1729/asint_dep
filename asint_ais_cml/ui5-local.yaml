@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.5"
+metadata:
+  name: com.asint.ais.mi.cml
+type: application
+framework:
+  name: SAPUI5
+  version: 1.120.32
+  libraries:
+    - name: sap.m
+    - name: sap.ui.core
+    - name: sap.f
+    - name: sap.suite.ui.generic.template
+    - name: sap.ui.comp
+    - name: sap.ui.generic.app
+    - name: sap.ui.table
+    - name: sap.ushell
+    - name: themelib_sap_horizon
+server:
+  customMiddleware:
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        backend:
+          - path: /sap
+            url: http://localhost
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        component: com.asint.ais.mi.cml
+        ui5Theme: sap_horizon
+    - name: '@ui5/middleware-code-coverage'
+      afterMiddleware: compression
+      mountPath: /
+      configuration:
+        path: 'webapp'           # folder to instrument
+        enabled: true           # you can toggle this off for dev
+        exclude: 'webapp/test' 

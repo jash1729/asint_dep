@@ -4,4 +4,4 @@ service AssetService {
 
     entity Assets as projection on db.Assets;
 
-}
+}

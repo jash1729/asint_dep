@@ -1,0 +1,34 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog  title="{mCMLModel>/data/genericValueHelp/dialogHeader}" class="asintAddRemoveTempDialogWidth"
+        contentWidth="30rem" contentHeight="auto">
+        <VBox>
+        <Toolbar>
+            <ToolbarSpacer />
+            <SearchField  placeholder="{i18n>asint.reusable.searchPlaceHolder}" id="idGenericSearchFieldCml" search="onValueHelpSearch" width="50%" />
+        </Toolbar>
+        <Table id="CmlvalueHelpTable" growingScrollToLoad="true" alternateRowColors="true" growingThreshold="20"  
+            selectionChange="onSelectValue" sticky="ColumnHeaders,HeaderToolbar" items="{path: 'valueHelpService>/S4Master', sorter: {path: 'name', descending: false}}"  updateFinished="onUpdateFinish">
+            <columns>
+                <Column>
+                    <Text text="{i18n>asint.reusable.name.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.reusable.description.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{valueHelpService>name}"/>
+                        <Text text="{valueHelpService>description}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </VBox>
+    <buttons>
+    <Button text="{i18n>asint.reusable.button.save.text}" press="onSaveValueHelpDialog"/>
+    <Button text="{i18n>asint.reusable.button.cancel.text}" press="onCloseGenericDialog"/>
+    </buttons>            
+    </Dialog>
+</core:FragmentDefinition>

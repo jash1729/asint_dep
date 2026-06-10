@@ -1,0 +1,227 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Dialog id="idDialogDetailCreateCML" title="{i18n>asint.detail.createcml.dialog.title}"
+        afterOpen="onAfterCreateCMLDialogOpen" horizontalScrolling="false" contentWidth="50%"
+        contentHeight="50%">
+        <content>
+            <Wizard id="idDetailCreateCMLWizard" renderMode="Page" showNextButton="false"
+                navigationChange="onCreateCMLWizNavChange">
+                <steps>
+                    <WizardStep title="{i18n>asint.detail.createcml.wizard.step1.title}">
+                        <content>
+                            <f:Form id="idDetailFormContainerGeneral" editable="true" visible="true">
+                                <f:layout>
+                                    <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12"
+                                        labelSpanM="12" labelSpanS="12"
+                                        adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+                                        emptySpanM="0" emptySpanS="0"
+                                        columnsXL="1" columnsL="1" columnsM="1"
+                                        singleContainerFullSize="false" />
+                                </f:layout>
+                                <f:formContainers>
+                                    <f:FormContainer>
+                                        <f:formElements>
+                                            <f:FormElement
+                                                label="{i18n>asint.detail.createcml.wizard.label.objectType}">
+                                                <ComboBox
+                                                    selectedKey="{mCMLModel>/data/detailPage/create/cml/selectedEqpFloc/objectType}"
+                                                    editable="false">
+                                                    <core:ListItem key="EQUI" text="{i18n>asint.detail.createcml.wizard.label.equipment}" />
+                                                    <core:ListItem key="FLOC" text="{i18n>asint.detail.createcml.wizard.label.functionalLocation}" />
+                                                </ComboBox>
+                                            </f:FormElement>
+                                            <f:FormElement
+                                                label="{i18n>asint.detail.createcml.wizard.label.equipment}"
+                                                visible="{= ${mCMLModel>/data/detailPage/create/cml/selectedEqpFloc/objectType} === 'EQUI'}">
+                                                <f:fields>
+                                                    <Input type="Text"
+                                                        value="{mCMLModel>/data/detailPage/create/cml/selectedEqpFloc/objectName}"
+                                                        placeholder="{i18n>asint.detail.createcml.wizard.placeholder.selectEquipment}"
+                                                        showValueHelp="true" valueHelpOnly="true"
+                                                        valueHelpRequest="fnHandleEquipmentValueHelpForCML"
+                                                        visible="{= ${mCMLModel>/data/detailPage/create/cml/selectedEqpFloc/objectType} === 'EQUI'}"
+                                                        editable="false" />
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement
+                                                label="{i18n>asint.detail.createcml.wizard.label.functionalLocation}"
+                                                visible="{= ${mCMLModel>/data/detailPage/create/cml/selectedEqpFloc/objectType} === 'FLOC'}">
+                                                <f:fields>
+                                                    <Input type="Text"
+                                                        value="{mCMLModel>/data/detailPage/create/cml/selectedEqpFloc/objectName}"
+                                                        placeholder="{i18n>asint.detail.createcml.wizard.placeholder.selectFunctionalLocation}"
+                                                        showValueHelp="true" valueHelpOnly="true"
+                                                        valueHelpRequest="fnHandleFunctionalLocationValueHelpForCML"
+                                                        visible="{= ${mCMLModel>/data/detailPage/create/cml/selectedEqpFloc/objectType} === 'FLOC'}"                                                        
+                                                        editable="false" />
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement
+                                                label="{i18n>asint.detail.createcml.wizard.label.objectTemplate}">
+                                                <f:fields>
+                                                    <Select
+                                                        items="{path: 'mCMLModel>/data/detailPage/create/cml/objectTemplateList'}"
+                                                        selectedKey="{mCMLModel>/data/detailPage/create/cml/selectedObjectTemplate}"
+                                                        change="onDetailObjectTemplateChange"
+                                                        enabled="{mCMLModel>/metaData/detailPage/create/cml/enabled/objectTemplate}"
+                                                        valueState="{mCMLModel>/metaData/detailPage/create/cml/valueState/objectTemplate}"
+                                                        valueStateText="{mCMLModel>/metaData/detailPage/create/cml/valueStateText/objectTemplate}">
+                                                            <core:Item key="{mCMLModel>key}" text="{mCMLModel>name}" />
+                                                    </Select>
+                                                </f:fields>
+                                            </f:FormElement>
+                                        </f:formElements>
+                                    </f:FormContainer>
+                                </f:formContainers>
+                            </f:Form>
+                        </content>
+                    </WizardStep>
+                    <WizardStep title="{i18n>asint.detail.createcml.wizard.step2.title}">
+                        <content>
+                            <HBox class="sapUiMediumMarginTop sapUiTinyMarginBottom"
+                                alignItems="Center" wrap="Wrap">
+                                <Label text="{mCMLModel>/data/detailPage/create/cml/selectedEqpFloc/objectType}:" />
+                                <GenericTag class="sapUiTinyMarginBeginEnd"
+                                    text="{mCMLModel>/data/detailPage/create/cml/selectedEqpFloc/objectName}" />
+                                <Label text="{i18n>asint.detail.createcml.wizard.label.objectTemplate} :" />
+                                <GenericTag class="sapUiTinyMarginBeginEnd"
+                                    text="{mCMLModel>/data/detailPage/create/cml/selectedObjectTemplateName}" />
+                            </HBox>
+                            <VBox>
+                                <f:Form id="idDetailFormContainerTable" editable="true" visible="true" class="asintMetricsDataConfigureFormCls">
+                                    <f:layout>
+                                        <f:ResponsiveGridLayout
+                                            labelSpanXL="12"
+                                            labelSpanL="12"
+                                            labelSpanM="12"
+                                            labelSpanS="12"
+                                            adjustLabelSpan="false"
+                                            emptySpanXL="0"
+                                            emptySpanL="0"
+                                            emptySpanM="0"
+                                            emptySpanS="0"
+                                            columnsXL="1"
+                                            columnsL="1"
+                                            columnsM="1"
+                                            singleContainerFullSize="false" />
+                                    </f:layout>
+
+                                    <f:formContainers>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement>
+                                                    <f:fields>
+
+                                                        <Table
+                                                            id="idDetailSingleCMLTable"
+                                                            items="{mCMLModel>/data/detailPage/create/cml/customDataset}"
+                                                            mode="None"
+                                                            sticky="ColumnHeaders,HeaderToolbar">
+
+                                                            <headerToolbar>
+                                                                <OverflowToolbar>
+                                                                    <content>
+                                                                        <ToolbarSpacer />
+
+                                                                        <Input
+                                                                            id="idDetailCMLRows"
+                                                                            type="Number"
+                                                                            placeholder="Enter number of CMLs"
+                                                                            change="onDetailTableNumberValChange"
+                                                                            width="50%"
+                                                                            valueState="{mCMLModel>numbersValueState}"
+                                                                            value="{mCMLModel>/data/detailPage/create/cml/addRowCount}" />
+
+                                                                            
+                                                                        <Button
+                                                                            tooltip="{i18n>asint.detail.createcml.wizard.tooltip.addCML}"
+                                                                            class="sapUiSizeCompact"
+                                                                            enabled="{mCMLModel>/metaData/detailPage/create/cml/enabled/addIcon}"
+                                                                            icon="sap-icon://add"
+                                                                            press="handleDetailAddNewRow" />
+
+                                                                    </content>
+                                                                </OverflowToolbar>
+                                                            </headerToolbar>
+
+                                                            <columns>
+                                                                <Column hAlign="Begin">
+                                                                    <Text text="{i18n>asint.detail.createcml.wizard.addCML.col.name}" />
+                                                                </Column>
+                                                                <Column hAlign="Begin" demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+                                                                    <Text text="{i18n>asint.detail.createcml.wizard.addCML.col.desc}" />
+                                                                </Column>
+                                                                <Column hAlign="Begin" demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+                                                                    <Text text="{i18n>asint.detail.createcml.wizard.addCML.col.CMLtemplate}" />
+                                                                </Column>
+                                                                <Column hAlign="End">
+                                                                    <Text text="" />
+                                                                </Column>
+                                                            </columns>
+
+                                                            <items>
+                                                                <ColumnListItem vAlign="Middle">
+                                                                    <cells>
+
+                                                                        <Input
+                                                                            value="{mCMLModel>name}"
+                                                                            change="onDetailTableNameValChange($event, 'addCML')"
+                                                                            valueState="{mCMLModel>nameValueState}"
+                                                                            valueStateText="{mCMLModel>nameValueStateText}" />
+
+                                                                        <Input
+                                                                            value="{mCMLModel>description}"
+                                                                            change="onDetailTableDescpValChange($event, 'addCML')"
+                                                                            valueState="{mCMLModel>descpValueState}" />
+
+                                                                        <Select
+                                                                            required="true"
+                                                                            items="{ path: 'mCMLModel>/data/detailPage/create/cml/locationTemplateList'}"
+                                                                            selectedKey="{mCMLModel>cmlTemplate}"
+                                                                            change="onCMLTemplateChange($event, 'addCML')"
+                                                                            valueState="{mCMLModel>/metaData/detailPage/create/cml/valueState/cmlTemplate}"
+                                                                            valueStateText="{mCMLModel>/metaData/detailPage/create/cml/valueStateText/cmlTemplate}">
+                                                                            <core:Item key="{mCMLModel>id}" text="{mCMLModel>name}" />
+                                                                        </Select>
+
+                                                                        <Button
+                                                                            tooltip="{i18n>asint.detail.createcml.wizard.tooltip.delCML}"
+                                                                            class="sapUiSizeCompact"
+                                                                            icon="sap-icon://delete"
+                                                                            enabled="{mCMLModel>/data/detailPage/create/cml/isDeleteEnabled}"
+                                                                            press="handleDetailDeleteTableRow" />
+                                                                    </cells>
+                                                                </ColumnListItem>
+                                                            </items>
+                                                        </Table>
+                                                    </f:fields>
+                                                </f:FormElement>
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
+                            </VBox>
+                        </content>
+                    </WizardStep>
+                </steps>
+            </Wizard>
+        </content>
+
+        <buttons>
+            <Button text="{i18n>asint.reusable.button.prev.text}"
+                enabled="{= ${mCMLModel>/metaData/detailPage/create/cml/wizard/currStep} > 1 }"
+                press="onCreateCMLWizNav($event,'prev')" />
+            <Button text="{i18n>asint.reusable.button.next.text}"
+                enabled="{= ${mCMLModel>/metaData/detailPage/create/cml/wizard/currStep} &lt; 2 &amp;&amp; ${mCMLModel>/metaData/detailPage/create/cml/wizard/nextStepEnabled} }"
+                press="onCreateCMLWizNav($event,'next')" />
+            <Button type="Emphasized"
+                visible="{= ${mCMLModel>/metaData/detailPage/create/cml/wizard/currStep} === 2 }"
+                enabled="{mCMLModel>/metaData/detailPage/create/cml/wizard/createEnabled}"
+                text="{i18n>asint.reusable.button.create.text}" press="onCMLCreate" />
+            <Button text="{i18n>asint.reusable.button.cancel.text}" press="onCMLDialogClose" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

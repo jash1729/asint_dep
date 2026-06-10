@@ -1,0 +1,289 @@
+/* Hierarchy table CSS */
+
+.asintrbiSplitterClass.sapUiLoSplitter.sapUiLoSplitterV>.sapUiLoSplitterBar {
+    display: none !important;
+}
+
+/* .asintrbiSplitterClass.sapUiLoSplitter.sapUiLoSplitterH>.sapUiLoSplitterBar{ */
+
+/*	display:none !important; */
+
+/* } */
+
+/* Dynamic Page - Content No Padding */
+.asintDynamicPage .sapFDynamicPageContent,
+.sapFDynamicPageContentFitContainer {
+    padding: 5px !important;
+}
+
+.asintrbiTreeTableClass .sapUiTableTr {
+    height: 49px !important;
+}
+
+.sapMLIBHighlightError {
+    background: #b00;
+}
+
+#idCMLList .sapMLIBHighlightError {
+    background: #B00 !important;
+    width: .375rem;
+}
+
+.asintIDMSFieldUoM {
+    color: #666;
+    margin-left: 0.4rem !important;
+    line-height: 1rem !important;
+    font-size: 12px;
+    max-height: 3rem;
+    text-transform: capitalize;
+}
+
+.sapMLIBHighlightWarning {
+    background: #f7bf00;
+}
+
+.asintButton * {
+    border: none;
+    background-color: transparent;
+}
+
+/* stylelint-disable selector-pseudo-element-colon-notation */
+.asintErrorColor .sapMBtnInner.sapMBtnText .sapMBtnIcon:before {
+    color: #b00;
+}
+
+.asintGrowthColor .sapMBtnInner.sapMBtnText .sapMBtnIcon:before {
+    color: #f7bf00;
+}
+
+.asintNewColor .sapMBtnInner.sapMBtnText .sapMBtnIcon:before {
+    color: #30914c;
+}
+
+/* stylelint-enable selector-pseudo-element-colon-notation */
+
+.errorColor .sapMSltLabel {
+    color: #b00 !important;
+}
+
+.growthColor .sapMSltLabel {
+    color: #f7bf00 !important;
+}
+
+.informationColor .sapMSltLabel {
+    color: #459de1 !important;
+}
+
+.newColor .sapMSltLabel {
+    color: #30914c !important;
+}
+
+.baselineColor .sapMSltLabel {
+    color: #b743c7 !important;
+}
+
+[data-iconcolor="red"] {
+    color: #b00 !important;
+}
+
+[data-iconcolor="yellow"] {
+    color: #f7bf00 !important;
+}
+
+[data-iconcolor="green"] {
+    color: #30914c !important;
+}
+
+[data-iconcolor="blue"] {
+    color: #459de1 !important;
+}
+
+[data-iconcolor="purple"] {
+    color: #b743c7 !important;
+}
+
+.sapMListTblSubCntHdr {
+    align-items: center;
+}
+
+.sapMTileCntFooterTextColorNeutral {
+    font-size: 0.6rem !important;
+    white-space: pre-line;
+    height: auto;
+}
+
+
+.classCorrision.sapMObjStatusWarning .sapMObjStatusIcon,
+.classCorrision.sapMObjStatusWarning .sapMObjStatusText {
+    color: #f7bf00 !important;
+}
+
+.classReading.sapMObjStatusError .sapMObjStatusIcon,
+.classReading.sapMObjStatusError .sapMObjStatusText {
+    color: #b00 !important;
+}
+
+.statusSuccess.sapMText {
+    color: green !important
+}
+
+.statusFailure.sapMText {
+    color: red !important
+}
+
+.statusWarn.sapMText {
+    color: #FFA500 !important
+}
+
+.asintIdmsFieldUoM {
+    margin-left: 0.4rem !important;
+    line-height: 1rem !important;
+    font-size: 12px;
+    max-height: 3rem;
+    text-transform: capitalize;
+}
+
+.asintIdmsFieldUoMFieldContainer>div:first-child {
+    width: 80%;
+}
+
+.asintIdmsFieldUoMFieldContainer .asintIdmsFieldWithUoM>div:first-child {
+    width: 95%;
+}
+.aiSection {
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    margin: 0.50rem 1.75rem !important;
+}
+
+.aiTitle,
+.aiSubTitle {
+    display: block !important;
+    width: 100% !important;
+    font-weight: bold !important;
+    color: #1e293b;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 0.30rem !important;
+}
+
+.aiTitle {
+    font-size: 1.05rem !important;
+}
+
+.aiSubTitle {
+    font-size: 0.925rem !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    margin-top: 0.25rem !important;
+}
+
+.aiRow {
+    padding: 0.25rem 0.75rem;
+}
+
+.aiKey {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 0.35rem;
+}
+
+.aiValue {
+    font-size: 0.95rem;
+    color: #334155;
+    line-height: 1.6;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.aiRowGrid {
+    display: grid !important;
+    grid-template-columns: 30% 1fr;
+    align-items: start;
+    gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.aiRowGrid .aiValue {
+    width: 100% !important;
+    text-align: justify !important;
+}
+
+.aiSectionList,
+.aiSectionList > .sapMListUl,
+.aiSectionList > div > .sapMListUl {
+    border-radius: 1rem !important;
+    overflow: hidden !important;
+}
+
+.aiSectionList .sapMLIB:focus,
+.aiSectionList .sapMLIBFocusable:focus,
+.aiSectionList .sapMLIBFocused {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.aiSection .aiSection {
+    margin: 0.50rem 0 !important;
+    padding: 0.75rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+}
+
+.aiSectionList .sapMLIB:first-child .aiSection {
+    margin-top: 1.75rem !important;
+}
+
+.aiSectionList .sapMLIB:last-child .aiSection {
+    margin-bottom: 1.75rem !important;
+}
+
+.aiMarginTop {
+    margin-top: 0.25rem !important;
+}
+
+.aiMarginBottom {
+    margin-bottom: 0.50rem !important;
+}
+
+.customTitle {
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: #1D2D3E;
+}
+
+.aiRecommendationButton .sapMBtnInner {
+    background: #EBF0F5 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    height: 28px !important;
+    padding: 0 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.aiRecommendationButton .sapMBtnIcon {
+    width: 18px !important;
+    height: 14px !important;
+    margin-right: -5px !important;
+    transform: translateY(-2px) !important;
+}
+
+.aiRecommendationButton .sapMBtnContent {
+    color: #1d2d3e !important;
+    font: 500 17px/1 inherit !important;
+}
+
+.customHeaderIcon {
+    width: 32px !important;
+    height: 25px !important;
+    transform: translateY(-3px) !important;
+    margin-right: -4px !important;
+}

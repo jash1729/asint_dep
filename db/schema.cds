@@ -1,4 +1,3 @@
--- Create schema for dependency check
 namespace asint.db;
 
 using { cuid } from '@sap/cds/common';
