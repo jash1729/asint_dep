@@ -7,7 +7,8 @@ const buildCMD = "ui5 build preload --clean-dest --config ui5-deploy.yaml --incl
 const rootFolder = __dirname; // Replace with the root folder If It isn't working
 
 const subfolders = [
-    "asint_ais_cml_config"
+    "asint_ais_library",
+    "asint_ais_cml_config"    
 ]; // UI folders
 
 const cpus = os.cpus().length;
