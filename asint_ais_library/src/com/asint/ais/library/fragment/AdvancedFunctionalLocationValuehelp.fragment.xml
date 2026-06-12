@@ -1,0 +1,946 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:core="sap.ui.core" 
+    xmlns:f="sap.f" 
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:svm="sap.ui.comp.smartvariants" 
+    xmlns:table="sap.ui.table"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Dialog title="{mAdvancedFlocValueHelp>/data/list/functionalLocationDialogTitle}" contentWidth="80%" contentHeight="70%" draggable="true" beforeOpen="beforeOpenTechnicalObjectValueHelpDialog('FLOC')">
+        <VBox>
+            <VBox visible="false">
+                <svm:SmartVariantManagement
+                    id="idAdvFlocSmartVariantManagement"
+                    showExecuteOnSelection="true" />
+                <Label id="idAdvFlocDynamicPageExpandedContent"
+                    text="{i18n>asint.reusable.variantManagement.message.noFiltersActive.text}" />
+                <Label id="idAdvFlocDynamicPageSnappedContent"
+                    text="{i18n>asint.reusable.variantManagement.message.noFiltersActive.text}" />
+            </VBox>
+                           
+            <fb:FilterBar id="idAdvFlocFilterBar" useToolbar="false">
+                <fb:filterGroupItems>
+                    <!-- Planning Plant Filter -->
+                    <fb:FilterGroupItem
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic" name="planningPlant" visibleInFilterBar="true"
+                        label="{i18n>asint.advEquipment.list.table.planningPlant}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/planningPlant}}"
+                    >
+                        <fb:control>
+                            <MultiInput id="idAdFlocPlanningPlantInputFilter" showValueHelp="true" valueHelpOnly="true"
+                                showClearIcon="true"
+                                tokenUpdate="onRemoveMultiInputToken"
+                                tokens="{mAdvancedFlocValueHelp>/data/filters/planningPlant}"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event,'PlanningPlant','MultiSelect')">
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>key}"
+                                        text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Category Filter -->
+                    <fb:FilterGroupItem
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic" name="category" visibleInFilterBar="true"
+                        label="{i18n>asint.advEquipment.list.table.category}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/category}}"
+                    >
+                        <fb:control>
+                            <MultiInput id="idAdFlocCategoryInputFilter" showValueHelp="true" valueHelpOnly="true"
+                                showClearIcon="true"
+                                tokenUpdate="onRemoveMultiInputToken"
+                                tokens="{mAdvancedFlocValueHelp>/data/filters/category}"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event,'Category','MultiSelect')">
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>key}"
+                                        text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Maintenance Plant -->
+                    <fb:FilterGroupItem
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic" name="maintenancePlant" visibleInFilterBar="true"
+                        label="{i18n>asint.advEquipment.list.table.maintenancePlant}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/maintenancePlant}}"
+                    >
+                        <fb:control>
+                            <MultiInput id="idAdFlocMaintenancePlantInputFilter" showValueHelp="true" valueHelpOnly="true"
+                                showClearIcon="true"
+                                tokenUpdate="onRemoveMultiInputToken"
+                                tokens="{mAdvancedFlocValueHelp>/data/filters/maintPlant}"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event,'MaintPlant','MultiSelect')">
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>key}"
+                                        text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Planner Group -->
+                    <fb:FilterGroupItem
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic" name="plannerGroup" visibleInFilterBar="true"
+                        label="{i18n>asint.advEquipment.list.table.plannergroup}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/plannerGroup}}"
+                    >
+                        <fb:control>
+                            <MultiInput id="idAdFlocPlannerGroupInputFilter" showValueHelp="true" valueHelpOnly="true"
+                                showClearIcon="true"
+                                tokenUpdate="onRemoveMultiInputToken"
+                                tokens="{mAdvancedFlocValueHelp>/data/filters/plannerGroup}"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event,'PlannerGroup','MultiSelect')">
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>key}"
+                                        text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Main Work Center -->
+                    <fb:FilterGroupItem
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic" name="maintenanceWorkCenter" visibleInFilterBar="true"
+                        label="{i18n>asint.advEquipment.list.table.mainworkcenter}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/mainworkcenter}}"
+                    >
+                        <fb:control>
+                            <MultiInput id="idAdFlocMainWorkCenterInputFilter" showValueHelp="true" valueHelpOnly="true"
+                                showClearIcon="true"
+                                tokenUpdate="onRemoveMultiInputToken"
+                                tokens="{mAdvancedFlocValueHelp>/data/filters/mainWorkCenter}"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event,'MainWorkCenter','MultiSelect')">
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>key}"
+                                        text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Sort Field Filter -->
+                    <fb:FilterGroupItem
+                        visibleInFilterBar="true"
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic"
+                        name="sortField"
+                        label="{i18n>asint.advEquipment.list.table.sortField}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/sortField} &amp;&amp; ${mAdvancedFlocValueHelp>/metadata/featureFlag/hideSortField} !== 'true'}"
+                    >
+                        <fb:control>
+                            <Input id="idFunctionallocationSortField" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Technical ID Filed Filter -->
+                    <!-- <fb:FilterGroupItem
+                        visibleInFilterBar="true"
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic"
+                        name="technicalObjectSortCode"
+                        label="{i18n>asint.advEquipment.list.table.technicalObjectSortCode}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/technicalObjectSortCode} &amp;&amp; ${mAdvancedFlocValueHelp>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}"
+                    >
+                        <fb:control>
+                            <Input id="idFunctionallocationTechnicalObjectSortCode"/>
+                        </fb:control>
+                    </fb:FilterGroupItem> -->
+
+                    <!-- Failure Data Profile Filter -->
+                    <fb:FilterGroupItem
+                        visibleInFilterBar="true"
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic"
+                        name="catalogProfile"
+                        label="{i18n>asint.advEquipment.list.table.failureDataProfile}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/catalog}}"
+                    >
+                        <fb:control>
+                            <MultiInput
+                                id="idAdFlocCatalogProfileInputFilter"
+                                valueHelpOnly="true"
+                                showValueHelp="true"
+                                showClearIcon="true"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event,'CatalogProfile','MultiSelect')"
+                                tokens="{path: 'mAdvancedFlocValueHelp>/data/filters/catalogProfile'}"
+                                tokenUpdate="onRemoveMultiInputToken"
+                            >
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>text}" text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>  
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Class Filter -->
+                    <fb:FilterGroupItem visibleInFilterBar="true"
+                        id="idAdFlocClassMultiInputFilterItem"
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic"
+                        name="ADVFLOC_CLASSES"
+                        label="{i18n>asint.advEquipment.list.table.classes}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/class}}"
+                    >
+                        <fb:control>
+                            <MultiInput
+                                id="idAdFlocClassMultiInputFilter"
+                                showValueHelp="true" 
+                                valueHelpOnly="true"
+                                valueHelpRequest="onOpenAdvancedFlocFilterDialog(
+                                    'idClassAdvanceFilterDialog',
+                                    'class',
+                                    'classFilterDialog',
+                                    'idAdFlocClassMultiInputFilter',
+                                    'idClassFilterTable',
+                                    'FLOC'
+                                )"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Characteristic Value Filter -->
+                    <fb:FilterGroupItem
+                        visibleInFilterBar="true"
+                        id="idAdFlocClassCharMultiInputFilterItem"
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic"
+                        name="ADVFLOC_CHAR_CLASS"
+                        label="{i18n>asint.advEquipment.list.table.classChar}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/characteristicValue}}"
+                    >
+                        <fb:control>
+                            <MultiInput
+                                id="idAdFlocClassCharMultiInputFilter"
+                                showValueHelp="true" 
+                                valueHelpOnly="true"
+                                valueHelpRequest="onOpenAdvancedEqFilterDialog(
+                                    'idClassCharAdvanceFlocFilterDialog',
+                                    'classChar',
+                                    'classCharFlocFilterDialog',
+                                    'idAdFlocClassCharMultiInputFilter'
+                                )"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Criticality / ABC Indicator Filter -->
+                    <fb:FilterGroupItem
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic"
+                        name="abcIndicator"
+                        label="{i18n>asint.advEquipment.list.table.criticality}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/criticality}}"
+                    >
+                        <fb:control>
+                            <MultiInput
+                                id="idFlocMultiABCIndicator"
+                                valueHelpOnly="true"
+                                showValueHelp="true"
+                                showClearIcon="true"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event ,'ABCIndicator','MultiSelect')" 
+                                tokens="{path: 'mAdvancedFlocValueHelp>/data/filters/abcIndicator'}"
+                            >
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>text}" text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>  
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Object Type Filter -->
+                    <fb:FilterGroupItem
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic"
+                        name="objectType"
+                        label="{i18n>asint.advEquipment.list.table.objectType}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/objectType}}"
+                    >
+                        <fb:control>
+                            <MultiInput
+                                id="idFlocMultiObjectType"
+                                valueHelpOnly="true"
+                                showValueHelp="true"
+                                showClearIcon="true"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event ,'ObjectType','MultiSelect')" 
+                                tokens="{path: 'mAdvancedFlocValueHelp>/data/filters/objectType'}"
+                            >
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>text}" text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>  
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <!-- Plant Section Filter -->
+                    <fb:FilterGroupItem
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic" name="plantSection" visibleInFilterBar="true"
+                        label="{i18n>asint.advEquipment.list.table.PlantSection}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/plantSection}}">
+                        <fb:control>
+                            <MultiInput id="idAdFlocPlantSectionInputFilter"
+                                showValueHelp="true" valueHelpOnly="true" showClearIcon="true"
+                                tokenUpdate="onRemoveMultiInputToken"
+                                tokens="{mAdvancedFlocValueHelp>/data/filters/plantSection}"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event,'PlantSection','MultiSelect')">
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>key}" text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <!-- Location Filter -->
+                    <fb:FilterGroupItem
+                        groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP"
+                        groupTitle="Basic" name="location" visibleInFilterBar="true"
+                        label="{i18n>asint.advEquipment.list.table.selectLocation}"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedFilters/location}}">
+                        <fb:control>
+                            <MultiInput id="idAdFlocLocationInputFilter"
+                                showValueHelp="true" valueHelpOnly="true" showClearIcon="true"
+                                tokenUpdate="onRemoveMultiInputToken"
+                                tokens="{mAdvancedFlocValueHelp>/data/filters/location}"
+                                valueHelpRequest="fnOpenGenericValueHelpFilters($event,'Location','MultiSelect')">
+                                <tokens>
+                                    <Token key="{mAdvancedFlocValueHelp>key}" text="{mAdvancedFlocValueHelp>text}" />
+                                </tokens>
+                            </MultiInput>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+                
+            <Table
+                id="idAdvFlocTable"
+                growing="true"
+                growingScrollToLoad="true"
+                growingThreshold="20"
+                mode="{mAdvancedFlocValueHelp>/metadata/selectionMode}"
+                noDataText="{i18n>library.reusable.noData.placeholder.text}"
+                popinLayout="GridLarge"
+                alternateRowColors="true"
+                autoPopinMode="true"
+                items="{
+                    path : 'mV4MasterService>/FunctionalLocationListService(language=\'en\')/Set',
+                    parameters : {$select: '*,characteristicValues', $count: true, countMode: 'Inline'},
+                    events:{dataReceived:'.onFlocDataReceived'}
+                }"
+                selectionChange="onSelectFunctionalLocation"
+            >
+                <!-- items="{
+                    path : 'mV4MasterService>/FunctionalLocationListService(language=\'en\')/Set',
+                    parameters : {$select: '*'}
+                }" -->
+                <columns>
+                    <!-- Name Column -->
+                    <Column
+                        id="idFunctionalLocationName"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'name',
+                                control: '',
+                                value1: 'name',
+                                value2: ''
+                            }
+                        }"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/name}}"
+                    >
+                        <Text customData:tableSettings="name" text="{i18n>library.reusable.field.name.text}" />
+                    </Column>
+
+                    <!-- Description Column -->
+                    <Column
+                        id="idFunctionalLocationDescription"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'functionalLocationDescription',
+                                control: '',
+                                value1: 'functionalLocationDescription',
+                                value2: ''
+                            }
+                        }"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/description}}"
+                    >
+                        <Text customData:tableSettings="functionalLocationDescription" text="{i18n>library.reusable.field.description.text}" />
+                    </Column>
+
+                    <!-- Functional Location Column -->
+                    <Column
+                        id="idFlocName"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'name',
+                                control: '',
+                                value1: 'name',
+                                value2: 'functionalLocationDescription',
+                                fields: [
+                                    { i18n: 'asint.advEquipment.list.table.floc',path: 'name', sortable: true, groupable: true},
+                                    { i18n: 'asint.advEquipment.list.table.flocDesc',path: 'functionalLocationDescription', sortable: false, groupable: false}
+                                ]
+                            }
+                        }"
+                        importance="High" width="14rem"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/floc}}"
+                    >
+                        <Text
+                            customData:tableSettings="name"
+                            customData:exportSettings="{
+                                fields : [
+                                    {
+                                        i18n: 'asint.advEquipment.list.table.floc',
+                                        value: 'name'
+                                    },{
+                                        i18n: 'asint.advEquipment.list.table.flocDesc',
+                                        value: 'functionalLocationDescription'
+                                    }
+                                ]
+                            }"
+                            text="{i18n>asint.advEquipment.list.table.floc}"
+                        />
+                    </Column>
+
+                    <!-- Category Column -->
+                    <Column
+                        id="idFlocCategory"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'category',
+                                control: '',
+                                value1: 'categoryDescription',
+                                value2: 'category'
+                            }
+                        }"
+                        importance="High"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/category}}"
+                    >
+                    <Text
+                        customData:tableSettings="category"
+                        customData:exportSettings="{
+                            fields : [
+                                {
+                                    i18n: 'asint.advEquipment.list.table.category',
+                                    value: 'category'
+                                },{
+                                    i18n: 'asint.advEquipment.list.table.categoryDesc',
+                                    value: 'categoryDescription'
+                                }
+                            ]
+                        }"
+                        text="{i18n>asint.advEquipment.list.table.category}"
+                    />
+                    </Column>
+
+                    <!-- Object Type Column -->
+                    <Column
+                        id="idFlocObjectType"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'objectType',
+                                control: '',
+                                value1: 'objectTypeDescription',
+                                value2: 'objectType'
+                            }
+                        }"
+                        minScreenWidth="Tablet"
+                        hAlign="Begin"
+                        demandPopin="true"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/objectType}}"
+                    >
+                    <Text
+                        customData:tableSettings="objectType"
+                        customData:exportSettings="{
+                            fields : [
+                                {
+                                    i18n: 'asint.advEquipment.list.table.objectType',
+                                    value: 'objectType'
+                                },{
+                                    i18n: 'asint.advEquipment.list.table.objectTypeDesc',
+                                    value: 'objectTypeDescription'
+                                }
+                            ]
+                        }"
+                        text="{i18n>asint.advEquipment.list.table.objectType}"
+                    />
+                    </Column>
+
+                    <!-- Sort Field Column -->
+                    <Column
+                        id="idFlocSortField"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'sortField',
+                                control: 'sap.m.Text',
+                                value1: 'sortField'
+                            }
+                        }"
+                        minScreenWidth="Tablet"
+                        hAlign="Begin"
+                        demandPopin="true"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/sortField} &amp;&amp; ${mAdvancedFlocValueHelp>/metadata/featureFlag/hideSortField} !== 'true'}"
+                    >
+                        <Text
+                            customData:tableSettings="sortField"
+                            customData:exportSettings="{
+                                fields : [
+                                    {
+                                        i18n: 'asint.advEquipment.list.table.sortField',
+                                        value: 'sortField'
+                                    }
+                                ]
+                            }"
+                            text="{i18n>asint.advEquipment.list.table.sortField}"
+                        />
+                    </Column>
+
+                    <!-- Sort Field Column
+                    <Column
+                        id="idFlocTechnicalObjectSortCode"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'technicalObjectSortCode',
+                                control: 'sap.m.Text',
+                                value1: 'technicalObjectSortCode'
+                            }
+                        }"
+                        minScreenWidth="Tablet"
+                        hAlign="Begin"
+                        demandPopin="true"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/technicalObjectSortCode} &amp;&amp; ${mAdvancedEquipmentValueHelp>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}"
+                    >
+                        <Text
+                            customData:tableSettings="technicalObjectSortCode"
+                            customData:exportSettings="{
+                                fields : [
+                                    {
+                                        i18n: 'asint.advEquipment.list.table.technicalObjectSortCode',
+                                        value: 'technicalObjectSortCode'
+                                    }
+                                ]
+                            }"
+                            text="{i18n>asint.advEquipment.list.table.technicalObjectSortCode}"
+                        />
+                    </Column> -->
+
+                    <!-- Class Column -->
+                    <Column
+                        id="idFlocClassDetails"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'classDetails',
+                                control: 'sap.m.Text',
+                                value1: 'classDetails'
+                            }
+                        }"
+                        minScreenWidth="Tablet"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/class}}"
+                    >
+                            <Text
+                                customData:tableSettings="classDetails"
+                                customData:exportSettings="{
+                                    fields : [
+                                        {
+                                            i18n: 'asint.advEquipment.list.table.classes',
+                                            value: 'classDetails'
+                                        }
+                                    ]
+                                }"
+                                text="{i18n>asint.advEquipment.list.table.classes}"
+                            />
+                    </Column>
+
+                    <!-- Abc Indicator / Criticality Column -->
+                    <Column
+                        id="idFlocAbcIndicator"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'abcIndicator',
+                                control: '',
+                                value1: '',
+                                value2: ''
+                            }
+                        }"
+                        minScreenWidth="Tablet"
+                        hAlign="Begin"
+                        demandPopin="true"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/abcIndicator}}"
+                    >
+                        <Text
+                            customData:tableSettings="abcIndicator"
+                            customData:valueMaps="{'A': 'Very Critical','B': 'Critical','C':'Less Critical'}"
+                            text="{i18n>asint.advEquipment.list.table.criticality}"
+                        />
+                    </Column>
+
+                    <!-- Failure Data Profile Column -->
+                    <Column
+                        id="idFlocCatalogProfile"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'catalogProfile',
+                                control: '',
+                                value1: '',
+                                value2: ''
+                            }
+                        }"
+                        importance="High"
+                        minScreenWidth="Tablet"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/catalog}}"
+                    >
+                        <Text
+                            customData:tableSettings="catalogProfile"
+                            customData:exportSettings="{
+                                fields : [
+                                    {
+                                        i18n: 'asint.advEquipment.list.table.failureDataProfile',
+                                        value: 'catalogProfile'
+                                    }
+                                ]
+                            }"
+                            text="{i18n>asint.advEquipment.list.table.failureDataProfile}"
+                        />
+                    </Column>
+
+                    <!-- Parent Functional Location Column -->
+                    <Column
+                        id="idFlocFunctionalLocation"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'parentFunctionalLocationName',
+                                control: '',
+                                value1: 'parentFunctionalLocationName',
+                                value2: 'parentFunctionalLocationDescription',
+                                fields: [
+                                    {i18n: 'asint.advEquipment.list.table.parentfloc',path: 'parentFunctionalLocationName', sortable: true, groupable: true},
+                                    {i18n: 'asint.advEquipment.list.table.parentflocDesc',path: 'parentFunctionalLocationDescription', sortable: false, groupable: false}
+                                ]
+                            }
+                        }"
+                        importance="High"
+                        minScreenWidth="Tablet"
+                        hAlign="Begin"
+                        demandPopin="true"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/parentFloc}}"
+                    >
+                    <Text
+                        customData:tableSettings=""
+                        customData:exportSettings="{
+                            fields : [
+                                {
+                                    i18n: 'asint.advEquipment.list.table.parentfloc',
+                                    value: 'parentFunctionalLocationName'
+                                },{
+                                    i18n: 'asint.advEquipment.list.table.parentflocDesc',
+                                    value: 'parentFunctionalLocationDescription'
+                                }
+                            ]
+                        }"
+                        text="{i18n>asint.advEquipment.list.table.parentfloc}"
+                    />
+                    </Column>
+
+                    <!-- Planning Plant Column -->
+                    <Column
+                        id="idFlocPlanningPlant"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'planningPlant',
+                                control: '',
+                                value1: '',
+                                value2: ''
+                            }
+                        }"
+                        importance="None"
+                        minScreenWidth="Tablet"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/planningPlant}}"
+                    >
+                        <Text
+                            customData:tableSettings="planningPlant"
+                            customData:exportSettings="{
+                                fields : [
+                                    {
+                                        i18n: 'asint.advEquipment.list.table.planningPlant',
+                                        value: 'planningPlant'
+                                    }
+                                ]
+                            }"
+                            text="{i18n>asint.advEquipment.list.table.planningPlant}"
+                        />
+                    </Column>
+
+                    <!-- Maintenance Plant Column -->
+                    <Column
+                        id="idFlocMaintenancePlant"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'maintenancePlant',
+                                control: '',
+                                value1: '',
+                                value2: ''
+                            }
+                        }"
+                        importance="None"
+                        minScreenWidth="Tablet"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/maintenancePlant}}"
+                    >
+                        <Text
+                            customData:tableSettings="maintenancePlant"
+                            customData:exportSettings="{
+                                fields : [
+                                    {
+                                        i18n: 'asint.advEquipment.list.table.maintenancePlant',
+                                        value: 'maintenancePlant'
+                                    }
+                                ]
+                            }"
+                            text="{i18n>asint.advEquipment.list.table.maintenancePlant}"
+                        />
+                    </Column>
+
+                    <!-- Asset Manufacturer Column -->
+                    <Column
+                        id="idFlocAssetManufacturerName"
+                        importance="Medium"
+                        customData:p13nSettings="{
+                            metadata: {
+                                path: 'assetManufacturerName',
+                                control: '',
+                                value1: '',
+                                value2: ''
+                            }
+                        }"
+                        minScreenWidth="Tablet"
+                        hAlign="Begin"
+                        demandPopin="true"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/assetManufacturer}}"
+                    >
+                        <Text
+                            customData:tableSettings="assetManufacturerName"
+                            text="{i18n>asint.advEquipment.list.table.manufacturer}"
+                        />
+                    </Column>
+
+                    <!-- Planner Group Column -->
+                    <Column id="plannerGroup"
+                        customData:p13nSettings="{ metadata: { path: 'plannerGroup', control: '', value1: '', value2: '' } }"
+                        importance="None" minScreenWidth="Tablet"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/plannerGroup}}">
+                        <Text customData:tableSettings="plannerGroup"
+                            customData:exportSettings="{ fields: [{ i18n: 'asint.advEquipment.list.table.plannergroup', value: 'plannerGroup' }] }"
+                            text="{i18n>asint.advEquipment.list.table.plannergroup}" />
+                    </Column>
+
+                    <!-- Maintenance Work Center Column -->
+                    <Column id="maintenanceWorkCenter"
+                        customData:p13nSettings="{ metadata: { path: 'maintenanceWorkCenter', control: '', value1: '', value2: '' } }"
+                        importance="None" minScreenWidth="Tablet"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/maintenanceWorkCenter}}">
+                        <Text customData:tableSettings="maintenanceWorkCenter"
+                            customData:exportSettings="{ fields: [{ i18n: 'asint.advEquipment.list.table.mainworkcenter', value: 'maintenanceWorkCenter' }] }"
+                            text="{i18n>asint.advEquipment.list.table.mainworkcenter}" />
+                    </Column>
+
+                    <!-- Plant Section Column -->
+                    <Column id="plantSection"
+                        customData:p13nSettings="{ metadata: { path: 'plantSection', control: '', value1: '', value2: '' } }"
+                        importance="None" minScreenWidth="Tablet"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/plantSection}}">
+                        <Text customData:tableSettings="plantSection"
+                            customData:exportSettings="{ fields: [{ i18n: 'asint.advEquipment.list.table.PlantSection', value: 'plantSection' }] }"
+                            text="{i18n>asint.advEquipment.list.table.PlantSection}" />
+                    </Column>
+
+                    <!-- Location Column -->
+                    <Column id="location"
+                        customData:p13nSettings="{ metadata: { path: 'location', control: '', value1: '', value2: '' } }"
+                        importance="None" minScreenWidth="Tablet"
+                        visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/location}}">
+                        <Text customData:tableSettings="location"
+                            customData:exportSettings="{ fields: [{ i18n: 'asint.advEquipment.list.table.selectLocation', value: 'location' }] }"
+                            text="{i18n>asint.advEquipment.list.table.selectLocation}" />
+                    </Column>
+
+                    <!-- <Column id="charDetails"
+                        customData:p13nSettings="{
+                        metadata: {
+                            path: 'characteristicValues',
+                            control: 'sap.m.Text',
+                            value1: 'characteristicValues'
+                        }
+                    }"
+                        minScreenWidth="Tablet" visible="true">
+                        <Text customData:tableSettings="characteristicValues"
+                            customData:exportSettings="{
+                            fields : [
+                                {
+                                    i18n: 'asint.advEquipment.list.table.characteristicValues',
+                                    value: 'characteristicValues'
+                                }
+                            ]
+                        }"
+                            text="{i18n>asint.advEquipment.list.table.characteristicValues}" />
+                    </Column> -->
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <!-- Name Column -->
+                            <Text
+                                text="{mV4MasterService>name}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/name}}"
+                            />
+
+                            <!-- Description Column -->
+                            <Text
+                                text="{mV4MasterService>functionalLocationDescription}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/description}}"
+                            />
+
+                            <!-- Functional Location Column -->
+                            <ObjectIdentifier
+                                title="{mV4MasterService>name}"
+                                text="{mV4MasterService>functionalLocationDescription}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/floc}}"
+                            />
+
+                            <!-- Category Column -->
+                            <Text
+                                text="{
+                                    parts:['mV4MasterService>categoryDescription','mV4MasterService>category'],
+                                    formatter:'.formatCategorylibrary'
+                                }"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/category}}"
+                            />
+
+                            <!-- Object Type Column -->
+                            <Text
+                                text="{
+                                    parts:['mV4MasterService>objectTypeDescription','mV4MasterService>objectType'],
+                                    formatter:'.formatCategorylibrary'
+                                }"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/objectType}}"
+                            />
+
+                            <!-- Sort Field Column -->
+                            <Text
+                                text="{mV4MasterService>sortField}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/sortField} &amp;&amp; ${mAdvancedFlocValueHelp>/metadata/featureFlag/hideSortField} !== 'true'}"
+                            />
+
+                            <!-- Technical ID Field Column -->
+                            <!-- <Text
+                                text="{mV4MasterService>technicalObjectSortCode}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/technicalObjectSortCode} &amp;&amp; ${mAdvancedFlocValueHelp>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}"
+                            /> -->
+
+                            <!-- Class Column -->
+                            <ExpandableText
+                                maxCharacters="30"
+                                overflowMode="Popover"
+                                text="{
+                                    path:'mV4MasterService>classDetails',
+                                    formatter:'.fnFormatEquipmentClass'
+                                }"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/class}}"
+                            />
+
+                            <!-- Abc Indicator Column / Criticality -->
+                                <!-- visible="{
+                                    path: 'mV4MasterService>abcIndicator',
+                                    formatter: '.formatVisible',
+                                    targetType: 'any'
+                                }" -->
+                            <GenericTag
+                                text="{mV4MasterService>abcIndicator}"
+                                visible="{
+                                    parts: ['mV4MasterService>abcIndicator', 'mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/abcIndicator'],
+                                    formatter: '.formatVisible',
+                                    targetType: 'any'
+                                }"
+                                design="StatusIconHidden"  
+                                status="{
+                                    path: 'mV4MasterService>abcIndicator',
+                                    formatter: '.formatStatus',
+                                    targetType: 'any'
+                                }" 
+                                tooltip="{
+                                    path: 'mV4MasterService>abcIndicator',
+                                    formatter: '.formatTooltip',
+                                    targetType: 'any'
+                                }"
+                                class="sapUiSmallMarginBottom"
+                            >
+                                <ObjectNumber
+                                    state="{
+                                        path: 'mV4MasterService>abcIndicator',
+                                        formatter: '.formatStatus',
+                                        targetType: 'any'
+                                    }"
+                                    emphasized="false"
+                                />
+                            </GenericTag>
+
+                            <!-- Catalog Column -->
+                            <Text
+                                text="{mV4MasterService>catalogProfile}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/catalog}}"
+                            />
+
+                            <!-- Parent Functional Location Column -->
+                            <ObjectIdentifier
+                                title="{mV4MasterService>parentFunctionalLocationName}"
+                                text="{mV4MasterService>parentFunctionalLocationDescription}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/parentFloc}}"
+                            />
+
+                            <!-- Planning Plant Column -->
+                            <Text
+                                text="{mV4MasterService>planningPlant}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/planningPlant}}"
+                            />
+
+                            <!-- Maintenance Plant Column -->
+                            <Text
+                                text="{mV4MasterService>maintenancePlant}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/maintenancePlant}}"
+                            />
+
+                            <!-- Asset Manufacturer Column -->
+                            <Text
+                                text="{mV4MasterService>assetManufacturerName}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/assetManufacturer}}"
+                            />
+
+                            <Text text="{mV4MasterService>plannerGroup}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/plannerGroup}}" />
+                            <Text text="{mV4MasterService>maintenanceWorkCentre}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/maintenanceWorkCentre}}" />
+                            <Text text="{mV4MasterService>plantSection}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/plantSection}}" />
+                            <Text text="{mV4MasterService>location}"
+                                visible="{= ${mAdvancedFlocValueHelp>/data/columnFilter/selectedColumns/location}}" />
+                            <!-- <ExpandableText maxCharacters="30" overflowMode="Popover"
+                                text="{path:'mV4MasterService>characteristicValues',formatter:'.fnFormatCharacteristicValue'}" /> -->
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </VBox>
+        <buttons>
+            <Button
+                text="{i18n>library.reusable.confirm.button.text}"
+                enabled="{= ${mAdvancedFlocValueHelp>/metadata/selectedCount} &gt; 0}"
+                visible="{= ${mAdvancedFlocValueHelp>/metadata/selectionMode} === 'MultiSelect'}"
+                type="Emphasized"
+                press="onAdvFlocValueHelpDialogConfirm"
+            />
+            
+            <Button text="{i18n>library.reusable.close.button.text}" press="onAdvFlocValueHelpDialogClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

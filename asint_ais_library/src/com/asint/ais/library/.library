@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<library xmlns="http://www.sap.com/sap.ui.library.xsd">
+    <name>com.asint.ais.library</name>
+    <vendor>AsInt, Inc.</vendor>
+    <version>1.0.0</version>
+    <copyright>Copyright © 2023 AsInt, Inc.</copyright>
+    <title>AsInt AIS Library</title>
+    <documentation>AsInt AIS Library</documentation>
+	<dependencies>
+		<dependency>
+			<libraryName>sap.ui.core</libraryName>
+		</dependency>
+	</dependencies>
+</library>

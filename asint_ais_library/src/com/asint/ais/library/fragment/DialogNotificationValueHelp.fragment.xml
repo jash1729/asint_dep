@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>asint.notficationValueHelp.title}" horizontalScrolling="false" contentWidth="30rem" contentHeight="50%">
+        <Table id="idNotificationTable" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="{mNotificationValueHelp>/metadata/selectionMode}" noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge" alternateRowColors="true" 
+            items="{
+                path : 'mNotificationService>/NotificationDetailedList',
+                parameters : {$select: '*'}
+            }"
+            selectionChange="onSelectNotification">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}" search="onSearch" width="100%"/>
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column width="10rem">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column1.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column2.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+						<ObjectIdentifier title="{mNotificationService>name}" text="{mNotificationService>displayId}"/>
+                        <Text text="{mNotificationService>shortDescription}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>library.reusable.confirm.button.text}"  enabled="{= ${mNotificationValueHelp>/metadata/selectedCount} &gt; 0}" visible="{= ${mNotificationValueHelp>/metadata/selectionMode} === 'MultiSelect'}" type="Emphasized" press="onNotificationValueHelpDialogConfirm"/>
+            <Button text="{i18n>library.reusable.close.button.text}" press="onNotificationValueHelpDialogClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

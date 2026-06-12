@@ -1,0 +1,38 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog id="idIntelliEditDialog" title="{i18n>asint.intelli.intelliEdit.dialog.title}" draggable="true" resizable="false" verticalScrolling="false" horizontalScrolling="false" class="intelliEditDialog" contentWidth="80vh">
+
+        <VBox width="100%" height="100%" class="intelliEditRoot">
+            <OverflowToolbar height="3rem">
+
+                <ToggleButton id="idTextToolBtn" icon="sap-icon://text" text="{i18n>asint.intelli.intelliEdit.toolbar.textTool.text}" press="onSelectTextTool"/>
+                <ToggleButton id="idBrushToolBtn" icon="sap-icon://edit" text="{i18n>asint.intelli.intelliEdit.toolbar.brushTool.text}" press="onSelectBrushTool"/>
+                <Slider id="idSizeControl" min="5" max="50" value="12" width="120px" liveChange="onBrushSizeChange"/>
+                <Button id="idColorPickerBtn" icon="sap-icon://circle-task" tooltip="{i18n>asint.intelli.intelliEdit.toolbar.colorPicker.tooltip}" press="onOpenColorPicker"/>
+                <Button id="idAttachFinding" icon="sap-icon://attachment" text="{i18n>asint.intelli.intelliEdit.toolbar.attachFinding.text}" press="onAttachFinding"/>
+
+                <ToolbarSpacer/>
+
+                <Button id="idUndoBtn" icon="sap-icon://undo" text="{i18n>asint.intelli.intelliEdit.toolbar.undo.text}" press="onUndo"/>
+                <Button id="idRedoBtn" icon="sap-icon://redo" text="{i18n>asint.intelli.intelliEdit.toolbar.redo.text}" press="onRedo"/>
+                <Button id="idZoomInBtn" icon="sap-icon://zoom-in" text="{i18n>asint.intelli.toolbar.zoomIn.text}" press="onZoomIn"/>
+                <Button id="idZoomOutBtn" icon="sap-icon://zoom-out" text="{i18n>asint.intelli.toolbar.zoomOut.text}" press="onZoomOut"/>
+                <Button id="idResetZoomBtn" icon="sap-icon://reset" text="{i18n>asint.intelli.toolbar.reset.text}" press="onViewResetZoom"/>
+            </OverflowToolbar>
+
+            <ScrollContainer id="idEditorScroll" width="100%" height="90%" horizontal="true" vertical="true" class="intelliEditCanvasWrapper">
+                <VBox width="100%" height="100%" justifyContent="Center" alignItems="Center" class="imageContainer">
+                    <core:HTML id="idCanvasHost" sanitizeContent="false" content=""/>
+                </VBox>
+            </ScrollContainer>
+        </VBox>
+
+        <buttons>
+            <Button text="{i18n>asint.intelli.intelliEdit.dialog.button.save.text}" type="Emphasized" press="onSaveIntelliEdit"/>
+            <Button text="{i18n>asint.intelli.intelliEdit.dialog.button.close.text}" press="onCloseIntelliEdit"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

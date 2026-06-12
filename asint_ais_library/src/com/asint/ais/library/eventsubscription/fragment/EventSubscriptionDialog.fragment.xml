@@ -1,0 +1,117 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap" core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
+    xmlns="sap.m">
+    <Dialog title="{i18n>asint.eventSubscription.dialog.title}" contentHeight="60%" contentWidth="30%" draggable="true">
+        <content>
+            <NavContainer id="idEventSubscriptionNavContainer" initialPage="idEventSubscriptionList" afterNavigate="onAfterNavigate">
+                <pages>
+                    <Page id="idEventSubscriptionList" showHeader="false">
+                        <customData>
+                            <core:CustomData key="pageId" value="idEventSubscriptionList" />
+                         </customData>
+                        <content>
+                            <Table busyIndicatorDelay="0" busy="{mEventSubscription>/dialog/isBusy}" mode="None" items="{
+                                    path: 'mEventSubscription>/dialog/list',
+                                    templateShareable: false
+                                }" growing="true" growingScrollToLoad="true">
+                                <headerToolbar>
+                                    <OverflowToolbar design="Solid">
+                                        <SearchField class="sapUiSmallMarginBottom sapUiSmallMarginTop" width="100%" liveChange="onSearchLiveChange"/>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column>
+                                        <Text text="{i18n>asint.eventSubscription.dialog.table.event.text}"/>
+                                    </Column>
+                                    <Column width="10rem" hAlign="Center" demandPopin="true" minScreenWidth="Small">
+                                        <Text text="{i18n>asint.eventSubscription.dialog.table.subscriptionStatus.text}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="{= ${mEventSubscription>allowMultiSubscription} ? 'Navigation' : 'Active' }" press="onNavToDetailPage">
+                                        <cells>
+                                            <Text text="{mEventSubscription>eventName}"/>
+                                            <HBox justifyContent="Center">
+                                                <Switch state="{mEventSubscription>subscription/status}" customTextOn=" " customTextOff=" " change="onStatusChange" visible="{= !${mEventSubscription>allowMultiSubscription}}"/>
+                                                <Link text="{mEventSubscription>subscription/message}" visible="{= ${mEventSubscription>allowMultiSubscription}}" press="onNavToDetailPage"/>
+                                                <Button type="Transparent" icon="sap-icon://fob-watch" tooltip=" " press="onLeadTimeInfoPress" visible="{= ${mEventSubscription>eventType} === 'DUE_DATE_REMINDER'}">
+                                                    <customData>
+                                                        <BadgeCustomData key="badge" value="{mEventSubscription>subscription/leadTime}"/>
+                                                    </customData>
+                                                </Button>
+                                            </HBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Page>
+                    <Page id="idEventSubscriptionNotificationComplete">
+                        <customData>
+                            <core:CustomData key="pageId" value="idEventSubscriptionNotificationComplete" />
+                         </customData>
+                        <customHeader>
+                            <Toolbar>
+                                <Button icon="sap-icon://nav-back" press="onNavToInitialPage" />
+                                <Text text="{mEventSubscription>/dialog/detail/notificationComplete/title}"/>
+                            </Toolbar>
+                        </customHeader>
+                        <content>
+                            <Table busyIndicatorDelay="0" busy="{mEventSubscription/dialog/detail/notificationComplete/isBusy}" mode="None" items="{
+                                    path: 'mEventSubscription>/dialog/detail/notificationComplete/list',
+                                    templateShareable: false
+                                }" growing="true" growingScrollToLoad="true">
+                                <headerToolbar>
+                                    <Toolbar design="Solid">
+                                        <SearchField class="sapUiSmallMarginBottom sapUiSmallMarginTop" liveChange="onSearchNotificationComplete"/>
+                                        <ToolbarSpacer/>
+                                        <Button icon="sap-icon://multi-select" press="onNotificationCompleteSelection('select')" tooltip="{i18n>library.reusable.selectAll.button.text}"/>
+                                        <Button icon="sap-icon://multiselect-none" press="onNotificationCompleteSelection('deselect')" tooltip="{i18n>library.reusable.deSelectAll.button.text}"/>
+                                    </Toolbar>
+                                </headerToolbar>
+                                <infoToolbar>
+                                    <Toolbar visible="{mEventSubscription>/dialog/detail/notificationComplete/strip/visible}">
+                                        <Text text="{mEventSubscription>/dialog/detail/notificationComplete/strip/message}"/>
+                                    </Toolbar>
+                                </infoToolbar>
+                                <columns>
+                                    <Column>
+                                        <Text text="{i18n>asint.eventSubscription.dialog.detail.notificationComplete.notification.text}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>asint.eventSubscription.dialog.detail.notificationComplete.generatedBy.text}"/>
+                                    </Column>
+                                    <Column width="10rem" hAlign="Center" demandPopin="true" minScreenWidth="Small">
+                                        <Text text="{i18n>asint.eventSubscription.dialog.table.subscriptionStatus.text}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <ObjectIdentifier title="{mEventSubscription>displayId}" text="{mEventSubscription>shortDescription}"/>
+                                            <HBox renderType="Bare">
+                                                <ObjectIdentifier title="{mEventSubscription>generatedFromTitle}" text="{mEventSubscription>generatedFromDesc}" visible="{= ${mEventSubscription>generatedFrom} !== 'FIND'}"/>
+                                                <ExpandableText text="{mEventSubscription>generatedFromTitle}" maxCharacters="20" overflowMode="Popover" visible="{= ${mEventSubscription>generatedFrom} === 'FIND'}"/>
+                                            </HBox>
+                                            <HBox justifyContent="Center">
+                                                <Switch state="{mEventSubscription>subscriptionStatus}" customTextOn=" " customTextOff=" " change="onNotificationSubscriptionChange"/>
+                                            </HBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Page>
+                </pages>
+            </NavContainer>
+        </content>
+        <beginButton>
+            <Button text="{i18n>asint.reusable.button.save.text}" type="Emphasized" press="onSavePress"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>asint.reusable.button.cancel.text}" press="onCancelPress"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

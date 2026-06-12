@@ -1,0 +1,35 @@
+<core:FragmentDefinition
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:rte="sap.ui.richtexteditor"
+    xmlns="sap.m">
+    <Dialog title="{i18n>asint.mail.dialog.title.text}" contentHeight="40%" contentWidth="50%"
+        draggable="true">
+        <content>
+            <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                singleContainerFullSize="false">
+                <f:content>
+                    <Label text="{i18n>asint.mail.dialog.to.text}" required="true" />
+                    <MultiComboBox items="{mMailer>/userList}" selectedKeys="{mMailer>/data/to}" showSecondaryValues="true" required="true">
+                        <core:ListItem key="{mMailer>email}" text="{mMailer>name}" additionalText="{mMailer>email}" />
+                    </MultiComboBox>
+                    <Label text="{i18n>asint.mail.dialog.cc.text}" />
+                    <MultiComboBox items="{mMailer>/userList}" selectedKeys="{mMailer>/data/cc}" showSecondaryValues="true">
+                        <core:ListItem key="{mMailer>email}" text="{mMailer>name}" additionalText="{mMailer>email}" />
+                    </MultiComboBox>
+                    <Label text="{i18n>asint.mail.dialog.subject.text}" />
+                    <Input value="{mMailer>/data/subject}"/>
+                    <Label text="{i18n>asint.mail.dialog.body.text}"/>
+                    <!-- <rte:RichTextEditor value="{mMailer>/data/body}" height="450px" /> -->
+                    <TextArea value="{mMailer>/data/body}" rows="9"/>
+                </f:content>
+            </f:SimpleForm>
+        </content>
+        <buttons>
+            <Button type="Emphasized" text="{i18n>library.reusable.send.button.text}" press="onSend" enabled="{= ${mMailer>/data/to/length} &gt; 0 &amp;&amp; ${mMailer>/data/subject}.length &gt; 0}"/>
+            <Button type="Transparent" text="{i18n>library.reusable.cancel.button.text}" press="onClose" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

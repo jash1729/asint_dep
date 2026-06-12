@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>asint.enumValueHelp.Notification.title}" horizontalScrolling="false" contentWidth="30rem" contentHeight="50%">
+        <Table id="idNotificationStatusTable" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="{mNotificationStatusModel>/metadata/selectionMode}" noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge" alternateRowColors="true" 
+            items="{
+                path : 'mNotificationStatusModel>/data',
+                templateShareable : true
+            }"
+            selectionChange="onSelectNotificationStatus">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}" search="onSearch" width="100%"/>
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column width="10rem">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column1.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column2.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{mNotificationStatusModel>code}"/>
+                        <Text text="{mNotificationStatusModel>description}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>library.reusable.confirm.button.text}"  enabled="{= ${mNotificationStatusModel>/metadata/selectedCount} &gt; 0}" visible="{= ${mNotificationStatusModel>/metadata/selectionMode} === 'MultiSelect'}" type="Emphasized" press="onNotificationStatusValueHelpDialogConfirm"/>
+            <Button text="{i18n>library.reusable.close.button.text}" press="onNotificationStatusValueHelpDialogClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

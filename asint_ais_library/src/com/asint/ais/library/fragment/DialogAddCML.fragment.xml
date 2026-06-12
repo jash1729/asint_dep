@@ -1,0 +1,58 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:core="sap.ui.core">
+    <Dialog horizontalScrolling="false" showHeader="false" contentWidth="30%" contentHeight="60%">
+        <content>
+            <NavContainer id="idAddCMLNavCont">
+                <pages>
+                    <Page id="idAddCMLPage">
+                        <customHeader>
+                            <Toolbar>
+                                <Title text="Add CML"/>
+                                <ToolbarSpacer />
+                                <Button icon="sap-icon://expand-all" tooltip="{i18n>asint.reusable.button.expandAll.text}" press="onAddCMLTreeToggleExpand($event,true)"/>
+                                <Button icon="sap-icon://collapse-all" tooltip="{i18n>asint.reusable.button.collapseAll.text}" press="onAddCMLTreeToggleExpand($event,false)"/>
+                            </Toolbar>
+                        </customHeader>
+                        <content>
+                            <Tree id="idCMLTree" items="{mCMLData>/data/cml/attachedequiCmls}" mode="MultiSelect" selectionChange="onCMLSelectionChange">                                
+                                <CustomTreeItem customData:type="{mCMLData>type}" selected="{mCMLData>selected}">
+                                    <HBox justifyContent="SpaceBetween" alignItems="Center" width="100%">
+                                        <Text text="{mCMLData>name}"/>
+                                    </HBox>
+                                </CustomTreeItem>
+                            </Tree>
+                        </content>
+                        <footer>
+                            <Toolbar>
+                                <ToolbarSpacer/>
+                                <Button type="Emphasized" text="Add" enabled="{= ${mCMLData>/data/tab/cml/unalteredequiCmls}.length > 0}" press="onAddCMLConfirm"/>
+                                <Button text="{i18n>asint.reusable.button.cancel.text}" press="onAddCMLCancel"/>
+                            </Toolbar>
+                        </footer>
+                    </Page>
+                    <!-- <Page id="idAddCMLCreateAdHocCMLPage" title="{i18n>asint.detail.tab.cml.createAdHocCML.dialog.header.text}">
+                        <content>
+                            <f:SimpleForm id="idCreateAdHocCMLForm" editable="true">
+                                <f:content>
+                                    <Label required="true" text="{i18n>asint.detail.tab.cml.createAdHocCML.dialog.name.text}"/>
+                                    <Input value="{mCMLData>/data/tab/cml/createAdHocCml/name}"/>
+                                    <Label required="true" text="{i18n>asint.detail.tab.cml.createAdHocCML.dialog.description.text}"/>
+                                    <Input value="{mCMLData>/data/tab/cml/createAdHocCml/description}"/>
+                                </f:content>
+                            </f:SimpleForm>
+                        </content>
+                        <footer>
+                            <Toolbar>
+                                <ToolbarSpacer/>
+                                <Button type="Emphasized" text="{i18n>asint.reusable.button.create.text}" press="onCreateAdHocCMLConfirm"/>
+                                <Button text="{i18n>asint.reusable.button.cancel.text}" press="onCreateAdHocCMLCancel"/>
+                            </Toolbar>
+                        </footer>
+                    </Page> -->
+                </pages>
+            </NavContainer>
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

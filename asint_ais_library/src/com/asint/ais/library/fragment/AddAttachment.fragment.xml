@@ -1,0 +1,156 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified">
+    <Dialog title="{mTableHandler>/documents/userInput/dialogHeader}" contentWidth="30%">
+        <MessageStrip class="sapUiSmallMargin" visible="{mTableHandler>/metadata/openTextIntegrationEnabled}" text="{i18n>asint.detail.tab.documents.openTextUploadInfo.text}"/>
+        <VBox class="sapUiSmallMargin" visible="{= !${mTableHandler>/documents/userInput/linkVisible} }">
+            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                <f:content>
+                    <u:FileUploader id="idFileUploader" visible="{= ${mTableHandler>/metadata/featureFlag/genEnableMultiDocumentUpload} !== '1' }" width="100%" uploadUrl="upload/" buttonText="Select a File" sameFilenameAllowed="false" name="file" multiple="false" change="onFileUploadChange" maximumFileSize="50" fileSizeExceed="fnFileSizeExceed" placeholder="Upload" icon="sap-icon://open-folder">
+                        <u:layoutData>
+                            <l:GridData span="L12 M12 S12" />
+                        </u:layoutData>
+                    </u:FileUploader>
+                    
+                    <HBox width="100%" alignItems="Center" visible="{= ${mTableHandler>/metadata/featureFlag/genEnableMultiDocumentUpload} === '1' }">
+                        <MultiInput id="idFileTokens" width="100%" enableMultiLineMode="true" showValueHelp="false" class="sapUiTinyMarginRight" placeholder="Upload" tokenUpdate="onFileTokenDelete" tokens="{mTableHandler>/documents/userInput/fileObjList}">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                            <tokens>
+                                <Token key="{mTableHandler>fileName}" text="{mTableHandler>fileName}" delete="onFileTokenDelete"/>
+                            </tokens>
+                        </MultiInput>
+                        <u:FileUploader id="idFileUploaderMulti" buttonOnly="true" uploadUrl="upload/" buttonText="Select a File"      sameFilenameAllowed="false" name="file" multiple="true" change="onFileUploadChange" maximumFileSize="50"  fileSizeExceed="fnFileSizeExceed" icon="sap-icon://open-folder">
+                            <u:layoutData>
+                                <FlexItemData growFactor="0" />
+                            </u:layoutData>
+                        </u:FileUploader>
+                        <layoutData>
+                            <l:GridData span="L12 M12 S12" />
+                        </layoutData>
+                    </HBox>
+                    <Text text="{i18n>asint.detail.tab.documents.fileSizelimit.text}">
+                        <layoutData>
+                            <l:GridData span="L12 M12 S12" />
+                        </layoutData>
+                    </Text>
+                    <Label text="Additional Information" style="font-weight: bold; font-size: 1.2em"/>
+
+                    <Label text="{i18n>asint.detail.tab.documents.shortDescription.text}" visible="{= ${mTableHandler>/metadata/featureFlag/genEnableShortDescFieldForAddDoc} === '1'}" />
+                    <Input visible="{= ${mTableHandler>/metadata/featureFlag/genEnableShortDescFieldForAddDoc} === '1'}" value="{mTableHandler>/documents/userInput/shortDescription}" placeholder="{i18n>asint.detail.tab.documents.shortDescription.placeholder}"/>
+
+                    <Label visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" text="{i18n>asint.detail.tab.documents.category.text}"/>
+                    <ComboBox visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" id="categorycomboBox" change = "handleChange" selectedKey="{mTableHandler>/documents/userInput/category}" items="{
+                        path: 'mTableHandler>/documents/documentTypeDropdown',
+                        sorter: { path: 'key' }
+                    }" multiSelect="true">
+                        <items>
+                            <core:ListItem key="{mTableHandler>key}" text="{mTableHandler>text}" />
+                        </items>
+                    </ComboBox>
+                    <Label required="true" text="{i18n>asint.detail.tab.documents.dcl1.text}"/>
+                    <ComboBox  id="idDCL1Attachment" visible="{mTableHandler>/metadata/openTextIntegrationEnabled}" selectionChange="onDCSelectionChange" selectedKey="{mTableHandler>/documents/userInput/DCL1}" items="{
+                        path: 'mAttachmentTableModel>/data/aAlluniqueGroupsForDC1'
+                    }">
+                        <items>
+                            <core:ListItem key="{mAttachmentTableModel>DCL_1-Document_Type_Group_Name}" text="{mAttachmentTableModel>DCL_1-Document_Type_Group_Name}" />
+                        </items>
+                    </ComboBox>
+                    <Label required="true" text="{i18n>asint.detail.tab.documents.dcl2.text}"/>
+                    <ComboBox  id="idDCL2Attachment"  visible="{mTableHandler>/metadata/openTextIntegrationEnabled}"  selectionChange="onDCSelectionChange" selectedKey="{mTableHandler>/documents/userInput/DCL2}" items="{
+                        path: 'mAttachmentTableModel>/data/aAlluniqueGroupsForDC2'
+                    }">
+                        <items>
+                            <core:ListItem key="{mAttachmentTableModel>DCL_2-Document_Type_Name}" text="{mAttachmentTableModel>DCL_2-Document_Type_Name}" />
+                        </items>
+                    </ComboBox>
+                    <Label text="{i18n>asint.detail.tab.documents.dcl3.text}"/>
+                    <ComboBox visible="{mTableHandler>/metadata/openTextIntegrationEnabled}"  id="idDCL3Attachment" selectionChange="onDCSelectionChange" selectedKey="{mTableHandler>/documents/userInput/DCL3}" items="{
+                        path: 'mAttachmentTableModel>/data/aAlluniqueGroupsForDC3'
+                    }">
+                        <items>
+                            <core:ListItem key="{mAttachmentTableModel>DCL_3-Document_Sub-type}" text="{mAttachmentTableModel>DCL_3-Document_Sub-type}" />
+                        </items>
+                    </ComboBox>
+                    <!-- Phase Field -->
+                    <Label visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" text="{i18n>asint.detail.tab.documents.phase.text}"/>
+                    <MultiComboBox visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" id="phasecomboBox" selectedKeys="{mTableHandler>/documents/userInput/phase}" items="{
+                        path: 'mTableHandler>/documents/phaseDropdown',
+                        sorter: { path: 'key' }
+                        }" multiSelect="true">
+                        <items>
+                            <core:ListItem key="{mTableHandler>key}" text="{mTableHandler>text}" />
+                        </items>
+                    </MultiComboBox>
+                    <!-- Confidentiality Field -->
+                    <Label visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" text="{i18n>asint.detail.tab.documents.confidentiality.text}"/>
+                    <Switch visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" id="confidentialitySwitch" state="{
+                        path: 'mTableHandler>/documents/userInput/confidentiality'
+                    }" change="onChange"/>
+
+                    <!-- Language Field -->
+                    <Label text="{i18n>asint.detail.tab.documents.language.text}"/>
+                    <ComboBox id="languagecomboBox" change = "handleChange" selectedKey="{mTableHandler>/documents/userInput/language}" items="{
+                    path: 'mTableHandler>/documents/languages',
+                    sorter: { path: 'name' }
+                    }">
+                                <items>
+                                    <core:ListItem key="{mTableHandler>name}" text="{mTableHandler>name}" />
+                                </items>
+                            </ComboBox>
+                    <Label text="{i18n>TableConstructor.table.column.documentDate.text}"/>
+                    <DatePicker visible="{mTableHandler>/metadata/openTextIntegrationEnabled}" value="{path: 'mTableHandler>/documents/userInput/documentDate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'MMM dd, yyyy' }}" displayFormat="long" valueFormat="yyyy-MM-dd" />
+                </f:content>
+            </f:SimpleForm>
+            </VBox>
+            <VBox class="sapUiSmallMargin" visible="{mTableHandler>/documents/userInput/linkVisible}">
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                    <f:content>
+                        <Label required="true" text="{i18n>asint.detail.tab.documents.addAttachmentDialog.displayName.text}"></Label>
+                        <Input value="{mTableHandler>/documents/userInput/linkName}" />
+                        <Label required="true" text="{i18n>asint.detail.tab.documents.addAttachmentDialog.link.text}"></Label>
+                        <Input value="{mTableHandler>/documents/userInput/linkValue}"/>
+
+                        <!-- Phase Field -->
+                        <Label visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" text="{i18n>asint.detail.tab.documents.phase.text}"/>
+
+                        <MultiComboBox visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" id="phasecomboBox2" selectedKeys="{mTableHandler>/documents/userInput/phase}" items="{
+                    path: 'mTableHandler>/documents/phaseDropdown',
+                    sorter: { path: 'key' }
+                }" multiSelect="true">
+                            <items>
+                                <core:ListItem key="{mTableHandler>key}" text="{mTableHandler>text}" />
+                            </items>
+                        </MultiComboBox>
+                        <!-- Category Field -->
+                        <Label visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" text="{i18n>asint.detail.tab.documents.category.text}"/>
+                        <ComboBox visible="{= ${mTableHandler>/metadata/featureFlag/hideAttachmentFields} !== '1' }" id="categorycomboBox3" change = "handleChange" selectedKey="{mTableHandler>/documents/userInput/category}" items="{
+                    path: 'mTableHandler>/documents/documentTypeDropdown',
+                    sorter: { path: 'key' }
+                }" multiSelect="true">
+                            <items>
+                                <core:ListItem key="{mTableHandler>key}" text="{mTableHandler>text}" />
+                            </items>
+                        </ComboBox>
+
+                        <Label text="{i18n>asint.detail.tab.documents.language.text}"/>
+                        <ComboBox id="languagecomboBox2" change = "handleChange" selectedKey="{mTableHandler>/documents/userInput/language}" items="{
+                    path: 'mTableHandler>/documents/languages',
+                    sorter: { path: 'name' }
+                }" multiSelect="true">
+                            <items>
+                                <core:ListItem key="{mTableHandler>name}" text="{mTableHandler>name}" />
+                            </items>
+                        </ComboBox>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+            <buttons>
+                <Button text="{i18n>asint.reusable.button.save.text}" type="Emphasized" press="fnFileUploadConfrim"/>
+                <Button text="{i18n>library.reusable.cancel.button.text}" press="fnFileUploadCancel"/>
+            </buttons>
+        </Dialog>
+    </core:FragmentDefinition>

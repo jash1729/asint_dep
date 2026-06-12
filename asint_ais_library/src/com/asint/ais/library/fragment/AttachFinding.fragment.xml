@@ -1,0 +1,31 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog id="idFindingSelectionDialog" title="{i18n>asint.intelli.attachFinding.dialog.title}" draggable="true" resizable="true" contentWidth="600px" contentHeight="500px">
+        <VBox class="sapUiSmallMargin">
+            <SearchField id="idFindingSearchField" width="100%" placeholder="{i18n>asint.intelli.attachFinding.searchField.placeholder.text}" search="onSearchFindings" class="sapUiTinyMarginBottom"/>
+            <HBox class="sapUiSmallMarginBottom">
+                <CheckBox id="idEmbeddedCheckbox" text="{i18n>asint.intelli.attachFinding.checkbox.embedded.text}" select="onEmbeddedChange" class="sapUiTinyMarginEnd"/>
+                <CheckBox id="idAddPointerCheckbox" text="{i18n>asint.intelli.attachFinding.checkbox.addPointer.text}" select="onAddPointerChange"/>
+            </HBox>
+            <Title text="{i18n>asint.intelli.attachFinding.list.title.text}" level="H6" class="sapUiSmallMarginBegin sapUiTinyMarginBottom"/>
+            <List id="idFindingsList" mode="SingleSelectMaster" items="{findingsModel>/findings}" selectionChange="onFindingSelect" noDataText="{i18n>asint.intelli.attachFinding.list.noData.text}" growing="true" growingThreshold="20">
+                <CustomListItem type="Active">
+                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBeginEnd sapUiTinyMarginTopBottom">
+                        <VBox>
+                            <Link text="{findingsModel>displayId}" press="onClickFindingIdFromMarkup" class="sapUiTinyMarginBottom"/>
+                            <Text text="{findingsModel>description}"/>
+                        </VBox>
+                        <Text text="Markup: {findingsModel>markupReference}" class="sapUiSmallMarginBegin"/>
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </VBox>
+        <buttons>
+            <Button text="{i18n>asint.intelli.attachFinding.dialog.button.continue.text}" type="Emphasized" press="onContinueFindingSelection"/>
+            <Button text="{i18n>asint.intelli.attachFinding.dialog.button.cancel.text}" press="onCancelFindingSelection"/>
+        </buttons>
+    </Dialog>
+
+</core:FragmentDefinition>

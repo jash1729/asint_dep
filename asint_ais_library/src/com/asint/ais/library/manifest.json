@@ -1,0 +1,65 @@
+{
+	"_version": "1.12.0",
+	"sap.app": {
+		"id": "com.asint.ais.library",
+		"type": "library",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "AsInt AIS Library",
+		"description": "AsInt AIS Library",
+		"i18n": "i18n/i18n.properties",
+		"offline": true
+	},
+	"sap.ui": {
+		"technology": "UI5"
+	},
+	"sap.ui5": {
+		"dependencies": {
+			"minUI5Version": "1.108.0",
+			"libs": {
+				"sap.ui.core": {
+					"minUI5Version": "1.108.0"
+				}
+			}
+		},
+		"library": {
+			"i18n": "messagebundle.properties",
+			"css": true,
+			"content": {
+				"controls": [
+					"com.asint.ais.library.Example"
+				],
+				"elements": [],
+				"types": [],
+				"interfaces": [],
+				"datasource": [
+					"com.asint.ais.library.datasource.BaseSource"
+				],
+				"controller": [
+					"com.asint.ais.library.controller.Utility"
+				],
+				"model": [
+					"com.asint.ais.library.model.formatter"
+				]
+			}
+		},
+		"resources": {
+			"css": [
+                {
+                    "uri": "asint_ais/asint_ais_library/src/com/asint/ais/library/css/style.css"
+                }
+            ]
+		}
+	},
+	"sap.platform.cf": {
+        "ui5VersionNumber": "1.120.32",
+        "oAuthScopes": [
+            "$XSAPPNAME.AIS_SUPER_ADMIN"
+        ]
+	},
+	"sap.cloud": {
+		"public": true,
+		"service": "com.asint.ais.library"
+	}
+}

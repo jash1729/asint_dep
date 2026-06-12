@@ -1,0 +1,29 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+    <Dialog title="{oNavModel>/title}" contentWidth="30%">
+        <Table noDataText="{oNavModel>/noDataText}" items="{path : 'oNavModel>/list',sorter: {path: 'displayId', descending: true}}" class="sapUiSizeCompact">
+            <headerToolbar>
+                <OverflowToolbar design="Transparent">
+                    <ToolbarSpacer/>
+                    <SearchField width="50%" change="fnSearchDialogNavList"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <header>
+                        <Text text="{oNavModel>/column1}" />
+                    </header>
+                </Column>
+            </columns>
+            <ColumnListItem type="Navigation" press="onSelectOneItemForNavigation">
+                <cells>
+                    <Text text="{oNavModel>displayId}" />
+                </cells>
+            </ColumnListItem>
+        </Table>
+        <buttons>
+            <Button text="{oNavModel>/close}" press="onCloseNavSelectDialog" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

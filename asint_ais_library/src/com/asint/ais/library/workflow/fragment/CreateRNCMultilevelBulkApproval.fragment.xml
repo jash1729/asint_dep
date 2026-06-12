@@ -1,0 +1,92 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns:tnt="sap.tnt"
+    xmlns:ui="sap.ui.table"
+    xmlns:cc="com.asint.ais.library.control.CustomControl"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m">
+
+    <Dialog contentHeight="60%" contentWidth="30%"
+            title="{i18n>workflow.create.dialog.header.text}"
+            afterOpen="onWorkflowDialogOpen"
+            draggable="true">
+
+        <customHeader>
+            <Toolbar>
+                <Title text="{i18n>workflow.create.dialog.header.text}"/>
+                <ToolbarSpacer />
+                <Button icon="sap-icon://resize" press="onResize"/>
+            </Toolbar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <f:SimpleForm editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="12" labelSpanL="12"
+                    labelSpanM="12" labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="0" emptySpanL="0"
+                    emptySpanM="0" emptySpanS="0"
+                    columnsXL="1" columnsL="1"
+                    columnsM="1"
+                    singleContainerFullSize="false"
+                    ariaLabelledBy="Title1">
+
+                    <f:content>
+                        <core:Title text="{i18n>workflow.rncMultilevelBulkApproval.create.dialog.header.text}" />
+                        <Label required="true" text="{i18n>library.reusable.field.name.text}" />
+                        <Input required="true" value="{mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/name}" />
+                        <Label design="Bold" text="{= ${i18n>workflow.rncMultilevelBulkApproval.create.dialog.rnc.text} + ' (' + (${mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/passedCount} || 0) + ')' }" />
+
+                        <cc:WorkflowAsmtStgTable id="idWorkflowAsmtStgTable" width="100%" rows="{path:'mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/treeTableData', parameters: {arrayNames:['nodes']}}" selectionMode="MultiToggle" enableSelectAll="false" visibleRowCount="10" expandFirstLevel="true">
+                            <cc:layoutData>
+                                <l:GridData span="XL12 L12 M12 S12" />
+                            </cc:layoutData>
+                        </cc:WorkflowAsmtStgTable>
+
+                        <Label text="{i18n>workflow.rncMultilevelBulkApproval.create.dialog.noOfLevels.text}" />
+                        <StepInput width="20%" textAlign="Center" min="0" max="{mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/maxLevelAllowed}" value="{mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/noOfLevels}" change="onCreateRNCBulkApprovalLevelChange" />
+
+                        <Text text="{= ${mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/noOfLevels} === 0 ? ${i18n>workflow.rncMultilevelBulkApproval.create.dialog.systemApproved.text} : ${i18n>workflow.rncMultilevelBulkApproval.create.dialog.approverSelection.text} }" />
+
+                        <Label />
+
+                        <Table class="sapUiTinyMarginTopBottom" visible="{= ${mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/noOfLevels} > 0}" items="{mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/levelsAndApprovers}">
+
+                            <columns>
+                                <Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Begin">
+                                    <Text text="{i18n>workflow.rncMultilevelBulkApproval.create.dialog.level.text}" />
+                                </Column>
+                                <Column width="70%">
+                                    <Text text="{i18n>workflow.rncMultilevelBulkApproval.create.dialog.approver.text}" />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Label text="{mWorkflow>level}" />
+                                        <Input valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onApproverValueHelp($event,'SingleSelectMaster')" value="{mWorkflow>approver}" placeholder="{i18n>library.reusable.email.text}" change="onCreateRNCBulkApprovalLevelChange" valueState="{path: 'mWorkflow>approver', formatter: '.fnValidateEmail'}" showValueStateMessage="false" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        <Label />
+                        <CheckBox text="{i18n>library.reusable.notifyByEmail.text}" selected="{mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/notifyByEmail}" />
+                        <Label text="{i18n>workflow.rncMultilevelBulkApproval.create.dialog.comments.text}" required="true" />
+                        <TextArea rows="4" maxLength="5000" showExceededText="true" growing="true" growingMaxLines="15" required="true" showValueStateMessage="false" value="{mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/comments}" liveChange="onCommentLiveChange"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button type="Emphasized" enabled="{mWorkflow>/create/rncMultilevelBulkApprovalWorkflow/enableCreateButton}" text="{i18n>library.reusable.create.button.text}" press="onRNCBulkApprovalCreatePress" />
+            <Button type="Transparent" text="{i18n>library.reusable.cancel.button.text}" press="onRNCBulkApprovalCancelPress" />
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

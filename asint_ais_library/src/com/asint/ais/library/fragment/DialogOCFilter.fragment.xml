@@ -1,0 +1,97 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="{i18n>valueHelpFragment.operatingContext.dialog.title.text}"
+        horizontalScrolling="false"
+        contentWidth="60%"
+        contentHeight="80%"
+    >
+        <Table
+            id="idOperatingContextFilterTable"
+            growing="true"
+            growingScrollToLoad="true"
+            growingThreshold="20"
+            mode="{mValueHelpFilterModel>/metadata/selectionMode}"
+            noDataText="{i18n>library.reusable.noDataFound.text}"
+            popinLayout="GridLarge"
+            alternateRowColors="true"
+            sticky="ColumnHeaders,HeaderToolbar"
+            items="{
+                path: 'assetReliabilityService>/OperatingContextData',
+                parameters : {
+                    $select: 'operatingContextID,type,characteristics',
+                    $filter: 'type eq \'LOCAL\'',
+                    countMode: 'Inline'
+                },
+                events:{
+                    dataReceived:'.onOperatingContextDataReceived'
+                }
+            }"
+            selectionChange="onValueHelpFilterTableSelection($event, 'assetReliabilityService')"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <SearchField
+                            id="idOperatingContextSearchField"
+                            placeholder="{i18n>library.reusable.search.placeholder.text}"
+                            width="100%"
+                            search="fnSearchInValueHelpFragmentTable(
+                                $event,
+                                'idOperatingContextFilterTable',
+                                ['name','className','characteristics'],
+                                'idOperatingContextSearchField'
+                            )"
+                            change="fnChangeInSearchValueHelp($event, 'idOperatingContextSearchField')"
+                        />
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>valueHelpFragment.operatingContext.dialog.table.column.operatingContext}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>valueHelpFragment.operatingContext.dialog.table.column.characteristicsAndValue}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>valueHelpFragment.operatingContext.dialog.table.column.class}" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{assetReliabilityService>name}" />
+                        <Link
+                            text="{= ${assetReliabilityService>characteristicsCount} ? ${assetReliabilityService>characteristicsCount} + ' items' : '0 items' }"
+                            press='.onOpenCharacteristicsDialog'
+                        />
+                        <Text text="{assetReliabilityService>className}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+
+        </Table>
+
+        <buttons>
+            <Button
+                text="{i18n>library.reusable.confirm.button.text}"
+                type="Emphasized"
+                press="onConfirmValueHelpFilter(
+                    'idOperatingContextFilterTable',
+                    'operatingContextID',
+                    'name'
+                )"
+                visible="{= ${mValueHelpFilterModel>/metadata/selectionMode} === 'MultiSelect'}"
+            />
+            <Button
+                text="{i18n>library.reusable.close.button.text}"
+                press="onCancelValueHelpFilter('idOperatingContextFilterTable')"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

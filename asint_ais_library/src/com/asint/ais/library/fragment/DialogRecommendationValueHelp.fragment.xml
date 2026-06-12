@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <Dialog title="{i18n>asint.recommendationValueHelp.title}" contentWidth="40%" contentHeight="100%" draggable="true">
+        <content>
+            <Table id="idRecommendationTable" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="{mRecoValueHelp>/metadata/selectionMode}" noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge" alternateRowColors="true" 
+                items="{ path : 'mRecoService>/RecommendationList',
+                        parameters : {$select: 'id,apmRecommendationId,status',countMode:'Inline'}
+                    }" selectionChange="onSelectRecommendation">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+                            <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}" search="onSearch" width="100%"/>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Text text="{i18n>asint.recommendation.valueHelp.table.column.name}"></Text>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>asint.recommendation.valueHelp.table.column.type}"></Text>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>asint.recommendation.valueHelp.table.column.subType}"></Text>
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>asint.recommendation.valueHelp.table.column.source}"></Text>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <ObjectIdentifier title="{mRecoService>displayId}" text="{mRecoService>shortDescription}"/>
+                            <Text text="{path:'mRecoService>recommendationType',formatter:'.fnTypeFormatter'}"></Text>
+                            <Text text="{path:'mRecoService>recommendationSubType',formatter:'.fnSubTypeFormatter'}"></Text>
+                            <Text text="{mRecoService>source}"></Text>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+		<buttons>
+            <Button text="{i18n>library.reusable.confirm.button.text}" enabled="{= ${mRecoValueHelp>/metadata/selectedCount} &gt; 0}" visible="{= ${mRecoValueHelp>/metadata/selectionMode} === 'MultiSelect'}" type="Emphasized" press="onRecoValueHelpDialogConfirm"/>
+            <Button text="{i18n>library.reusable.close.button.text}" press="onRecoValueHelpDialogClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

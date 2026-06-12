@@ -1,0 +1,136 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap" core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
+    xmlns="sap.m">
+    <Dialog  contentHeight="60%" contentWidth="30%" draggable="true" afterOpen="onWorkflowDialogOpen">
+    <customHeader>
+    <Toolbar>
+      <Title text="{
+        parts: [
+            'mWorkflow>/dialog/title',
+            'mWorkflow>/taskCount'
+        ],
+        formatter: 'formatMessage'
+    }"></Title> 
+      <ToolbarSpacer />
+      <!-- <Button text="{mWorkflow>/dialog/createButtonText}" visible="{mWorkflow>/dialog/viewCreateButton}" press="onCreateWrkFlow($event)" /> -->
+      <MenuButton text="{mWorkflow>/dialog/createButtonText}" visible="{mWorkflow>/dialog/viewCreateButton}">
+			<menu>
+				<Menu itemSelected="onCreateWrkFlow($event)" items="{mWorkflow>/dialog/currentCreateOptions}">
+					<MenuItem key="{mWorkflow>key}" text="{mWorkflow>text}" />
+				</Menu>
+			</menu>
+		</MenuButton>
+        <Button icon="sap-icon://resize" press="onResize"/>
+    </Toolbar>
+  </customHeader>
+        <content>
+            <NavContainer id="idWorkflowNavContainer" initialPage="idWorkflowTaskList">
+                <pages>
+                    <Page id="idWorkflowTaskList" showHeader="true">
+                        <customHeader>
+                            <Toolbar>
+                                <SearchField search="onSearchTask" width="100%"/>
+                            </Toolbar>
+                        </customHeader>
+                        <content>
+                            <List id="idInboxTaskList" items="{mWorkflow>/tasks}">
+                                <items>
+                                    <CustomListItem type="Navigation" press="onNavToTaskDetail">
+                                        <content>
+                                            <HBox alignItems="Center" class="sapUiTinyMarginTopBottom sapUiTinyMarginBegin">
+                                                <items>
+                                                    <Avatar class="sapUiTinyMargin" src="{
+                                                        path: 'mWorkflow>TaskDefinitionName',
+                                                        formatter: '.fnGetWorkflowTaskIconByDefName'
+                                                    }" />
+                                                    <VBox width="100%">
+                                                        <items>
+                                                            <Title text="{mWorkflow>TaskTitle}" wrapping="true"/>
+                                                            <HBox class="sapUiTinyMarginTop" justifyContent="SpaceBetween">
+                                                                <items>
+                                                                    <Text text="{
+                                                                        parts: [{
+                                                                                path: 'mWorkflow>CreatedOn'
+                                                                            },{
+                                                                                path: 'mWorkflow>customCreatedBy'
+                                                                        }],
+                                                                        formatter: '.fnDisplayCreatedOnAndBy'
+                                                                    }"/>
+                                                                    <ObjectStatus text="{
+                                                                        path: 'mWorkflow>Priority',
+                                                                        formatter: '.fnFormatPriority'
+                                                                    }" state="{
+                                                                        path: 'mWorkflow>Priority',
+                                                                        formatter: '.fnGetStatusType'
+                                                                    }"/>
+                                                                </items>
+                                                            </HBox>
+                                                        </items>
+                                                    </VBox>
+                                                </items>
+                                            </HBox>
+                                        </content>
+                                    </CustomListItem>
+                                </items>
+                            </List>
+                        </content>
+                    </Page>
+                    <Page id="idWorkflowTaskDetail" showHeader="false">
+                        <content>
+                            <uxap:ObjectPageLayout>
+                                <uxap:headerTitle>
+                                    <uxap:ObjectPageDynamicHeaderTitle>
+                                        <uxap:heading>
+                                            <Title text="{mWorkflow>/taskDetail/TaskTitle}" />
+                                        </uxap:heading>
+                                        <uxap:snappedContent>
+                                            <Text text="{mWorkflow>/taskDetail/Description/Description}" visible="{= ${mWorkflow>/taskDetail/Description/Description}.length > 0}"/>
+                                        </uxap:snappedContent>
+                                        <uxap:expandedContent>
+                                            <Text text="{mWorkflow>/taskDetail/Description/Description}" visible="{= ${mWorkflow>/taskDetail/Description/Description}.length > 0}"/>
+                                        </uxap:expandedContent>
+                                    </uxap:ObjectPageDynamicHeaderTitle>
+                                </uxap:headerTitle>
+                                <uxap:headerContent>
+                                    <FlexBox wrap="Wrap" fitContainer="true">
+                                        <ObjectStatus class="sapUiTinyMarginBeginEnd" title="Created By" text="{mWorkflow>/taskDetail/customCreatedBy}"/>
+                                        <ObjectStatus class="sapUiTinyMarginBeginEnd" title="Created On" text="{
+                                            path: 'mWorkflow>/taskDetail/CreatedOn',
+                                            formatter: '.formatDate'
+                                        }"/>
+                                        <ObjectStatus class="sapUiTinyMarginBeginEnd" title="Priority" text="{
+                                            path: 'mWorkflow>/taskDetail/Priority',
+                                            formatter: '.fnFormatPriority'
+                                        }" state="{
+                                            path: 'mWorkflow>/taskDetail/Priority',
+                                            formatter: '.fnGetStatusType'
+                                        }"/>
+                                    </FlexBox>
+                                </uxap:headerContent>
+                                <uxap:sections>
+                                    <uxap:ObjectPageSection showTitle="false" busyIndicatorDelay="0" busy="{mWorkflow>/dialog/isBusy}">
+                                        <uxap:subSections>
+                                            <uxap:ObjectPageSubSection>
+                                                <uxap:blocks>
+                                                    <VBox id="idWorkflowTaskDetailContent"/>
+                                                </uxap:blocks>
+                                            </uxap:ObjectPageSubSection>
+                                        </uxap:subSections>
+                                    </uxap:ObjectPageSection>
+                                </uxap:sections>
+                            </uxap:ObjectPageLayout>
+                        </content>
+                    </Page>
+                </pages>
+            </NavContainer>
+        </content>
+        <buttons>
+            <Button type="Transparent" text="{mWorkflow>/dialog/backButtonText}" visible="{mWorkflow>/dialog/showBackButton}" press="onNavToTaskList"/>
+            <Button type="{mWorkflow>/dialog/decision/button1/type}" text="{mWorkflow>/dialog/decision/button1/text}" visible="{= ${mWorkflow>/dialog/showBackButton} &amp;&amp; ${mWorkflow>/dialog/decision/button1/visible}}" enabled="{mWorkflow>/dialog/isEditable}" busy="{mWorkflow>/dialog/isFooterBusy}" press="onSubmitDecision" />
+            <Button type="{mWorkflow>/dialog/decision/button2/type}" text="{mWorkflow>/dialog/decision/button2/text}" visible="{= ${mWorkflow>/dialog/showBackButton} &amp;&amp; ${mWorkflow>/dialog/decision/button2/visible}}" enabled="{mWorkflow>/dialog/isEditable}" busy="{mWorkflow>/dialog/isFooterBusy}" press="onSubmitDecision" />
+            <Button type="Transparent" text="{mWorkflow>/dialog/closeButtonText}" press="onClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

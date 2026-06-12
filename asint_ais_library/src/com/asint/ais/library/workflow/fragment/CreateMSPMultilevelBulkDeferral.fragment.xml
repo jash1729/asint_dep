@@ -1,0 +1,170 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns:tnt="sap.tnt"
+    xmlns:ui="sap.ui.table"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m">
+    <Dialog contentHeight="60%" contentWidth="30%" title="{i18n>workflow.create.dialog.header.text}" afterOpen="onWorkflowDialogOpen" draggable="true">
+        <customHeader>
+            <Toolbar>
+                <Title text="{i18n>workflow.create.dialog.header.text}"/> 
+                <ToolbarSpacer />
+                <Button icon="sap-icon://resize" press="onResize"/>
+            </Toolbar>
+        </customHeader>
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <!-- <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4"
+                    labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false"
+                    emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2"
+                    columnsL="1" columnsM="1" singleContainerFullSize="false"
+                    ariaLabelledBy="Title1"> -->
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" ariaLabelledBy="Title1">
+                    <f:content>
+                        <core:Title text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.header.text}" />
+                        <Label required="true" text="{i18n>library.reusable.field.name.text}" />
+                        <Input required="true" value="{mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/name}" />
+                        <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.msp.text}" />
+                        <ui:Table visibleRowCountMode="Auto" rows="{mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/mSPItems}" selectionMode="None"
+                            customData:keyMap="{
+                                'proposedDueDate': 'proposedDueDate',
+                                'proposedSheRiskAtDueDate': 'proposedSHERiskAtDueDate',
+                                'proposedFinRiskAtDueDate': 'proposedFINRiskAtDueDate'
+                            }">
+                            <ui:extension>
+                                <OverflowToolbar style="Clear">
+                                    <ToolbarSpacer />
+                                    <Button type="Emphasized" text="{i18n>library.reusable.calculatedProposedRisk.button.text}" press="onBulkDeferralCalcProposedRisk($event,'MSP')"/>                      
+                                </OverflowToolbar>
+                            </ui:extension>
+                            <ui:columns>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.msp.text}" />
+                                    <ui:template>
+                                        <Link target="_blank" text="{mWorkflow>mSP}"
+                                            href="{mWorkflow>mSPLink}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.description.text}" />
+                                    <ui:template>
+                                        <ExpandableText text="{mWorkflow>description}" maxCharacters="15" overflowMode="Popover"/>
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.dueDate.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>dueDate}" wrapping="true"/>
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.sheRiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>sHERiskAtDueDate}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.finRiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>fINRiskAtDueDate}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="15rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.proposedDueDate.text}" required="true"/>
+                                    <ui:template>
+                                    <DatePicker value="{mWorkflow>proposedDueDate}" valueFormat="yyyy-MM-dd" displayFormat="MMM dd, yyyy" minDate="{path: 'mWorkflow>startDate', formatter: '.fnFormatMinDate'}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="15rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.proposedSHERiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <ComboBox items="{mWorkflow>/config/riskData}" selectedKey="{mWorkflow>proposedSHERiskAtDueDate}">
+                                            <core:Item key="{mWorkflow>risk}" text="{mWorkflow>risk}" />
+                                        </ComboBox>
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="15rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.proposedFINRiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <ComboBox items="{mWorkflow>/config/riskData}" selectedKey="{mWorkflow>proposedFINRiskAtDueDate}" customData:useGetBinding="true" change="fnValidateBPAFormField">
+                                            <core:Item key="{mWorkflow>risk}" text="{mWorkflow>risk}" />
+                                        </ComboBox>
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.deferralFollowUp.text}" required="true"/>
+                                    <ui:template>
+                                        <ComboBox items="{mWorkflow>/config/deferralFollowup}"  selectedKey="{mWorkflow>deferralFollowup}" customData:useGetBinding="true" change="fnValidateBPAFormField">
+                                            <core:Item key="{mWorkflow>description}" text="{mWorkflow>description}" />
+                                        </ComboBox >
+                                    </ui:template>
+                                </ui:Column>
+                            </ui:columns>
+                        </ui:Table>
+                        <Label />   
+                        <VBox>
+                            <MessageStrip
+                                text="{i18n>workflow.deferral.create.dialog.proposedDueDate.info.text}"
+                                type="Information"
+                                showIcon="true"
+                                showCloseButton="false"
+                                class="sapUiTinyMarginBottom">
+                            </MessageStrip>
+                        </VBox>
+                        <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.column.proposedDueDate.text}" required="true"/>
+                        <DatePicker value="{mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/proposedDueDate}" valueFormat="yyyy-MM-dd" displayFormat="MMM dd, yyyy" change="onBulkUpdateMSPProposedDueDate" minDate="{path: 'mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/latestStartDate', formatter: '.fnFormatMinDate'}" />
+                        <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.noOfLevels.text}" />
+                        <StepInput width="20%" textAlign="Center" min="0"
+                            max="{mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/maxLevelAllowed}"
+                            value="{mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/noOfLevels}"
+                            change="onCreateMSPBulkDeferralLevelChange" />
+                        <Text text="{= ${mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/noOfLevels} === 0 ? ${i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.systemApproved.text} : ${i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.approverSelection.text}}" />
+                        <Label />
+                        <Table class="sapUiTinyMarginTopBottom"
+                            visible="{= ${mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/noOfLevels} &gt; 0}"
+                            items="{mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/levelsAndApprovers}">
+                            <columns>
+                                <Column minScreenWidth="Desktop" demandPopin="true"
+                                    popinDisplay="Inline" hAlign="Begin">
+                                    <Text
+                                        text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.level.text}" />
+                                </Column>
+                                <Column width="70%">
+                                    <Text
+                                        text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.approver.text}" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Label text="{mWorkflow>level}" />
+                                        <Input value="{mWorkflow>approver}" showValueHelp="true" valueHelpRequest="onApproverValueHelp($event,'SingleSelectMaster')"
+                                            placeholder="{i18n>library.reusable.email.text}"
+                                            change="onCreateMSPBulkDeferralLevelChange"
+                                            valueState="{path: 'mWorkflow>approver', formatter: '.fnValidateEmail'}"
+                                            showValueStateMessage="false"
+                                            valueHelpOnly="true" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        <Label />
+                        <CheckBox text="{i18n>library.reusable.notifyByEmail.text}" selected="{mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/notifyByEmail}" />
+                        <Label text="{i18n>workflow.mspMultiLevelBulkDeferral.create.dialog.comments.text}" required="true"/>
+                        <TextArea rows="4" showExceededText="true" maxLength="5000" growing="true" growingMaxLines="15" showValueStateMessage="false" required="true"
+                            value="{mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/comments}" liveChange="onCommentLiveChange"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <buttons>
+            <Button type="Emphasized" enabled="{mWorkflow>/create/mspMultilevelBulkDeferralWorkflow/enableCreateButton}"
+                text="{i18n>library.reusable.create.button.text}"
+                press="onMSPBulkDeferralCreatePress" />
+            <Button type="Transparent" text="{i18n>library.reusable.cancel.button.text}"
+                press="onMSPBulkDeferralCancelPress" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

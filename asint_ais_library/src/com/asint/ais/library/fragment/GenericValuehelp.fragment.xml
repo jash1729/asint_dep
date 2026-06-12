@@ -1,0 +1,34 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog  title="{mGenericValuehelp>/data/genericValueHelp/dialogHeader}" id="idDetailGenericvalueHelpDialog" class="asintAddRemoveTempDialogWidth" showHeader="true"
+        contentWidth="40%" contentHeight="auto">
+        <VBox>
+        <Toolbar>
+            <ToolbarSpacer />
+            <SearchField  placeholder="{i18n>asint.genValueHelp.search.placeHolder.text}" id="idDetailGenericValueHelpSearchField" search="onDetailGenValueHelpSearch" width="50%" />
+        </Toolbar>
+        <Table id="idDetailGenericvalueHelpTable" growingScrollToLoad="true" alternateRowColors="true" growingThreshold="20" mode="{mGenericValuehelp>/data/genericValueHelp/mode}" 
+             sticky="ColumnHeaders,HeaderToolbar" items="{path : 'mV4ValueHelpService>/S4Master',sorter: {path: 'name', descending: false}}" updateFinished="onValueHelpUpdateFinish">
+            <columns>
+                <Column>
+                    <Text text="{i18n>asint.genValueHelp.name.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.genValueHelp.desc.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{mV4ValueHelpService>name}"/>
+                        <Text text="{mV4ValueHelpService>description}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </VBox>
+    <buttons>
+    <Button text="{i18n>asint.genValueHelp.save.text}" press="onConfrimDetailGenValueHelpDialog"/>
+    <Button text="{i18n>asint.genValueHelp.close.text}" press="onCloseDetailGenValueHelpDialog"/>
+    </buttons>            
+    </Dialog>
+</core:FragmentDefinition>

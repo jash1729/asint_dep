@@ -1,0 +1,35 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="{i18n>valueHelpFragment.operatingContext.dialog.table.characteristicsData}"
+        contentWidth="40%"
+        contentHeight="60%"
+        draggable="true"
+        resizable="true"
+    >
+        <content>
+            <VBox
+                items="{
+                    path: 'mCharacteristicsModel>/data'
+                }"
+                class="sapUiSmallMargin"
+            >
+                <VBox class="sapUiMediumMarginBottom">
+                    <Text 
+                        text="{= ${mCharacteristicsModel>charDescription} + ' (' + ${mCharacteristicsModel>name} + '):'}" 
+                        class="sapUiTinyMarginBottom"
+                    />
+                    <Text 
+                        text="{mCharacteristicsModel>charValues}" 
+                    />
+                </VBox>
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button text="Close" press=".onCloseCharacteristicsDialog" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

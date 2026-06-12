@@ -1,0 +1,123 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns:tnt="sap.tnt"
+    xmlns:ui="sap.ui.table"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m">
+    <Dialog contentHeight="60%" contentWidth="30%" title="{i18n>workflow.create.dialog.header.text}" afterOpen="onWorkflowDialogOpen" draggable="true">
+        <customHeader>
+            <Toolbar>
+                <Title text="{i18n>workflow.create.dialog.header.text}"/> 
+                <ToolbarSpacer />
+                <Button icon="sap-icon://resize" press="onResize"/>
+            </Toolbar>
+        </customHeader>
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <!-- <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4"
+                    labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false"
+                    emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2"
+                    columnsL="1" columnsM="1" singleContainerFullSize="false"
+                    ariaLabelledBy="Title1"> -->
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" ariaLabelledBy="Title1">
+                    <f:content>
+                        <core:Title text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.header.text}" />
+                        <Label required="true" text="{i18n>library.reusable.field.name.text}" />
+                        <Input required="true" value="{mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/name}" />
+                        <Label text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.msp.text}" />
+                        <ui:Table visibleRowCountMode="Auto" rows="{mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/mSPItems}" selectionMode="None">
+                            <ui:columns>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.column.msp.text}" />
+                                    <ui:template>
+                                        <Link target="_blank" text="{mWorkflow>mSP}"
+                                            href="{mWorkflow>mSPLink}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.column.description.text}" />
+                                    <ui:template>
+                                        <ExpandableText text="{mWorkflow>description}" maxCharacters="15" overflowMode="Popover"/>
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.column.dueDate.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>dueDate}" wrapping="true"/>
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.column.sheRiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>sHERiskAtDueDate}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.column.finRiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>fINRiskAtDueDate}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.column.totalCost.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>totalCost}" />
+                                    </ui:template>
+                                </ui:Column>
+                            </ui:columns>
+                        </ui:Table>
+                        <Label text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.noOfLevels.text}" />
+                        <StepInput width="20%" textAlign="Center" min="0"
+                            max="{mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/maxLevelAllowed}"
+                            value="{mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/noOfLevels}"
+                            change="onCreateMSPBulkApprovalLevelChange" />
+                        <Text text="{= ${mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/noOfLevels} === 0 ? ${i18n>workflow.mspMultiLevelBulkApproval.create.dialog.systemApproved.text} : ${i18n>workflow.mspMultiLevelBulkApproval.create.dialog.approverSelection.text}}" />
+                        <Label />
+                        <Table class="sapUiTinyMarginTopBottom"
+                            visible="{= ${mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/noOfLevels} &gt; 0}"
+                            items="{mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/levelsAndApprovers}">
+                            <columns>
+                                <Column minScreenWidth="Desktop" demandPopin="true"
+                                    popinDisplay="Inline" hAlign="Begin">
+                                    <Text
+                                        text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.level.text}" />
+                                </Column>
+                                <Column width="70%">
+                                    <Text
+                                        text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.approver.text}" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Label text="{mWorkflow>level}" />
+                                        <Input value="{mWorkflow>approver}" showValueHelp="true" valueHelpRequest="onApproverValueHelp($event,'SingleSelectMaster')"
+                                            placeholder="{i18n>library.reusable.email.text}"
+                                            change="onCreateMSPBulkApprovalLevelChange"
+                                            valueState="{path: 'mWorkflow>approver', formatter: '.fnValidateEmail'}"
+                                            showValueStateMessage="false" 
+                                            valueHelpOnly="true"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        <Label />
+                        <CheckBox text="{i18n>library.reusable.notifyByEmail.text}" selected="{mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/notifyByEmail}" />
+                        <Label text="{i18n>workflow.mspMultiLevelBulkApproval.create.dialog.comments.text}" required="true"/>
+                        <TextArea rows="4" showExceededText="true" maxLength="5000" growing="true" growingMaxLines="15" showValueStateMessage="false" required="true"
+                            value="{mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/comments}" liveChange="onCommentLiveChange"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <buttons>
+            <Button type="Emphasized" enabled="{mWorkflow>/create/mspMultilevelBulkApprovalWorkflow/enableCreateButton}"
+                text="{i18n>library.reusable.create.button.text}"
+                press="onMSPBulkApprovalCreatePress" />
+            <Button type="Transparent" text="{i18n>library.reusable.cancel.button.text}"
+                press="onMSPBulkApprovalCancelPress" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

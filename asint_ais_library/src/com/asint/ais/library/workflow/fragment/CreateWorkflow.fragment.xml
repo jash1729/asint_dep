@@ -1,0 +1,77 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns="sap.m">
+    <Dialog  contentHeight="60%" contentWidth="30%" title="{i18n>workflow.create.dialog.header.text}" afterOpen="onWorkflowDialogOpen" draggable="true">
+    <customHeader>
+        <Toolbar>
+            <Title text="{i18n>workflow.create.dialog.header.text}"/> 
+            <ToolbarSpacer />
+            <Button icon="sap-icon://resize" press="onResize"/>
+        </Toolbar>
+    </customHeader>
+        <content>
+           <VBox class="sapUiSmallMargin">
+                <!-- <f:SimpleForm id=""
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="4"
+                    labelSpanL="3"
+                    labelSpanM="4"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="0"
+                    emptySpanL="4"
+                    emptySpanM="0"
+                    emptySpanS="0"
+                    columnsXL="2"
+                    columnsL="1"
+                    columnsM="1"
+                    singleContainerFullSize="false"
+                    ariaLabelledBy="Title1" > -->
+                <f:SimpleForm  id="workflowForm" editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" ariaLabelledBy="Title1">
+                    <f:content>
+                        <core:Title text="{i18n>workflow.inspApproval.create.dialog.header.text}" />
+                        <Label required= "true" text="{i18n>workflow.inspApproval.create.dialog.objectType.text}"></Label>
+                        <ComboBox selectedKey="{mWorkflow>/createWorkFLow/selectedTypeKey}" items="{ path: 'mWorkflow>/objectType'}" change="onWorkflowSelectType">
+                            <core:Item key="{mWorkflow>key}" text="{mWorkflow>text}"/>
+                        </ComboBox>
+                        <Label text="{i18n>workflow.inspApproval.create.dialog.inspection.text}" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'INSP' }"></Label>
+                        <ComboBox items="{ path: 'mWorkflow>/inspectionList'}" selectedKey="{mWorkflow>/createWorkFLow/selectedInspection}" change="onInspectionChange" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'INSP' }">
+                            <core:Item key="{mWorkflow>assessment}" text="{mWorkflow>assessment}" />
+                        </ComboBox>
+                        <Label text="{i18n>workflow.inspApproval.create.dialog.assessment.text}" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'ASSESSMENT' }"></Label>
+                        <ComboBox items="{ path: 'mWorkflow>/AssessmentList'}" selectedKey="{mWorkflow>/createWorkFLow/selectedAssessment}" change="onAssessmentChange" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'ASSESSMENT' }">
+                            <core:Item key="{mWorkflow>assessment}" text="{mWorkflow>assessment}" />
+                        </ComboBox>
+                        <Label required="true" text="{i18n>workflow.inspApproval.create.dialog.equipment.text}" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'EQU' }" />
+                        <Input type="Text" value="{mWorkflow>/createWorkFLow/equiName}" showValueHelp="true" valueHelpOnly="true"
+                            valueHelpRequest="fnHandleValueHelp('equi')" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'EQU' }" />
+                        <Label required="true" text="{i18n>workflow.inspApproval.create.dialog.functionalLocation.text}" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'FLOC' }" />
+                        <Input type="Text" value="{mWorkflow>/createWorkFLow/FLoc}" showValueHelp="true" valueHelpOnly="true" 
+                            valueHelpRequest="fnHandleValueHelp('floc')" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'FLOC' }" />
+                        <Label required="true" text="{i18n>workflow.inspApproval.create.dialog.inspector.text}" />
+                        <Input showValueHelp="true"  valueHelpOnly="true" valueHelpRequest="onApproverValueHelp($event,'SingleSelectMaster')" value="{mWorkflow>/createWorkFLow/inspectorName}" placeholder="{i18n>library.reusable.email.text}"
+                             valueState="{path: 'mWorkflow>/createWorkFLow/inspectorName', formatter: '.fnValidateEmail'}"
+                            showValueStateMessage="false" required="true"/>
+                        <Label required="true" text="{i18n>workflow.inspApproval.create.dialog.reviewer.text}" />
+                        <Input valueHelpOnly="true" value="{mWorkflow>/createWorkFLow/reviewerName}" showValueHelp="true" valueHelpRequest="onApproverValueHelp($event,'SingleSelectMaster')" placeholder="{i18n>library.reusable.email.text}"  
+                            valueState="{path: 'mWorkflow>/createWorkFLow/reviewerName', formatter: '.fnValidateEmail'}"
+                            showValueStateMessage="false" required="true"/>
+                        <Label text="{i18n>workflow.inspApproval.create.dialog.inspectionDate.text}"  visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'INSP' }"/>
+                        <DatePicker value="{mWorkflow>/createWorkFLow/inspectionDate}" displayFormat="yyyy-MM-dd" valueFormat="MM dd," placeholder="yyyy MM dd" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'INSP' }"/>  
+                        <Label text="{i18n>workflow.inspApproval.create.dialog.assessmentDate.text}"  visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'ASSESSMENT' }"/>
+                        <DatePicker value="{mWorkflow>/createWorkFLow/assessmentDate}" displayFormat="yyyy-MM-dd" valueFormat="MM dd," placeholder="yyyy MM dd" visible="{= ${mWorkflow>/createWorkFLow/selectedTypeKey} === 'ASSESSMENT' }"/>  
+                        <Label text="{i18n>workflow.inspApproval.create.dialog.dueDate.text}" />
+                        <DatePicker value="{mWorkflow>/createWorkFLow/dueDate}" displayFormat="yyyy-MM-dd" valueFormat="yyyy-MM-dd" placeholder="yyyy MM dd"/>                                    
+                    </f:content>
+                </f:SimpleForm>
+	        </VBox> 
+        </content>
+        <buttons>
+            <Button type="Emphasized" text="{mWorkflow>/dialog/createButtonText}" press="onCreateBtnPress"/>
+            <Button type="Transparent" text="{mWorkflow>/dialog/cancelButtonText}" press="onCancelBtnPress"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

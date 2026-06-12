@@ -1,0 +1,375 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:table="sap.ui.table"
+    xmlns:layout="sap.ui.layout"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Dialog title="" class="asintTemplateListDialogWidth" draggable="true" verticalScrolling="false" horizontalScrolling="false" contentWidth="30%" contentHeight="100%">
+        <customHeader>
+            <Bar>
+                <!-- <contentLeft>
+                    <Button icon="{mDCData>/data/header/icon}" press="onHandleBacktoLists" visible="false"/>
+                </contentLeft> -->
+                <contentLeft>
+                    <Title text="{i18n>asint.dataConduitlite.dialog.title}"></Title>
+                </contentLeft>
+                <contentRight>
+                    <Button type="Default" icon="sap-icon://full-screen" visible="{= ${mDCData>/data/header/isFullScreen} === true}" press="onEnableFullScreen($event, 'fullScreen')"></Button>
+                    <Button type="Default" icon="sap-icon://exit-full-screen" visible="{= ${mDCData>/data/header/isFullScreen} === false}" press="onEnableFullScreen($event, 'isExistFullScreen')"></Button>
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <NavContainer id="idasintDCNavContainer">
+            <Page id="idasintDCHome" enableScrolling="false" showFooter="true" showHeader="false" showNavButton="false">
+                <content>
+                    <HBox class="asIntImportExportHomeLogo">
+                        <Image src="{value: 'com/asint/ais/library/dataconduitlite/images/banner_image.png', formatter: 'sap.ui.require.toUrl'}" width="100%" />
+                    </HBox>
+                    <VBox height="80%" alignContent="Center" justifyContent="Center" alignItems="Center">
+                        <ScrollContainer height="80%" width="100%" vertical="true" focusable="false" class="sapUiTinyMarginTop sapUiTinyMarginBottom asintOptionScrollCon">
+                            <layout:VerticalLayout width="100%" class="gridWrapper">
+                                <layout:Grid containerQuery="true" defaultSpan="XL3 L3 M6 S12" position="Center" content="{mDCData>/data/tiles/home}" class="sapUiTinyMarginTop">
+                                    <layout:content>
+                                        <GenericTile class="asintConfigHdrTileClass asintCustomHoverTile" press="onNavToOptionList">
+                                            <TileContent>
+                                                <HBox renderType="Bare" alignItems="Center" height="100%">
+                                                    <FlexBox alignItems="Center" justifyContent="Center" class="asintConfigHdrIcon">
+                                                        <core:Icon size="20px" src="{mDCData>icon}"/>
+                                                    </FlexBox>
+                                                    <VBox class="sapUiSmallMarginBegin">
+                                                        <Title text="{mDCData>title}" class="asintCustomHoverTitle" level="H6" titleStyle="H6"/>
+                                                    </VBox>
+                                                </HBox>
+                                            </TileContent>
+                                        </GenericTile>
+                                    </layout:content>
+                                </layout:Grid>
+                            </layout:VerticalLayout>
+                        </ScrollContainer>
+                    </VBox>
+                </content>
+                <footer>
+                    <Toolbar>
+                        <ToolbarSpacer/>
+                        <Button text="{i18n>library.reusable.close.button.text}" press="onCloseDCLDialog" />
+                    </Toolbar>
+                </footer>
+            </Page>
+            <Page id="idasintDCOption" title="{mDCData>/data/header/option/title}" titleLevel="H6" enableScrolling="false" showFooter="true" showHeader="true" showNavButton="true" navButtonPress="onHandleBacktoList($event, 'page1', 'pageNav')">
+                <VBox class="asintBreadcrumbs">
+                    <Breadcrumbs currentLocationText="{mDCData>/data/header/option/title}" separatorStyle="Slash">
+                        <Link class="sapUiTinyMarginLeft" press="onHandleBacktoList($event, 'page0', 'breadNav')" text="Home"/>
+                    </Breadcrumbs>
+                </VBox>
+                <content>
+                    <HBox class="asIntImportExportHomeLogo">
+                        <Image src="{value: 'com/asint/ais/library/dataconduitlite/images/banner_image.png', formatter: 'sap.ui.require.toUrl'}" width="100%" />
+                    </HBox>
+                    <VBox height="80%" alignContent="Center" justifyContent="Center" alignItems="Center">
+                        <ScrollContainer height="80%" width="100%" vertical="true" focusable="false" class="sapUiTinyMarginTop sapUiTinyMarginBottom asintOptionScrollCon">
+                            <layout:VerticalLayout width="100%" class="gridWrapper">
+                                <layout:Grid containerQuery="true" defaultSpan="XL3 L3 M6 S12" position="Center" content="{mDCData>/data/tiles/option/home}" class="sapUiTinyMarginTop">
+                                    <layout:content>
+                                        <GenericTile class="asintConfigHdrTileClass asintCustomHoverTile" press="onNavToOptionDetail">
+                                            <TileContent>
+                                                <HBox renderType="Bare" alignItems="Center" height="100%">
+                                                    <FlexBox alignItems="Center" justifyContent="Center" class="asintConfigHdrIcon">
+                                                        <core:Icon size="20px" src="{mDCData>icon}"/>
+                                                    </FlexBox>
+                                                    <VBox class="sapUiSmallMarginBegin">
+                                                        <Title text="{mDCData>title}" class="asintCustomHoverTitle" level="H6" titleStyle="H6"/>
+                                                    </VBox>
+                                                </HBox>
+                                            </TileContent>
+                                        </GenericTile>
+                                    </layout:content>
+                                </layout:Grid>
+                            </layout:VerticalLayout>
+                        </ScrollContainer>
+                    </VBox>
+                </content>
+                <footer>
+                    <Toolbar>
+                        <ToolbarSpacer/>
+                        <Button text="{i18n>library.reusable.close.button.text}" press="onCloseDCLDialog" />
+                    </Toolbar>
+                </footer>
+            </Page>
+            <Page id="idasintDCDetail" title="{mDCData>/data/header/detail/title}" titleLevel="H6" enableScrolling="false" showFooter="true" showHeader="true" showNavButton="true" navButtonPress="onHandleBacktoList($event, 'page2', 'pageNav')">
+                <VBox class="asintBreadcrumbs">
+                    <Breadcrumbs currentLocationText="{mDCData>/data/header/detail/title}" separatorStyle="Slash">
+                        <Link press="onHandleBacktoList($event, 'page0', 'breadNav')" text="Home"/>
+                        <Link press="onHandleBacktoList($event, 'page1', 'breadNav')" text="{mDCData>/data/header/option/title}"/>
+                    </Breadcrumbs>
+                </VBox>
+                <content>
+                    <HBox class="asIntImportExportHomeLogo">
+                        <Image src="{value: 'com/asint/ais/library/dataconduitlite/images/banner_image.png', formatter: 'sap.ui.require.toUrl'}" width="100%" />
+                    </HBox>
+                    <VBox height="80%" alignContent="Center" justifyContent="Center" alignItems="Center">
+                        <ScrollContainer height="80%" width="100%" vertical="true" focusable="false" class="sapUiTinyMarginTop sapUiTinyMarginBottom asintOptionScrollCon">
+                            <layout:VerticalLayout width="100%" class="gridWrapper">
+                                <layout:Grid containerQuery="true" defaultSpan="XL3 L3 M6 S12" position="Center" content="{mDCData>/data/tiles/option/list}" class="sapUiTinyMarginTop">
+                                    <layout:content>
+                                        <GenericTile class="asintConfigHdrTileClass asintCustomHoverTile" press="onPressDetailTile($event, 'page2')">
+                                            <TileContent>
+                                                <HBox renderType="Bare" alignItems="Center" height="100%">
+                                                    <FlexBox alignItems="Center" justifyContent="Center" class="asintConfigHdrIcon">
+                                                        <core:Icon size="20px" src="{mDCData>icon}"/>
+                                                    </FlexBox>
+                                                    <VBox class="sapUiSmallMarginBegin">
+                                                        <Title text="{mDCData>title}" class="asintCustomHoverTitle" level="H6" titleStyle="H6"/>
+                                                    </VBox>
+                                                </HBox>
+                                            </TileContent>
+                                        </GenericTile>
+                                    </layout:content>
+                                </layout:Grid>
+                            </layout:VerticalLayout>
+                        </ScrollContainer>
+                    </VBox>
+                </content>
+                <footer>
+                    <Toolbar>
+                        <ToolbarSpacer/>
+                        <Button text="{i18n>library.reusable.close.button.text}" press="onCloseDCLDialog" />
+                    </Toolbar>
+                </footer>
+            </Page>
+            <Page id="idDCDetailCreateCharacteristics" title="{mDCData>/data/header/detail/title}" titleLevel="H6" enableScrolling="true" showFooter="true" showHeader="true" showNavButton="true" navButtonPress="onHandleBacktoList($event, 'page2', 'pageNav')">
+                <VBox class="asintBreadcrumbs">
+                    <Breadcrumbs currentLocationText="{mDCData>/data/header/detail/title}" separatorStyle="Slash">
+                        <Link press="onHandleBacktoList($event, 'page0', 'breadNav')" text="Home"/>
+                        <Link press="onHandleBacktoList($event, 'page1', 'breadNav')" text="{mDCData>/data/header/option/title}"/>
+                    </Breadcrumbs>
+                </VBox>
+                <content>
+                    <table:Table id="idDCCreateCharacteristicsTable" fixedColumnCount="1" busyIndicatorDelay="0" enableBusyIndicator="true" rows="{mDCData>/data/tiles/option/pageList/characteristics/create characteristics}" visibleRowCountMode="Auto">
+                        <table:extension>
+                            <OverflowToolbar style="Clear">
+                                <ToolbarSpacer />
+                                <Button icon="sap-icon://validate" press="handleTableValidation"/>
+                                <Button text="Create" type="Emphasized" press="handleTableButtonClick($event, 'create')"/>
+                                <Button icon="sap-icon://add" press="handleTableAddRow"/>
+                                <Button icon="sap-icon://download" press="handleTableExport"/>
+                                <Button icon="sap-icon://upload" press="handleTableImport"/>
+                                <Button icon="sap-icon://delete" press="handleTableDelete"/>                                
+                            </OverflowToolbar>
+                        </table:extension>
+                        <table:columns>
+                            <table:Column width="9rem" customData:exportProperty="status">
+                                <Label text="Status"/>
+                                <table:template>
+                                    <ObjectStatus text="{mDCData>status}" state="{path: 'mDCData>status', formatter: '.formatter.fnGetStatusType'}" inverted="true"/>
+                                </table:template>
+                            </table:Column>
+                            <!-- <table:Column width="11rem" customData:exportProperty="ID">
+                                <Label text="ID"/>
+                                <table:template>
+                                    <Text text="{mDCData>ID}"/>
+                                </table:template>
+                            </table:Column> -->
+                            <table:Column width="11rem" customData:exportProperty="displayId">
+                                <Label text="Display Id"/>
+                                <table:template>
+                                    <Text text="{mDCData>displayId}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="description">
+                                <Label text="Short Description"/>
+                                <table:template>
+                                    <Input value="{mDCData>shortDescription}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="description">
+                                <Label text="Long Description"/>
+                                <table:template>
+                                    <Input value="{mDCData>longDescription}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="dataType">
+                                <Label text="Data Type"/>
+                                <table:template>
+                                    <Input value="{mDCData>dataType}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="required">
+                                <Label text="Required"/>
+                                <table:template>
+                                    <!-- <Select selectedKey="{mDCData>required}">
+                                        <core:Item text="Yes" key="true"/>
+                                        <core:Item text="No" key="false"/>
+                                    </Select> -->
+                                    <CheckBox selected="{mDCData>required}" text="{= ${mDCData>required} ? 'Yes' : 'No' }" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="multiValue">
+                                <Label text="MultiValue"/>
+                                <table:template>
+                                    <!-- <Select selectedKey="{mDCData>multiValue}">
+                                        <core:Item text="Yes" key="true"/>
+                                        <core:Item text="No" key="false"/>
+                                    </Select> -->
+                                    <Switch customTextOn="Yes" customTextOff="No" state="{mDCData>multiValue}" enabled="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="uom">
+                                <Label text="Unit of Measure"/>
+                                <table:template>
+                                    <Input value="{mDCData>uom}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="dimension">
+                                <Label text="Dimension"/>
+                                <table:template>
+                                    <Input value="{mDCData>dimension}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="length">
+                                <Label text="Length"/>
+                                <table:template>
+                                    <Input type="Number" value="{mDCData>length}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="decimals">
+                                <Label text="Decimals"/>
+                                <table:template>
+                                    <Input type="Number" value="{mDCData>decimals}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="defaultValue">
+                                <Label text="Default Value"/>
+                                <table:template>
+                                    <Input value="{mDCData>defaultValue}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" visible="false" customData:exportProperty="response">
+                                <Label text="Response"/>
+                                <table:template>
+                                    <Text text="{mDCData>response}"/>
+                                </table:template>
+                            </table:Column>
+                        </table:columns>
+                    </table:Table>
+                </content>
+                <footer>
+                    <Toolbar>
+                        <ToolbarSpacer/>
+                        <Button text="{i18n>library.reusable.close.button.text}" press="onCloseDCLDialog" />
+                    </Toolbar>
+                </footer>
+            </Page>
+            <Page id="idDCDetailCreateClassifications" title="{mDCData>/data/header/option/title}" titleLevel="H6" enableScrolling="true" showFooter="true" showHeader="true" showNavButton="true" navButtonPress="onHandleBacktoList($event, 'page3', 'pageNav')">
+                <VBox class="asintBreadcrumbs">
+                    <Breadcrumbs currentLocationText="{mDCData>/data/header/detail/title}" separatorStyle="Slash">
+                        <Link press="onHandleBacktoList($event, 'page0', 'breadNav')" text="Home"/>
+                        <Link press="onHandleBacktoList($event, 'page1', 'breadNav')" text="{mDCData>/data/header/option/title}"/>
+                    </Breadcrumbs>
+                </VBox>
+                <content>
+                    <table:Table id="idDCCreateClassificationsTable" fixedColumnCount="1" busyIndicatorDelay="0" enableBusyIndicator="true" rows="{mDCData>/data/detail/classification/create/tableData}" visibleRowCountMode="Auto">
+                        <table:extension>
+                            <OverflowToolbar style="Clear">
+                                <ToolbarSpacer />
+                                <Button icon="sap-icon://validate" press="handleTableValidation"/>
+                                <Button text="Create" type="Emphasized" press="handleTableButtonClick($event, 'create')"/>
+                                <Button icon="sap-icon://add" press="handleTableAddRow"/>
+                                <Button icon="sap-icon://download" press="handleTableExport"/>
+                                <Button icon="sap-icon://upload" press="handleTableImport"/>
+                                <Button icon="sap-icon://delete" press="handleTableDelete"/>                                
+                            </OverflowToolbar>
+                        </table:extension>
+                        <table:columns>
+                            <table:Column width="9rem" customData:exportProperty="status">
+                                <Label text="Status"/>
+                                <table:template>
+                                    <ObjectStatus text="{mDCData>status}" state="{path: 'mDCData>status', formatter: '.formatter.fnGetStatusType'}" inverted="true"/>
+                                </table:template>
+                            </table:Column>
+                            <!-- <table:Column width="11rem" customData:exportProperty="ID">
+                                <Label text="ID"/>
+                                <table:template>
+                                    <Text text="{mDCData>ID}"/>
+                                </table:template>
+                            </table:Column> -->
+                            <table:Column width="11rem" customData:exportProperty="displayId">
+                                <Label text="Display Id"/>
+                                <table:template>
+                                    <Input value="{mDCData>displayId}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="dataType">
+                                <Label text="Data Type"/>
+                                <table:template>
+                                    <Input value="{mDCData>dataType}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="required">
+                                <Label text="Required"/>
+                                <table:template>
+                                    <!-- <Select selectedKey="{mDCData>required}">
+                                        <core:Item text="Yes" key="true"/>
+                                        <core:Item text="No" key="false"/>
+                                    </Select> -->
+                                    <CheckBox selected="{mDCData>required}" text="{= ${mDCData>required} ? 'Yes' : 'No' }" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="multiValue">
+                                <Label text="MultiValue"/>
+                                <table:template>
+                                    <!-- <Select selectedKey="{mDCData>multiValue}">
+                                        <core:Item text="Yes" key="true"/>
+                                        <core:Item text="No" key="false"/>
+                                    </Select> -->
+                                    <Switch customTextOn="Yes" customTextOff="No" state="{mDCData>multiValue}" enabled="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="uom">
+                                <Label text="Unit of Measure"/>
+                                <table:template>
+                                    <Input value="{mDCData>uom}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="dimension">
+                                <Label text="Dimension"/>
+                                <table:template>
+                                    <Input value="{mDCData>dimension}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="length">
+                                <Label text="Length"/>
+                                <table:template>
+                                    <Input type="Number" value="{mDCData>length}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="decimals">
+                                <Label text="Decimals"/>
+                                <table:template>
+                                    <Input type="Number" value="{mDCData>decimals}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="defaultValue">
+                                <Label text="Default Value"/>
+                                <table:template>
+                                    <Input value="{mDCData>defaultValue}" editable="{= ${mDCData>status} === 'Created' ? false : true}"/>
+                                </table:template>
+                            </table:Column>
+                            <table:Column width="11rem" customData:exportProperty="response">
+                                <Label text="Response"/>
+                                <table:template>
+                                    <Text text="{mDCData>response}"/>
+                                </table:template>
+                            </table:Column>
+                        </table:columns>
+                    </table:Table>
+                </content>
+                <footer>
+                    <Toolbar>
+                        <ToolbarSpacer/>
+                        <Button text="{i18n>library.reusable.close.button.text}" press="onCloseDCLDialog" />
+                    </Toolbar>
+                </footer>
+            </Page>
+        </NavContainer>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,47 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>technicalObject.valueHelp.functionalLocation.dialog.title}" horizontalScrolling="false" contentWidth="30rem" contentHeight="50%" beforeOpen="beforeOpenTechnicalObjectValueHelpDialog('FLOC')">
+        <Table id="idFunctionalLocationTable" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="{mFunctionalLocationValueHelp>/metadata/selectionMode}" noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge" alternateRowColors="true" 
+            items="{
+                path : 'mV4MasterService>/FunctionalLocationListService(language=\'en\')/Set',
+                parameters : {$select: '*'}
+            }"
+            selectionChange="onSelectFunctionalLocation">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}" search="onSearch" width="100%"/>
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column width="10rem">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column1.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column2.text}"/>
+                </Column>
+                <Column visible="{= ${mFunctionalLocationValueHelp>/metadata/featureFlag/hideSortField} !== 'true'}">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column3.text}"/>
+                </Column>
+                <!-- <Column visible="{= ${mFunctionalLocationValueHelp>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column4.text}"/>
+                </Column> -->
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{mV4MasterService>name}"/>
+                        <Text text="{mV4MasterService>functionalLocationDescription}"/>
+                        <Text text="{mV4MasterService>sortField}"/>
+                        <!-- <Text text="{mV4MasterService>technicalObjectSortCode}"/> -->
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>library.reusable.confirm.button.text}"  enabled="{= ${mFunctionalLocationValueHelp>/metadata/selectedCount} &gt; 0}" visible="{= ${mFunctionalLocationValueHelp>/metadata/selectionMode} === 'MultiSelect'}" type="Emphasized" press="onFunctionalLocationValueHelpDialogConfirm"/>
+            <Button text="{i18n>library.reusable.close.button.text}" press="onFunctionalLocationValueHelpDialogClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

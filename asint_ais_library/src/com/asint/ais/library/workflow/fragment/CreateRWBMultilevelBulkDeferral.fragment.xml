@@ -1,0 +1,162 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns:tnt="sap.tnt"
+    xmlns:ui="sap.ui.table"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m">
+    <Dialog contentHeight="60%" contentWidth="30%" title="{i18n>workflow.create.dialog.header.text}" afterOpen="onWorkflowDialogOpen" draggable="true">
+        <customHeader>
+            <Toolbar>
+                <Title text="{i18n>workflow.create.dialog.header.text}"/> 
+                <ToolbarSpacer />
+                <Button icon="sap-icon://resize" press="onResize"/>
+            </Toolbar>
+        </customHeader>
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <!-- <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4"
+                    labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false"
+                    emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2"
+                    columnsL="1" columnsM="1" singleContainerFullSize="false"
+                    ariaLabelledBy="Title1"> -->
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false"
+                    emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" ariaLabelledBy="Title1">
+                    <f:content>
+                        <core:Title text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.header.text}" />
+                        <Label required="true" text="{i18n>library.reusable.field.name.text}" />
+                        <Input required="true" value="{mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/name}" />
+                        <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.recommendation.text}" />
+                        <ui:Table visibleRowCountMode="Auto" rows="{mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/recommendations}" selectionMode="None" 
+                            customData:keyMap="{
+                                'proposedDueDate': 'proposedDueDate',
+                                'proposedSheRiskAtDueDate': 'proposedSHERiskAtDueDate',
+                                'proposedFinRiskAtDueDate': 'proposedFINRiskAtDueDate'
+                            }">
+                            <ui:extension>
+                                <OverflowToolbar style="Clear">
+                                    <ToolbarSpacer />
+                                    <Button type="Emphasized" text="{i18n>library.reusable.calculatedProposedRisk.button.text}" press="onBulkDeferralCalcProposedRisk($event,'RECO')"/>                      
+                                </OverflowToolbar>
+                            </ui:extension>
+                            <ui:columns>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.column.recommendation.text}" />
+                                    <ui:template>
+                                        <Link target="_blank" text="{mWorkflow>recommendation}"
+                                            href="{mWorkflow>recommendationLink}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.column.description.text}" />
+                                    <ui:template>
+                                        <ExpandableText text="{mWorkflow>description}" maxCharacters="15" overflowMode="Popover"/>
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.column.dueDate.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>dueDate}" wrapping="true"/>
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.column.sheRiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>sHERiskAtDueDate}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="10rem">
+                                    <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.column.finRiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <Text text="{mWorkflow>fINRiskAtDueDate}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="15rem">
+                                    <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.column.proposedDueDate.text}" />
+                                    <ui:template>
+                                        <DatePicker value="{mWorkflow>proposedDueDate}" valueFormat="yyyy-MM-dd" displayFormat="MMM dd, yyyy" minDate="{path: 'mWorkflow>validFrom', formatter: '.fnFormatMinDate'}" />
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="15rem">
+                                    <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.column.proposedSHERiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <ComboBox items="{mWorkflow>/config/riskData}" selectedKey="{mWorkflow>proposedSHERiskAtDueDate}" customData:useGetBinding="true" change="fnValidateBPAFormField">
+                                            <core:Item key="{mWorkflow>risk}" text="{mWorkflow>risk}" />
+                                        </ComboBox>
+                                    </ui:template>
+                                </ui:Column>
+                                <ui:Column width="15rem">
+                                    <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.column.proposedFINRiskAtDueDate.text}" />
+                                    <ui:template>
+                                        <ComboBox items="{mWorkflow>/config/riskData}" selectedKey="{mWorkflow>proposedFINRiskAtDueDate}" customData:useGetBinding="true" change="fnValidateBPAFormField">
+                                            <core:Item key="{mWorkflow>risk}" text="{mWorkflow>risk}" />
+                                        </ComboBox>
+                                    </ui:template>
+                                </ui:Column>
+                            </ui:columns>
+                        </ui:Table>
+                        <Label />   
+                        <VBox>
+                            <MessageStrip
+                                text="{i18n>workflow.deferral.create.dialog.proposedDueDate.info.text}"
+                                type="Information"
+                                showIcon="true"
+                                showCloseButton="false"
+                                class="sapUiTinyMarginBottom">
+                            </MessageStrip>
+                        </VBox>
+                        <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.column.proposedDueDate.text}" />
+                        <DatePicker value="{mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/proposedDueDate}" valueFormat="yyyy-MM-dd" displayFormat="MMM dd, yyyy" change="onBulkUpdateRECOProposedDueDate" minDate="{path: 'mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/latestValidFrom', formatter: '.fnFormatMinDate'}" />
+                        <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.noOfLevels.text}" />
+                        <StepInput width="20%" textAlign="Center" min="0"
+                            max="{mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/maxLevelAllowed}"
+                            value="{mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/noOfLevels}"
+                            change="onCreateRECOBulkDeferralLevelChange" />
+                        <Text text="{= ${mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/noOfLevels} === 0 ? ${i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.systemApproved.text} : ${i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.approverSelection.text}}" />
+                        <Label />
+                        <Table class="sapUiTinyMarginTopBottom"
+                            visible="{= ${mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/noOfLevels} &gt; 0}"
+                            items="{mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/levelsAndApprovers}">
+                            <columns>
+                                <Column minScreenWidth="Desktop" demandPopin="true"
+                                    popinDisplay="Inline" hAlign="Begin">
+                                    <Text
+                                        text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.level.text}" />
+                                </Column>
+                                <Column width="70%">
+                                    <Text
+                                        text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.approver.text}" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Label text="{mWorkflow>level}" />
+                                        <Input value="{mWorkflow>approver}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onApproverValueHelp($event,'SingleSelectMaster')"
+                                            placeholder="{i18n>library.reusable.email.text}"
+                                            change="onCreateRECOBulkDeferralLevelChange"
+                                            valueState="{path: 'mWorkflow>approver', formatter: '.fnValidateEmail'}"
+                                            showValueStateMessage="false" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        <Label />
+                        <CheckBox text="{i18n>library.reusable.notifyByEmail.text}" selected="{mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/notifyByEmail}" />
+                        <Label text="{i18n>workflow.recoMultiLevelBulkDeferral.create.dialog.comments.text}" required="true"/>
+                        <TextArea rows="4" showExceededText="true" maxLength="5000" growing="true" growingMaxLines="15" required="true" showValueStateMessage="false" 
+                            value="{mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/comments}" liveChange="onCommentLiveChange"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <buttons>
+            <Button type="Emphasized" enabled="{mWorkflow>/create/recoMultilevelBulkDeferralWorkflow/enableCreateButton}"
+                text="{i18n>library.reusable.create.button.text}"
+                press="onRECOBulkDeferralCreatePress" />
+            <Button type="Transparent" text="{i18n>library.reusable.cancel.button.text}"
+                press="onRECOBulkDeferralCancelPress" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>  

@@ -1,0 +1,57 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog horizontalScrolling="false"
+        contentWidth="40rem" contentHeight="50%" showHeader="false">
+        <Table id="idCodeListTable" growing="true" growingScrollToLoad="true"
+            growingThreshold="20" mode="{mCodeListValueHelp>/metadata/selectionMode}"
+            noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge"
+            alternateRowColors="true"
+            items="{
+                path: 'mV4MasterService>/CodeLists', 
+                parameters : {countMode:'Inline'},
+                events:{dataReceived:'.onDataReceived'}
+            }"
+            selectionChange="onSelectCodeList" sticky="ColumnHeaders,HeaderToolbar">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <Title text="{mCodeListValueHelp>/metadata/tableHeader}" />
+                        <ToolbarSpacer />
+                        <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}"
+                            search="onSearch" width="30%" />
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text text="{i18n>codeList.valueHelp.dialog.table.column1.text}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>codeList.valueHelp.dialog.table.column2.text}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>codeList.valueHelp.dialog.table.column3.text}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{mV4MasterService>displayId}"
+                            text="{mV4MasterService>to_description/0/shortDescription}" titleActive="false" />
+                        <Text text="{mV4MasterService>dataType}" />
+                        <ObjectIdentifier title="{mV4MasterService>to_characteristic/0/displayId}"
+                            text="{mV4MasterService>to_characteristic/0/name}" titleActive="false" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>library.reusable.confirm.button.text}"
+                enabled="{= ${mCodeListValueHelp>/metadata/selectedCount} &gt; 0}"
+                visible="{= ${mCodeListValueHelp>/metadata/selectionMode} === 'MultiSelect'}"
+                type="Emphasized" press="onCodeListValueHelpDialogConfirm" />
+            <Button text="{i18n>library.reusable.close.button.text}"
+                press="onCodeListValueHelpDialogClose" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

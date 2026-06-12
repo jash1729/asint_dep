@@ -1,0 +1,98 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:filterbar="sap.ui.comp.filterbar" xmlns="sap.m" xmlns:l="sap.ui.layout">
+	<Dialog title="Assign Attachments"  contentWidth="80%">
+    <Table noDataText="No Data" id="Assigntable" growing="true" growingScrollToLoad="true" growingThreshold="10"
+		items="{
+			path:'MasterService>/DocumentsForAttachment', 
+			sorter: {path: 'displayId', descending: true},
+			events:{dataReceived:'.onDataReceived'}
+			}"
+		selectionChange="onSelectionChange" sticky="ColumnHeaders,HeaderToolbar" inset="false" updateFinished="onAssignDocumentsUpdateFinsihed" mode="MultiSelect">
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+					<Title text="{assignattachment>/title}"  />
+					<ToolbarSpacer/>
+					<!-- <Button text="Assign" press="onAssignPress" id="_assign" /> -->
+					<SearchField placeholder="Search by name and ID" width="40%" search="onSearchDocuments"
+						class="help-id-ain-attachments-assignAttachments-searchField"  />
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+			<Column class="help-id-ain-assessment-assessmentDocument-iconColumn"
+				hAlign="End" width="5%"></Column>
+			<Column
+				class="help-id-ain-assessment-assessmentDocument-nameColumn" demandPopin="true" minScreenWidth="Large">
+				<header>
+					<Label text="{i18n>TableConstructor.table.column.fileName.text}"></Label>
+				</header>
+			</Column>
+			<Column
+				class="help-id-ain-assessment-assessmentDocument-internalIdColumn">
+				<header>
+					<Label text="{i18n>TableConstructor.table.column.document.text}"></Label>
+				</header>
+			</Column>
+			<Column
+				class="help-id-ain-assessment-assessmentDocument-confidentialityColumn" hAlign="Center" demandPopin="true" minScreenWidth="Medium" visible="{= ${assignattachment>/metadata/featureFlag/hideAttachmentFields} !== '1'}">
+				<header>
+					<Label text="{i18n>TableConstructor.table.column.confidentiality.text}"></Label>
+				</header>
+			</Column>
+			<Column class="help-id-ain-assessment-assessmentDocument-phaseColumn"
+				demandPopin="true" minScreenWidth="Medium" visible="{= ${assignattachment>/metadata/featureFlag/hideAttachmentFields} !== '1'}">
+				<header>
+					<Label text="{i18n>TableConstructor.table.column.phase.text}"></Label>
+				</header>
+			</Column>
+			<Column
+				class="help-id-ain-assessment-assessmentDocument-categoryColumn" demandPopin="true" minScreenWidth="Large" visible="{= ${assignattachment>/metadata/featureFlag/hideAttachmentFields} !== '1'}">
+				<header>
+					<Label text="{i18n>TableConstructor.table.column.category.text}"></Label>
+				</header>
+			</Column>
+			<Column
+				class="help-id-ain-assessment-assessmentDocument-languageColumn" demandPopin="true" minScreenWidth="Large">
+				<header>
+					<Label text="{i18n>TableConstructor.table.column.language.text}"></Label>
+				</header>
+			</Column>
+			<Column
+				class="help-id-ain-assessment-assessmentDocument-fileSizeColumn" demandPopin="true" hAlign="Right" minScreenWidth="XXLarge">
+				<header>
+					<Label text="{i18n>TableConstructor.table.column.fileSize.text}"></Label>
+				</header>
+			</Column>
+		</columns>
+		<items>
+		<ColumnListItem>
+			<cells>
+				<!-- <HBox> -->
+                 <core:Icon class="iotAinCustomTitleColor" tooltip="{MasterService>fileName}"
+                src="{path: 'MasterService>fileType', targetType: 'any', formatter: '.formatter.fnFormatAttachmentIconBasedOnFileType'}">
+                </core:Icon>
+                <!-- <core:Icon visible="{= ${MasterService>to_file/type} === 'LINK' }" class="iotAinCustomTitleColor" tooltip="{MasterService>to_file/name}"
+                 src="sap-icon://chain-link"> -->
+                <!-- </core:Icon> -->
+                <!-- </HBox> -->
+				<Text text="{MasterService>fileName}"></Text>
+				<!-- <ObjectIdentifier title="{MasterService>fileName}" titleActive="false" titlePress="onPressDocumentDownloadLink" text="{MasterService>displayId}"></ObjectIdentifier>   -->
+				<ObjectIdentifier title="{= ${MasterService>documentShortDescription} ? ${MasterService>documentShortDescription} : ${MasterService>fileName} }" titleActive="false" titlePress="onPressDocumentDownloadLink" text="{MasterService>displayId}"></ObjectIdentifier>
+				<core:Icon src="{=${MasterService>confidentiality} === '1' ? 'sap-icon://locked' : ''}" tooltip="{MasterService>confidentiality}"></core:Icon>
+				<Text text="{path: 'MasterService>phase' ,targetType: 'any', formatter:'.getNamesFromKeys'}"></Text>
+				<Text text="{path:'MasterService>category' ,targetType: 'any', formatter:'.keyToCategory'}"></Text>
+				<Text text="{path:'MasterService>language' , targetType: 'any',formatter:'.keyToName'}"></Text>
+				<Text text="{path:'MasterService>fileSize' , targetType: 'any',formatter:'.formatter.fnConverbytestoSize'}"></Text>
+				<Text text="{MasterService>ID}" visible="false"></Text>
+				<!-- <Text text="{path:'MasterService>to_file/content'}"></Text> -->
+			</cells>
+		</ColumnListItem>
+		</items>
+	</Table>
+	<buttons>
+            <Button text="Assign" press="onAssignPress"/>
+			<Button text="Cancel" press="fnAttachmentSelectCancel"/>
+	</buttons>
+	</Dialog>
+</core:FragmentDefinition>

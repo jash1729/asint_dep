@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog title="{mGenericEnumModel>/metadata/tableTitle}" horizontalScrolling="false" contentWidth="30rem" contentHeight="50%">
+        <Table id="idGenericEnumTable" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="{mGenericEnumModel>/metadata/selectionMode}" noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge" alternateRowColors="true" 
+            items="{
+                path : 'mGenericEnumModel>/data',
+                templateShareable : true
+            }"
+            selectionChange="onSelectGenericEnum">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}" search="onSearch" width="100%"/>
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column width="10rem">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column1.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column2.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{mGenericEnumModel>name}"/>
+                        <Text text="{mGenericEnumModel>description}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>library.reusable.confirm.button.text}"  enabled="{= ${mGenericEnumModel>/metadata/selectedCount} &gt; 0}" visible="{= ${mGenericEnumModel>/metadata/selectionMode} === 'MultiSelect'}" type="Emphasized" press="onGenericEnumValueHelpDialogConfirm"/>
+            <Button text="{i18n>library.reusable.close.button.text}" press="onGenericEnumValueHelpDialogClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

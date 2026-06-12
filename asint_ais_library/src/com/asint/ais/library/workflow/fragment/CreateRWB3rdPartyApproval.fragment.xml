@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns="sap.m">
+    <Dialog contentHeight="60%" contentWidth="30%" title="{i18n>workflow.create.dialog.header.text}" afterOpen="onWorkflowDialogOpen" draggable="true">
+        <customHeader>
+            <Toolbar>
+                <Title text="{i18n>workflow.create.dialog.header.text}"/> 
+                <ToolbarSpacer />
+                <Button icon="sap-icon://resize" press="onResize"/>
+            </Toolbar>
+        </customHeader>
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <!-- <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false" ariaLabelledBy="Title1"> -->
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" ariaLabelledBy="Title1">
+                    <f:content>
+                        <core:Title text="{i18n>workflow.recoApproval.create.dialog.header.text}" />
+                        <Label text="{i18n>workflow.recoApproval.create.dialog.recommendation.text}"/>
+                        <Input editable="false" type="Text" value="{mWorkflow>/create/recommendation3rdPartyApproval/recommendation}"/>
+                        <Label text="{i18n>workflow.recoApproval.create.dialog.recommendationId.text}"/>
+                        <Input editable="false" type="Text" value="{mWorkflow>/create/recommendation3rdPartyApproval/recommendationId}"/>
+                        <Label text="{i18n>workflow.recoApproval.create.dialog.reviewer.text}" required="true"/>
+                        <Input value="{mWorkflow>/create/recommendation3rdPartyApproval/reviewer}" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onApproverValueHelp($event,'SingleSelectMaster')" placeholder="{i18n>library.reusable.email.text}"
+                            change="onRecoReviewChange" valueState="{path: 'mWorkflow>/create/recommendation3rdPartyApproval/reviewer', formatter: '.fnValidateEmail'}"
+                            showValueStateMessage="false" required="true"/>
+                        <!-- <ComboBox required="true" items="{mWorkflow>/userList}" selectedKey="{mWorkflow>/create/recommendation3rdPartyApproval/reviewer}">
+                            <core:ListItem key="{mWorkflow>email}" text="{mWorkflow>name}" />
+                        </ComboBox> -->
+                        <Label />
+                        <CheckBox text="{i18n>library.reusable.notifyByEmail.text}" selected="{mWorkflow>/create/recommendation3rdPartyApproval/notifyByEmail}" />
+                        <Label text="{i18n>workflow.recoApproval.create.dialog.comments.text}"/>
+                        <TextArea showExceededText="true" maxLength="5000" growing="true" growingMaxLines="15" rows="4" value="{mWorkflow>/create/recommendation3rdPartyApproval/comments}" liveChange="onCommentLiveChange"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <buttons>
+            <Button type="Emphasized" text="{i18n>library.reusable.create.button.text}" enabled="{mWorkflow>/create/recommendation3rdPartyApproval/enableCreateButton}" press="onReco3rdPartyApprovalCreatePress"/>
+            <Button type="Transparent" text="{i18n>library.reusable.cancel.button.text}" press="onReco3rdPartyApprovalCancelPress"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

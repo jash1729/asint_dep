@@ -1,0 +1,88 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="{i18n>valueHelpFragment.classchar.dialog.title.text}"
+        horizontalScrolling="false"
+        contentWidth="60%"
+        contentHeight="80%"
+    >
+            <!-- mode="MultiSelect" -->
+        <Table
+            id="idClassCharFilterTable"
+            growing="true"
+            growingScrollToLoad="true"
+            growingThreshold="20"
+            mode="{mValueHelpFilterModel>/metadata/selectionMode}"
+            noDataText="{i18n>library.reusable.noDataFound.text}"
+            popinLayout="GridLarge"
+            alternateRowColors="true"
+            sticky="ColumnHeaders,HeaderToolbar"
+            items="{
+                path: 'masterDataService>/ClassCharacteristicValues',
+                parameters: {
+                    $select: 'className,characteristic,value,characteristicId'
+                }
+            }"
+            selectionChange="onValueHelpFilterTableSelection($event, 'masterDataService')"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <SearchField
+                            placeholder="{i18n>library.reusable.search.placeholder.text}"
+                            width="100%"
+                            search="fnSearchInValueHelpFragmentTable(
+                                $event,
+                                'idClassCharFilterTable',
+                                ['value', 'characteristic','className']
+                            )"
+                        />
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>valueHelpFragment.classchar.dialog.table.column.class}" />
+                </Column>
+
+                <Column>
+                    <Text text="{i18n>valueHelpFragment.classchar.dialog.table.column.characteristic}" />
+                </Column>
+
+                <Column>
+                    <Text text="{i18n>valueHelpFragment.classchar.dialog.table.column.value}" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{masterDataService>className}" />
+                        <Text text="{masterDataService>characteristic}" />
+                        <Text text="{masterDataService>value}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <buttons>
+            <Button
+                text="{i18n>library.reusable.confirm.button.text}"
+                type="Emphasized"
+                press="onConfirmValueHelpFilter(
+                    'idClassCharFilterTable',
+                    'characteristicId',
+                    ['characteristic', 'value']
+                )"
+                visible="{= ${mValueHelpFilterModel>/metadata/selectionMode} === 'MultiSelect'}"
+            />
+            <Button
+                text="{i18n>library.reusable.close.button.text}"
+                press="onCancelValueHelpFilter('idClassCharFilterTable')"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

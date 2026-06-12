@@ -1,0 +1,96 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="{i18n>valueHelpFragment.globalOperatingContext.dialog.title.text}"
+        horizontalScrolling="false"
+        contentWidth="60%"
+        contentHeight="80%"
+    >
+        <Table
+            id="idGlobalOperatingContextFilterTable"
+            growing="true"
+            growingScrollToLoad="true"
+            growingThreshold="20"
+            mode="{mValueHelpFilterModel>/metadata/selectionMode}"
+            noDataText="{i18n>library.reusable.noDataFound.text}"
+            popinLayout="GridLarge"
+            alternateRowColors="true"
+            sticky="ColumnHeaders,HeaderToolbar"
+            items="{
+                path: 'assetReliabilityService>/OperatingContextData',
+                parameters : {
+                    $select: 'operatingContextID,type,characteristics',
+                    $filter: 'type eq \'GLOBAL\'',
+                    countMode: 'Inline'
+                },
+                events:{
+                    dataReceived:'.onOperatingContextDataReceived'
+                }
+            }"
+            selectionChange="onValueHelpFilterTableSelection($event, 'assetReliabilityService')"
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <SearchField
+                            id="idOperatingGlobalContextSearchField"
+                            placeholder="{i18n>library.reusable.search.placeholder.text}"
+                            width="100%"
+                            search="fnSearchInValueHelpFragmentTable(
+                                $event,
+                                'idGlobalOperatingContextFilterTable',
+                                ['name','className','characteristics'],
+                                'idOperatingGlobalContextSearchField'
+                            )"
+                            change="fnChangeInSearchValueHelp($event, 'idOperatingGlobalContextSearchField')"
+                        />
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>valueHelpFragment.globalOperatingContext.dialog.table.column.globalOperatingContext}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>valueHelpFragment.globalOperatingContext.dialog.table.column.characteristicsAndValue}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>valueHelpFragment.globalOperatingContext.dialog.table.column.class}" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{assetReliabilityService>name}" />
+                        <Link
+                            text="{= ${assetReliabilityService>characteristicsCount} ? ${assetReliabilityService>characteristicsCount} + ' items' : '0 items' }"
+                            press='.onOpenCharacteristicsDialog'
+                        />
+                        <Text text="{assetReliabilityService>className}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <buttons>
+            <Button
+                text="{i18n>library.reusable.confirm.button.text}"
+                type="Emphasized"
+                press="onConfirmValueHelpFilter(
+                    'idGlobalOperatingContextFilterTable',
+                    'operatingContextID',
+                    'name'
+                )"
+                visible="{= ${mValueHelpFilterModel>/metadata/selectionMode} === 'MultiSelect'}"
+            />
+            <Button
+                text="{i18n>library.reusable.close.button.text}"
+                press="onCancelValueHelpFilter('idGlobalOperatingContextFilterTable')"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

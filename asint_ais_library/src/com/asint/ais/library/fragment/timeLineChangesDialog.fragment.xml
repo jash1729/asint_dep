@@ -1,0 +1,31 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<TableSelectDialog noDataText="{oChangesModel>/Labels/noDataText}" title="{oChangesModel>/Labels/dialogHeader}" liveChange="handleSearch" confirm="handleClose" cancel="handleClose"
+		items="{oChangesModel>/Changes}" class="sapUiSizeCompact" contentHeight="60%" contentWidth="60%">
+		<ColumnListItem>
+			<cells>
+				<Text text="{oChangesModel>Description}" />
+				<Text text="{oChangesModel>OldValue}" />
+				<Text text="{oChangesModel>NewValue}" />
+			</cells>
+		</ColumnListItem>
+		<columns>
+			<Column>
+				<header>
+					<Text text="{oChangesModel>/Labels/description}" />
+				</header>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true" >
+				<header>
+					<Text text="{oChangesModel>/Labels/oldValue}" />
+				</header>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<header>
+					<Text text="{oChangesModel>/Labels/newValue}" />
+				</header>
+			</Column>
+		</columns>
+	</TableSelectDialog>
+</core:FragmentDefinition>

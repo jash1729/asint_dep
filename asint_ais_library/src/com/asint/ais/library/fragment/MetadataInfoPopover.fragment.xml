@@ -1,0 +1,52 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Popover
+        id="idMetadataInfoPopover"
+        placement="Auto"
+        showHeader="false"
+        contentWidth="22rem"
+        class="sapUiResponsivePadding">
+
+        <VBox class="sapUiSmallMargin">
+
+            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
+                <core:Icon src="sap-icon://hint" size="1rem" class="sapUiTinyMarginEnd"/>
+                <Title text="{i18n>asint.metadataInfo.header.text}" level="H6"/>
+            </HBox>
+
+            <f:SimpleForm
+                editable="false"
+                layout="ResponsiveGridLayout">
+
+                <Label text="{i18n>asint.metadataInfo.createdOn.text}"/>
+                <Text
+                    text="{
+                        parts: [
+                            { path: 'mMetadataInfo>/createdAt' },
+                            { value: 'MMM dd, yyyy, HH:mm:ss' }
+                        ],
+                        formatter: '.formatter.formatDate'
+                    }"
+                    wrapping="true"/>
+
+                <Label text="{i18n>asint.metadataInfo.createdBy.text}"/>
+                <Text text="{mMetadataInfo>/createdBy}"/>
+
+                <Label text="{i18n>asint.metadataInfo.modifiedOn.text}"/>
+                <Text
+                    text="{
+                        parts: [
+                            { path: 'mMetadataInfo>/modifiedAt' },
+                            { value: 'MMM dd, yyyy, HH:mm:ss' }
+                        ],
+                        formatter: '.formatter.formatDate'
+                    }"
+                    wrapping="true"/>
+
+                <Label text="{i18n>asint.metadataInfo.modifiedBy.text}"/>
+                <Text text="{mMetadataInfo>/modifiedBy}"/>
+
+            </f:SimpleForm>
+
+        </VBox>
+    </Popover>
+</core:FragmentDefinition>

@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <ResponsivePopover title="{i18n>asint.eventSubscription.subscribeDialog.specifyleadTime.title.text}" class="sapUiContentPadding" placement="Right" afterClose="onLeadTimeDialogOk">
+        <beginButton>
+            <Button text="{i18n>library.reusable.ok.button.text}" type="Emphasized" press="onLeadTimeDialogOk"/>
+        </beginButton>
+        <content>
+            <VBox alignItems="Center">
+                <StepInput min="0" textAlign="Center" value="{mEventSubscription>/dialog/subscribeLeadTime/leadTime}" description="{i18n>library.reusable.asint.days.text}"/>
+                <Text text="{parts: [{path:'mEventSubscription>/dialog/subscribeLeadTime/leadTime'}], formatter:'.fnFormatLeadTimeInfo'}"  class="sapUiTinyMarginTop"/>
+            </VBox>
+            <!-- <f:SimpleForm editable="true">
+                <f:content>
+                    <Label required="true" text="{i18n>asint.eventSubscription.subscribeDialog.leadTime.text}"/>
+                    <StepInput min="0" value="{mEventSubscription>/dialog/subscribeLeadTime/leadTime}" description="{i18n>library.reusable.asint.days.text}"/>
+                </f:content>
+            </f:SimpleForm> -->
+        </content>
+    </ResponsivePopover>
+</core:FragmentDefinition>

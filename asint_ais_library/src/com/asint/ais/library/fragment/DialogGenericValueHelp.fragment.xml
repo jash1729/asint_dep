@@ -1,0 +1,73 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog
+        title="Planning Plant"
+        showHeader="true"
+        contentWidth="40%"
+        contentHeight="auto"
+    >
+        <Table
+            id="idGenericValueHelpFilterTable"
+            growingScrollToLoad="true"
+            alternateRowColors="true"
+            growingThreshold="20"
+            mode="{mValueHelpFilterModel>/metadata/selectionMode}"
+            sticky="ColumnHeaders,HeaderToolbar"
+            items="{
+                path : 's4DataService>/S4Master',
+                sorter: {path: 'name', descending: false}
+            }"
+            selectionChange="onValueHelpFilterTableSelection($event, 's4DataService')"
+        >
+            <headerToolbar>
+                <OverflowToolbar>                    
+                    <SearchField
+                        id="idGenericValueHelpSearchField"
+                        placeholder="Search..."
+                        search=".fnSearchInValueHelpFragmentTable(
+                            $event,
+                            'idGenericValueHelpFilterTable',
+                            ['name', 'description'],
+                            'idGenericValueHelpSearchField'
+                        )"
+                        width="100%"
+                    />
+                </OverflowToolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column>
+                    <Text text="{i18n>asint.genValueHelp.name.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.genValueHelp.desc.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{s4DataService>name}"/>
+                        <Text text="{s4DataService>description}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <buttons>
+            <Button
+                text="{i18n>library.reusable.confirm.button.text}"
+                type="Emphasized"
+                press=".onConfirmValueHelpFilter(
+                    'idGenericValueHelpFilterTable',
+                    'name',
+                    'name'
+                )"
+                visible="{= ${mValueHelpFilterModel>/metadata/selectionMode} === 'MultiSelect'}"
+            />
+
+            <Button
+                text="{i18n>library.reusable.close.button.text}"
+                press="onCancelValueHelpFilter('idGenericValueHelpFilterTable')"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

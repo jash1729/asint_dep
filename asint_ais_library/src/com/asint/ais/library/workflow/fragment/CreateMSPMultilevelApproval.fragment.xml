@@ -1,0 +1,92 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns:tnt="sap.tnt"
+    xmlns="sap.m">
+    <Dialog contentHeight="60%" contentWidth="30%" title="{i18n>workflow.create.dialog.header.text}" afterOpen="onWorkflowDialogOpen"
+        draggable="true">
+        <customHeader>
+            <Toolbar>
+                <Title text="{i18n>workflow.create.dialog.header.text}"/> 
+                <ToolbarSpacer />
+                <Button icon="sap-icon://resize" press="onResize"/>
+            </Toolbar>
+        </customHeader>
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <!-- <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4"
+                    labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false"
+                    emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2"
+                    columnsL="1" columnsM="1" singleContainerFullSize="false"
+                    ariaLabelledBy="Title1"> -->
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" ariaLabelledBy="Title1">
+                    <f:content>
+                        <core:Title
+                            text="{i18n>workflow.mspMultiLevelApproval.create.dialog.header.text}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelApproval.create.dialog.msp.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelApprovalWorkflow/msp}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelApproval.create.dialog.mspDisplayId.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelApprovalWorkflow/mspDisplayId}" />
+                        <!--Editable fields-->
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelApproval.create.dialog.noOfLevels.text}" />
+                        <StepInput width="20%" textAlign="Center" min="0"
+                            max="{mWorkflow>/create/mspMultilevelApprovalWorkflow/maxLevelAllowed}"
+                            value="{mWorkflow>/create/mspMultilevelApprovalWorkflow/noOfLevels}"
+                            change="onCreateMSPMultiLevelApprovalLevelChange" />
+                        <Text
+                            text="{= ${mWorkflow>/create/mspMultilevelApprovalWorkflow/noOfLevels} === 0 ? ${i18n>workflow.mspMultiLevelApproval.create.dialog.systemApproved.text} : ${i18n>workflow.mspMultiLevelApproval.create.dialog.approverSelection.text}}" />
+                        <Table class="sapUiTinyMarginTopBottom"
+                            visible="{= ${mWorkflow>/create/mspMultilevelApprovalWorkflow/noOfLevels} &gt; 0}"
+                            items="{mWorkflow>/create/mspMultilevelApprovalWorkflow/levelsAndApprovers}">
+                            <columns>
+                                <Column minScreenWidth="Desktop" demandPopin="true"
+                                    popinDisplay="Inline" hAlign="Begin">
+                                    <Text
+                                        text="{i18n>workflow.mspMultiLevelApproval.create.dialog.level.text}" />
+                                </Column>
+                                <Column width="70%">
+                                    <Text
+                                        text="{i18n>workflow.mspMultiLevelApproval.create.dialog.approver.text}" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Label text="{mWorkflow>level}" />
+                                        <Input value="{mWorkflow>approver}" showValueHelp="true" valueHelpRequest="onApproverValueHelp($event,'SingleSelectMaster')"
+                                            placeholder="{i18n>library.reusable.email.text}"
+                                            change="onCreateMSPMultiLevelApprovalLevelChange"
+                                            valueState="{path: 'mWorkflow>approver', formatter: '.fnValidateEmail'}"
+                                            showValueStateMessage="false" 
+                                            valueHelpOnly="true"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        <Label />
+                        <CheckBox text="{i18n>library.reusable.notifyByEmail.text}" selected="{mWorkflow>/create/mspMultilevelApprovalWorkflow/notifyByEmail}" />
+                        <Label 
+                            text="{i18n>workflow.mspMultiLevelApproval.create.dialog.comments.text}" />
+                        <TextArea rows="4"
+						showExceededText="true" maxLength="5000" growing="true" growingMaxLines="15" 
+                            value="{mWorkflow>/create/mspMultilevelApprovalWorkflow/comments}" liveChange="onCommentLiveChange"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <buttons>
+            <Button type="Emphasized"
+                enabled="{mWorkflow>/create/mspMultilevelApprovalWorkflow/enableCreateButton}"
+                text="{i18n>library.reusable.create.button.text}"
+                press="onMSPMultiLevelApprovalCreatePress" />
+            <Button type="Transparent" text="{i18n>library.reusable.cancel.button.text}"
+                press="onMSPMultiLevelApprovalCancelPress" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

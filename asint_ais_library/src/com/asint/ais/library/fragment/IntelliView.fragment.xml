@@ -1,0 +1,27 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog id="idIntelliViewDialog" title="{i18n>asint.intelli.intelliView.dialog.title}" draggable="true" resizable="false" verticalScrolling="false" horizontalScrolling="false" class="intelliViewDialog" contentWidth="80vh">
+
+        <VBox width="100%" height="100%" class="intelliViewRoot">
+            <OverflowToolbar height="3rem">
+                <ToolbarSpacer/>
+                <Button id="idViewZoomInBtn" icon="sap-icon://zoom-in" text="{i18n>asint.intelli.toolbar.zoomIn.text}" press="onZoomIn"/>
+                <Button id="idViewZoomOutBtn" icon="sap-icon://zoom-out" text="{i18n>asint.intelli.toolbar.zoomOut.text}" press="onZoomOut"/>
+                <Button id="idResetZoomBtn" icon="sap-icon://reset" text="{i18n>asint.intelli.toolbar.reset.text}" press="onViewResetZoom"/>
+            </OverflowToolbar>
+
+            <ScrollContainer id="idViewerScroll" width="100%" height="90%" horizontal="true" vertical="true" class="intelliViewCanvasWrapper">
+                <VBox width="100%" height="100%" justifyContent="Center" alignItems="Center" class="imageContainer">
+                    <core:HTML id="idViewCanvasHost" sanitizeContent="false" content=""/>
+                </VBox>
+            </ScrollContainer>
+        </VBox>
+
+        <buttons>
+            <Button text="{i18n>asint.intelli.intelliView.dialog.button.close.text}" type="Emphasized" press="onCloseIntelliView"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

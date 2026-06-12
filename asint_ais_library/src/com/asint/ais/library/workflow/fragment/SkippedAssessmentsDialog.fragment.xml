@@ -1,0 +1,49 @@
+<core:FragmentDefinition 
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:ui="sap.ui.table">
+    <Dialog contentWidth="40rem" resizable="false" draggable="true">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <core:Icon src="sap-icon://warning" color="#E9730C"/>
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>workflow.skipped.dialog.title}"/>
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+        <VBox class="sapUiSmallMargin" height="100%">
+            <Text text="{i18n>workflow.skipped.dialog.info.text}" class="sapUiSmallMarginBottom" visible="{= ${mWorkflow>/config/skippedAssessments}.length > 0 }"/>
+            <Title visible="{= ${mWorkflow>/config/skippedAssessments}.length > 0 }" text="{i18n>workflow.skipped.assessments.title} ({= ${mWorkflow>/config/skippedCount}})" class="sapUiSmallMarginBottom"/>
+            <ui:Table visible="{= ${mWorkflow>/config/skippedAssessments}.length > 0 }" rows="{mWorkflow>/config/skippedAssessments}" visibleRowCount="5" visibleRowCountMode="Fixed" selectionMode="None" width="100%">
+                <ui:columns>
+                    <ui:Column width="18%">
+                        <Label text="{i18n>workflow.skipped.table.assessment.column}"/>
+                        <ui:template>
+                            <Text text="{mWorkflow>name}"/>
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column>
+                        <Label text="{i18n>workflow.skipped.table.description.column}"/>
+                        <ui:template>
+                            <Text text="{mWorkflow>description}" wrapping="true"/>
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="40%">
+                        <Label text="{i18n>workflow.skipped.table.reason.column}"/>
+                        <ui:template>
+                             <ObjectStatus
+                                text="{mWorkflow>reason}"
+                                state="{path: 'mWorkflow>reason', formatter: '.fnSkippedReasonState'}"/>
+                        </ui:template>
+                    </ui:Column>
+                </ui:columns>
+            </ui:Table>
+        </VBox>
+        <buttons>
+            <Button text="{i18n>workflow.skipped.dialog.button.continue}" type="Emphasized" press="onSkippedAssessmentContinue"/>
+            <Button text="{i18n>workflow.skipped.dialog.button.cancel}" press="onSkippedAssessmentCancel"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

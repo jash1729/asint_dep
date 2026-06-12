@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>asint.enumValueHelp.MO.title}" horizontalScrolling="false" contentWidth="30rem" contentHeight="50%">
+        <Table id="idMOStatusTable" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="{mMOStatusModel>/metadata/selectionMode}" noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge" alternateRowColors="true" 
+            items="{
+                path : 'mMOStatusModel>/data',
+                templateShareable : true
+            }"
+            selectionChange="onSelectMOStatus">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}" search="onSearch" width="100%"/>
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column width="10rem">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column1.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column2.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{mMOStatusModel>code}"/>
+                        <Text text="{mMOStatusModel>description}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>library.reusable.confirm.button.text}"  enabled="{= ${mMOStatusModel>/metadata/selectedCount} &gt; 0}" visible="{= ${mMOStatusModel>/metadata/selectionMode} === 'MultiSelect'}" type="Emphasized" press="onMOStatusValueHelpDialogConfirm"/>
+            <Button text="{i18n>library.reusable.close.button.text}" press="onMOStatusValueHelpDialogClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

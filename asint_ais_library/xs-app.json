@@ -1,0 +1,56 @@
+{
+	"authenticationMethod": "route",
+	"routes": [{
+		"source": "^/resources/(.*)$",
+		"target": "/resources/$1",
+		"authenticationType": "none",
+		"destination": "ui5"
+	  },
+	  {
+		"source": "^/test-resources/(.*)$",
+		"target": "/test-resources/$1",
+		"authenticationType": "none",
+		"destination": "ui5"
+	  },
+	  {
+		"source": "^/asint/(.*)$",
+		"target": "$1",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa",
+		"destination": "asint-ais-backend-api"
+	  },
+	  {
+		"source": "^/workflow_api/(.*)$",
+		"target": "$1",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa",
+		"destination": "AIS_WORKFLOW"
+	  },
+	  {
+		"source": "^/bpa_api/(.*)$",
+		"target": "$1",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa",
+		"destination": "AIS_BPA"
+	  },
+	  {
+		"source": "^/apm_recommendation_api/(.*)$",
+		"target": "$1",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa",
+		"destination": "AIS_APM_RECOMMENDATION"
+	  },
+	  {
+		"source": "^/helpdesk/(.*)$",
+		"target": "$1",
+		"csrfProtection": false,
+		"authenticationType": "xsuaa",
+		"destination": "asint-ais-helpdesk"
+	  },
+	  {
+		"source": "^(.*)$",
+		"target": "$1",
+		"service": "html5-apps-repo-rt",
+		"authenticationType": "xsuaa"
+	}]
+}

@@ -1,0 +1,37 @@
+sap.ui.define([
+    "sap/ui/core/Control"
+], function (Control) {
+	
+    return Control.extend("com.asint.ais.library.control.GeneralRiskMatrix.RiskMatrixCell", {
+        metadata: {
+            properties: {
+                index: { type: "int", defaultValue: null },
+                text: { type: "string", defaultValue: null },
+                color: { type: "string", defaultValue: null }
+            }
+        },
+		
+        /**
+		 * @description The Custom Control's init method, called first before the control is rendered
+		 *              onto the DOM
+		 * 
+		 * @author      MM0477
+		 * @version     1.0
+		 * @since       1.0
+		 */
+        init: function () {},
+		
+        /**
+		 * @description Renders the Custom Control's HTML onto the DOM, we define the
+		 *              structure of the Control here along with the SVG code
+		 *
+		 * @author      MM0477
+		 * @version     1.0
+		 * @since       1.0
+		 * 
+		 * @param       {sap.ui.core.RenderManager} oRm      Renders data onto the DOM
+		 * @param       {sap.ui.core.Control}       oControl Object referring to the custom control's data
+		 */
+        renderer: function () {}
+    });
+});

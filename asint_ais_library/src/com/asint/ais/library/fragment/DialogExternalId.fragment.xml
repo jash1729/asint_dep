@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>externalId.fragment.dialog.title}" horizontalScrolling="false" contentWidth="40%" contentHeight="50%">
+        <Table id="idExternalId" growing="true" growingScrollToLoad="true" growingThreshold="20" noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge" alternateRowColors="true"
+             items="{mExternalId>/data/externalIdData}">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <ToolbarSpacer/>
+                    <content>
+                        <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}" search="onSearch" width="50%"/>
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text text="{i18n>externalId.fragment.column.system.title}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>externalId.fragment.column.external.title}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{mExternalId>systemName}"/>
+                        <Text text="{mExternalId>externalId}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>library.reusable.close.button.text}" press="onExternalFragmentClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

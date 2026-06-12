@@ -1,0 +1,59 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>objectTemplate.valueHelp.dialog.equipment.title}"
+        horizontalScrolling="false"
+        contentWidth="40rem" contentHeight="50%" showHeader="false">
+        <Table id="idObjectTemplateTable" growing="true" growingScrollToLoad="true"
+            growingThreshold="20" mode="{mObjectTemplateValueHelp>/metadata/selectionMode}"
+            noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge"
+            alternateRowColors="true"
+            items="{
+                path: 'mV4MasterService>/ObjectTemplateList', 
+                filters: [{path: 'type', operator: 'EQ', value1: 'EQUI', value2: 'Equipment'}],
+                parameters : {countMode:'Inline'},
+                events:{dataReceived:'.onDataReceived'}
+            }"
+            selectionChange="onSelectObjectTemplate" sticky="ColumnHeaders,HeaderToolbar">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <Title text="{mObjectTemplateValueHelp>/metadata/tableHeader}" />
+                        <ToolbarSpacer />
+                        <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}"
+                            search="onSearch" width="30%" />
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text text="{i18n>objectTemplate.valueHelp.dialog.table.equiValueHelp.column1.text}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>objectTemplate.valueHelp.dialog.table.column2.text}" />
+                </Column>
+                <Column>
+                    <Text text="{i18n>objectTemplate.valueHelp.dialog.table.column3.text}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{mV4MasterService>name}"
+                            text="{mV4MasterService>shortDescription}" titleActive="false" />
+                        <Text text="{mV4MasterService>displayId}" />
+                        <Text
+                            text="Equipment Template" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>library.reusable.confirm.button.text}"
+                enabled="{= ${mObjectTemplateValueHelp>/metadata/selectedCount} &gt; 0}"
+                visible="{= ${mObjectTemplateValueHelp>/metadata/selectionMode} === 'MultiSelect'}"
+                type="Emphasized" press="onObjectTemplateValueHelpDialogConfirm" />
+            <Button text="{i18n>library.reusable.close.button.text}"
+                press="onObjectTemplateValueHelpDialogClose" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

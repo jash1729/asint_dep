@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog id="idIntelliEditPDFDialog" title="{i18n>asint.intelli.intelliEdit.dialog.title}" draggable="true" resizable="false" verticalScrolling="false" horizontalScrolling="false" class="intelliEditDialog" contentWidth="80vh">
+
+        <VBox width="100%" height="100%" class="intelliEditRoot">
+            <OverflowToolbar height="3rem">
+
+                <ToggleButton id="idPDFTextToolBtn" icon="sap-icon://text" text="{i18n>asint.intelli.intelliEdit.toolbar.textTool.text}" press="onPDFSelectTextTool"/>
+                <ToggleButton id="idPDFBrushToolBtn" icon="sap-icon://edit" text="{i18n>asint.intelli.intelliEdit.toolbar.brushTool.text}" press="onPDFSelectBrushTool"/>
+                <Slider id="idPDFSizeControl" min="5" max="50" value="12" width="120px" liveChange="onPDFBrushSizeChange"/>
+                <Button id="idPDFColorPickerBtn" icon="sap-icon://circle-task" tooltip="{i18n>asint.intelli.intelliEdit.toolbar.colorPicker.tooltip}" press="onPDFOpenColorPicker"/>
+                <Button id="idPDFAttachFinding" icon="sap-icon://attachment" text="{i18n>asint.intelli.intelliEdit.toolbar.attachFinding.text}" press="onPDFAttachFinding"/>
+
+                <ToolbarSpacer/>
+
+                <Button id="idPDFUndoBtn" icon="sap-icon://undo" text="{i18n>asint.intelli.intelliEdit.toolbar.undo.text}" press="onPDFUndo" enabled="false"/>
+                <Button id="idPDFRedoBtn" icon="sap-icon://redo" text="{i18n>asint.intelli.intelliEdit.toolbar.redo.text}" press="onPDFRedo" enabled="false"/>
+
+                <Button id="idPDFZoomOutBtn" icon="sap-icon://zoom-out" text="{i18n>asint.intelli.toolbar.zoomOut.text}" press="onPDFZoomOut"/>
+                <Button id="idPDFZoomInBtn"  icon="sap-icon://zoom-in"  text="{i18n>asint.intelli.toolbar.zoomIn.text}"  press="onPDFZoomIn"/>
+                <Button id="idPDFResetZoomBtn" icon="sap-icon://reset" text="{i18n>asint.intelli.toolbar.reset.text}" press="onPDFEditResetZoom"/>
+            </OverflowToolbar>
+
+            <HBox justifyContent="Center" alignItems="Center" height="2.5rem" class="sapUiSmallMarginTopBottom">
+                <Button id="idPDFPrevPageBtn" icon="sap-icon://navigation-left-arrow" press="onPDFPrevPage" enabled="false"/>
+                <Text id="idPDFPageIndicator" text="Page 1 / 1" class="sapUiSmallMarginBeginEnd"/>
+                <Button id="idPDFNextPageBtn" icon="sap-icon://navigation-right-arrow" press="onPDFNextPage" enabled="false"/>
+            </HBox>
+
+            <ScrollContainer id="idPDFEditorScroll" width="100%" height="80%" horizontal="true" vertical="true" class="intelliEditCanvasWrapper">
+                <VBox width="100%" height="100%" justifyContent="Center" alignItems="Center" class="imageContainer">
+                    <core:HTML id="idPDFCanvasHost" sanitizeContent="false" content=""/>
+                </VBox>
+            </ScrollContainer>
+        </VBox>
+
+        <buttons>
+            <Button text="{i18n>asint.intelli.intelliEdit.dialog.button.save.text}" type="Emphasized" press="onSavePDFIntelliEdit"/>
+            <Button text="{i18n>asint.intelli.intelliEdit.dialog.button.close.text}" press="onClosePDFIntelliEdit"/>
+        </buttons>
+
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified">
+	<Dialog title="{i18n>asint.dataConduitlite.dialog.upload.dialog.title}" id="idDocumentUploadDialog"
+		class="asintRbiDialogWidthLg">
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="idDocumentUploadForm" editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+				labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+				singleContainerFullSize="false">
+				<f:content>
+					<u:FileUploader id="idDocumentUpload" width="100%" fileType="xlsx" change="onFileBrowse"
+						name="file" placeholder="{i18n>asint.dataConduitlite.dialog.upload.dialog.placeholder}">
+						<u:parameters>
+							<u:FileUploaderParameter id="idDocumentUploadParameter" name="objectType" value=""/>
+						</u:parameters>
+					</u:FileUploader>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+		<buttons>
+			<Button text="{i18n>library.reusable.button.upload.text}" press="fnFileUploadConfrim"></Button>
+			<Button text="{i18n>library.reusable.cancel.button.text}" press="fnFileUploadCancel"></Button>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

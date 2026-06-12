@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ViewSettingsDialog sortDescending="true" confirm="onMTableViewSettingsConfirm">
+		<sortItems/>
+		<groupItems/>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

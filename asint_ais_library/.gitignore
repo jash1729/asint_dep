@@ -1,0 +1,5 @@
+node_modules/
+dist/
+resources
+default-env.json
+package-lock.json

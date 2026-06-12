@@ -1,0 +1,170 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uxap="sap.uxap"
+    xmlns:tnt="sap.tnt"
+    xmlns="sap.m"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Dialog contentHeight="60%" contentWidth="30%" title="{i18n>workflow.create.dialog.header.text}" afterOpen="onWorkflowDialogOpen"
+        draggable="true">
+        <customHeader>
+            <Toolbar>
+                <Title text="{i18n>workflow.create.dialog.header.text}"/> 
+                <ToolbarSpacer />
+                <Button icon="sap-icon://resize" press="onResize"/>
+            </Toolbar>
+        </customHeader>
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <!-- <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4"
+                    labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false"
+                    emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2"
+                    columnsL="1" columnsM="1" singleContainerFullSize="false"
+                    ariaLabelledBy="Title1"> -->
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" ariaLabelledBy="Title1">
+                    <f:content>
+                        <core:Title
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.header.text}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.msp.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/msp}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.mspDisplayId.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/mspDisplayId}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.recommendation.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/recommendationDisplayId}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.assessment.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/assessmentDisplayId}" />
+                        <!-- add due date picker add valid to validation also -->
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.recoType.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/recommendationType}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.recoSubType.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/recommendationSubtype}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.dueDate.text}" />
+                        <DatePicker width="100%" editable="false"
+                            value="{path: 'mWorkflow>/create/mspMultilevelDefferalWorkflow/endDate'}"
+                            valueFormat="yyyy-MM-dd"
+                            displayFormat="MMM dd, yyyy"
+                        ></DatePicker>
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.sheRiskAtDueDate.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/sheRiskAtDueDate}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.finRiskAtDueDate.text}" />
+                        <Input editable="false" type="Text"
+                            value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/finRiskAtDueDate}" />
+
+                        <!--Editable fields-->
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.regulatory.text}" />
+                        <Switch state="{mWorkflow>/create/mspMultilevelDefferalWorkflow/isRegulatory}" customTextOn=" " customTextOff=" " enabled="true"></Switch>
+                        <Label required="true"
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.proposedDueDate.text}" />
+                        <DatePicker width="100%" 
+                            value="{path: 'mWorkflow>/create/mspMultilevelDefferalWorkflow/proposedDueDate'}"
+                            valueFormat="yyyy-MM-dd"
+                            displayFormat="MMM dd, yyyy"
+                            minDate="{
+                                path: 'mWorkflow>/create/mspMultilevelDefferalWorkflow/startDate',
+                                formatter: '.fnFormatMinDate'
+                            }"
+                            change="fnValidateBPAFormField"
+                        ></DatePicker>
+                        <Button type="Emphasized" text="{i18n>library.reusable.calculatedProposedRisk.button.text}" press="onDeferralCalcProposedRisk($event, 'MSP')"
+                            customData:keyMap="{
+                                'objectId': 'mspId',
+                                'proposedDueDate': 'proposedDueDate',
+                                'proposedSheRiskAtDueDate': 'sheRiskAtprosposedDueDate',
+                                'proposedFinRiskAtDueDate': 'finRiskAtprosposedDueDate'
+                            }">
+                            <customData>
+                                <core:CustomData key="bindingInfo" value="{mWorkflow>/create/mspMultilevelDefferalWorkflow}" />
+                            </customData>
+                        </Button>
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.proposedSheRiskAtDueDate.text}" />
+                        <ComboBox
+                            items="{path: 'mWorkflow>/config/riskData'}" selectedKey="{mWorkflow>/create/mspMultilevelDefferalWorkflow/sheRiskAtprosposedDueDate}" change="fnValidateBPAFormField">
+                            <core:Item key="{mWorkflow>risk}" text="{mWorkflow>risk}" />
+			            </ComboBox>
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.proposedFinRiskAtDueDate.text}" />
+                        <ComboBox
+                            items="{path: 'mWorkflow>/config/riskData'}" selectedKey="{mWorkflow>/create/mspMultilevelDefferalWorkflow/finRiskAtprosposedDueDate}" change="fnValidateBPAFormField">
+                            <core:Item key="{mWorkflow>risk}" text="{mWorkflow>risk}" />
+			            </ComboBox>
+                        <Label required = "true"
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.deferralFollowUp.text}" />
+                        <ComboBox
+                            items="{path: 'mWorkflow>/config/deferralFollowup'}" selectedKey="{mWorkflow>/create/mspMultilevelDefferalWorkflow/deferralFollowUp}" change="fnValidateBPAFormField($event,true)">
+                            <core:Item key="{mWorkflow>description}" text="{mWorkflow>description}" />
+			            </ComboBox>
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.noOfLevels.text}" />
+                        <StepInput width="20%" textAlign="Center" min="0"
+                            max="{mWorkflow>/create/mspMultilevelDefferalWorkflow/maxLevelAllowed}"
+                            value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/noOfLevels}"
+                            change="onCreateMSPMultiLevelDefferalLevelChange" />
+                        <Text
+                            text="{= ${mWorkflow>/create/mspMultilevelDefferalWorkflow/noOfLevels} === 0 ? ${i18n>workflow.mspMultiLevelDeferral.create.dialog.systemApproved.text} : ${i18n>workflow.mspMultiLevelDeferral.create.dialog.approverSelection.text}}" />
+                        <Table class="sapUiTinyMarginTopBottom"
+                            visible="{= ${mWorkflow>/create/mspMultilevelDefferalWorkflow/noOfLevels} &gt; 0}"
+                            items="{mWorkflow>/create/mspMultilevelDefferalWorkflow/levelsAndApprovers}">
+                            <columns>
+                                <Column minScreenWidth="Desktop" demandPopin="true"
+                                    popinDisplay="Inline" hAlign="Begin">
+                                    <Text
+                                        text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.level.text}" />
+                                </Column>
+                                <Column width="70%">
+                                    <Text
+                                        text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.approver.text}" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem vAlign="Middle">
+                                    <cells>
+                                        <Label text="{mWorkflow>level}" />
+                                        <Input value="{mWorkflow>approver}" showValueHelp="true" valueHelpRequest="onApproverValueHelp($event,'SingleSelectMaster')"
+                                            placeholder="{i18n>library.reusable.email.text}"
+                                            change="onCreateMSPMultiLevelDefferalLevelChange"
+                                            valueState="{path: 'mWorkflow>approver', formatter: '.fnValidateEmail'}"
+                                            showValueStateMessage="false"
+                                            valueHelpOnly="true" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        <Label />
+                        <CheckBox text="{i18n>library.reusable.notifyByEmail.text}" selected="{mWorkflow>/create/mspMultilevelDefferalWorkflow/notifyByEmail}" />
+                        <Label
+                            text="{i18n>workflow.mspMultiLevelDeferral.create.dialog.comments.text}" required="true"/>
+                        <TextArea rows="4"
+						showExceededText="true" maxLength="5000" growing="true" growingMaxLines="15" required="true"
+                            showValueStateMessage="false" value="{mWorkflow>/create/mspMultilevelDefferalWorkflow/comments}" liveChange="onCommentLiveChange"/>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <buttons>
+            <Button type="Emphasized"
+                enabled="{mWorkflow>/create/mspMultilevelDefferalWorkflow/enableCreateButton}"
+                text="{i18n>library.reusable.create.button.text}"
+                press="onMSPMultiLevelDeferralCreatePress" />
+            <Button type="Transparent" text="{i18n>library.reusable.cancel.button.text}"
+                press="onMSPMultiLevelDeferralCancelPress" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

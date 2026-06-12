@@ -1,0 +1,9 @@
+specVersion: "2.5"
+metadata:
+  name: library
+type: library
+resources:
+  configuration:
+    paths:
+      src: src
+      test: test

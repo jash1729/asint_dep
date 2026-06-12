@@ -1,0 +1,47 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>technicalObject.valueHelp.equipment.dialog.title}" horizontalScrolling="false" contentWidth="30rem" contentHeight="50%" beforeOpen="beforeOpenTechnicalObjectValueHelpDialog('EQUI')">
+        <Table id="idEqpuipmentTable" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="{mEquipmentValueHelp>/metadata/selectionMode}" noDataText="{i18n>library.reusable.noData.placeholder.text}" popinLayout="GridLarge" alternateRowColors="true" 
+            items="{
+                path : 'mV4MasterService>/EquipmentListService(language=\'en\')/Set',
+                parameters : {$select: '*'}
+            }"
+            selectionChange="onSelectEquipment">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <content>
+                        <SearchField placeholder="{i18n>library.reusable.search.placeholder.text}" search="onSearch" width="100%"/>
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column width="10rem">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column1.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column2.text}"/>
+                </Column>
+                <Column visible="{= ${mEquipmentValueHelp>/metadata/featureFlag/hideSortField} !== 'true'}">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column3.text}"/>
+                </Column>
+                <Column visible="{= ${mEquipmentValueHelp>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}">
+                    <Text text="{i18n>technicalObject.valueHelp.dialog.table.column4.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{mV4MasterService>name}"/>
+                        <Text text="{mV4MasterService>equipmentDescription}"/>
+                        <Text text="{mV4MasterService>sortField}"/>
+                        <Text text="{mV4MasterService>technicalObjectSortCode}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>library.reusable.confirm.button.text}" enabled="{= ${mEquipmentValueHelp>/metadata/selectedCount} &gt; 0}" visible="{= ${mEquipmentValueHelp>/metadata/selectionMode} === 'MultiSelect'}" type="Emphasized" press="onEquipmentValueHelpDialogConfirm"/>
+            <Button text="{i18n>library.reusable.close.button.text}" press="onEquipmentValueHelpDialogClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>
