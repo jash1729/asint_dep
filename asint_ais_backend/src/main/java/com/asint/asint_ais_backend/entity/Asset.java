@@ -1,22 +1,30 @@
-package com.asint.asint_dep.entity;
+package com.asint.asint_ais_backend.entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * Exercises lombok and spring-boot-starter-validation through annotations.
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Asset {
+
     private String id;
+
+    @NotBlank
+    @Size(max = 100)
     private String name;
+
+    @Size(max = 50)
     private String type;
+
+    @Size(max = 30)
     private String status;
-
-    public Asset() {}
-
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
 }

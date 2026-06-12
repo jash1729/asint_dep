@@ -9,8 +9,7 @@
                 "options": {
                     "model": [
                         "./asint_ais_model",
-                        "./asint_ais_backend",
-                        "./asint_ais_analytics_backend"
+                        "./asint_ais_backend"
                     ]
                 }
             },
@@ -37,24 +36,11 @@
         ]
     },
     "hana": {
-        "deploy-format": "hdbtable",
-        "syntax": "hdi"
+        "deploy-format": "hdbtable"
     },
-    "folders": {
-        "db": "./asint_ais_model",
-        "srv": "./asint_ais_backend"
-    },
-    "roots": [
-        "./asint_ais_model",
-        "./asint_ais_backend"
-    ],
     "requires": {
         "db": {
-            "kind": "hana",
-            "pool": {
-                "max": 100,
-                "min": 10
-            }
+            "kind": "hana-cloud"
         }
     }
 }
