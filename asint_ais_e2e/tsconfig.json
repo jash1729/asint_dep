@@ -1,0 +1,45 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "module": "ESNext",
+        "target": "es2022",
+        "lib": [
+            "es2022",
+            "dom"
+        ],
+        "types": [
+            "node",
+            "mocha",
+            "@wdio/globals/types",
+            "expect-webdriverio"
+        ],
+        "baseUrl": ".", 
+        "paths": {
+            "@pages/*": ["page_object_model/*"]
+        },
+        "skipLibCheck": true,
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": [
+        "equipment",
+        "planning",
+        "page_object_model",
+        "configuration",
+        "task_management",
+        "reliability",
+        "root_cause_analysis",
+        "integrity_configuration",
+        "reliability/root_cause_analysis",
+        "integrity",
+        "planning/maintenance_orders",
+        "wdio.conf.ts",
+        "planning/recommendation_workbench"    
+    ]
+}
