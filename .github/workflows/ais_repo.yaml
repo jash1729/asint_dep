@@ -108,7 +108,7 @@ jobs:
 
       - name: Install E2E dependencies
         working-directory: asint_ais_e2e
-        run: npm ci
+        run: npm install
 
 
       # TESTS
