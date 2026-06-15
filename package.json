@@ -33,6 +33,7 @@
         "@sap/xssec": "^3.6.1",
         "bottleneck": "^2.19.5",
         "express": "^4",
+        "mbt": "^1.2.29",
         "fs": "^0.0.1-security",
         "passport": "^0.7.0"
     },
