@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog title="{mEquipmentList>/data/createNewEquipment/oDialogData/Title}" contentHeight="70%" class="asintAddRemoveTempDialogWidth">
+        <Table id="idAsintObjectTemplatesTable" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar"
+            items="{
+                    path: 'masterService>/ObjectTemplate',
+                    events:{dataReceived:'.onDataReceived'},
+                    parameters : {countMode:'Inline'},
+                    sorter: {path: 'modifiedAt', descending: true}
+            }" growing="true" growingThreshold="20" growingScrollToLoad="true"
+            noDataText="" selectionChange="onDialogTemplateSelect">
+            <headerToolbar>
+                <OverflowToolbar design="Transparent">
+                    <Title text="{mEquipmentList>/data/createNewEquipment/oDialogData/TableHeader}"/>
+                    <ToolbarSpacer/>
+                    <SearchField width="30%" change="fnSearchDialogTemplatesList"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.create.objectTemplate.dialog.table.column.name.text}"/>
+                </Column>
+                <Column hAlign="Begin" minScreenWidth="Tablet" demandPopin="true">
+                    <Text text="{i18n>asint.equipment.create.objectTemplate.dialog.table.column.displayID.text}"/>
+                </Column>
+                <Column hAlign="Begin" minScreenWidth="Tablet" demandPopin="true">
+                    <Text text="{i18n>asint.equipment.create.objectTemplate.dialog.table.column.type.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{masterService>name}" text="{masterService>to_description/0/shortDescription}"/>
+                        <Text text="{masterService>displayId}"></Text>
+                        <Text text="{parts: [{ path : 'masterService>type' }],formatter : '.formatter.fnFormatTemplateType'}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>asint.reusable.button.confirm.text}" type="Emphasized" enabled="{mEquipmentList>/data/createNewEquipment/oDialogData/IsOkEnabled}" press="onSelectObjectTemplateOkPress" />
+            <Button text="{i18n>asint.reusable.close.button}" press="onCloseSelectObjectTemplateDialog" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

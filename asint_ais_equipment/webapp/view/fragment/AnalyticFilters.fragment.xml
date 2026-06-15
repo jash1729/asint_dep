@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <Dialog title="{i18n>asint.equipment.list.analytics.filter.fragment.title}" contentWidth="30%" draggable="true">
+        <f:SimpleForm editable="true" columnsM="1" columnsL="1" columnsXL="1" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" layout="ResponsiveGridLayout" maxContainerCols="1">
+            <f:content>
+                <Label  text="{i18n>asint.equipment.list.analytics.filter.equipment.text}" />
+                <MultiInput  id="idAnalyticEquipmentInputFilter" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="handleEquipmentValueHelp('idAnalyticEquipmentInputFilter')" 
+                tokenUpdate="onAnalyticsFilterTokenUpdate($event,'equipment')" selectedItem="{mEquipmentList>/data/analytics/equipment}"/>
+                <Label  text="{i18n>asint.equipment.list.analytics.filter.floc.text}" />
+                <MultiInput id="idAnalyticFlocInputFilter" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="handleFunctionalLocationValueHelp('idAnalyticFlocInputFilter')"
+                tokenUpdate="onAnalyticsFilterTokenUpdate($event,'functionalLoc')" selectedItem="{mEquipmentList>/data/analytics/functionalLoc}"/>
+                <Label  text="{i18n>asint.equipment.list.analytics.filter.planningPlant.text}" />
+                <MultiInput  valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelpDialog($event ,'PLPT', 'MultiSelect', true)" tokenUpdate="onAnalyticsFilterTokenUpdate($event,'planningPlant')"
+                    tokens="{path: 'mEquipmentList>/data/analytics/planningPlant'}">
+                    <tokens>
+                        <Token key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                    </tokens>  
+                </MultiInput>
+                <Label  text="{i18n>asint.equipment.list.analytics.filter.mainplant.text}" />
+                <MultiInput  valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelpDialog($event ,'PLMT', 'MultiSelect', true)" tokenUpdate="onAnalyticsFilterTokenUpdate($event,'mainPlant')"
+                    tokens="{path: 'mEquipmentList>/data/analytics/mainPlant'}">
+                    <tokens>
+                        <Token key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                    </tokens>  
+                </MultiInput>
+            </f:content>
+        </f:SimpleForm>
+        <buttons>
+            <Button type="Emphasized" text="{i18n>asint.reusable.button.ok.text}" press="onAnalyticsFilterConfirm"/>
+            <Button type="Transparent" text="{i18n>asint.reusable.close.button}" press="onAnalyticsFilterClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

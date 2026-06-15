@@ -1,0 +1,570 @@
+<mvc:View xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:svm="sap.ui.comp.smartvariants" xmlns:t="sap.ui.table"
+    controllerName="com.asint.ais.mi.equipment.controller.list.EquAnalyticsMode"
+    xmlns="sap.m" xmlns:cc="com.asint.ais.library.control.GeneralRiskMatrix" 
+    xmlns:mvc="sap.ui.core.mvc" xmlns:v="sap.ui.comp.variants"
+    displayBlock="true"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <f:DynamicPage class="asintDynamicPage">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:actions>
+					<OverflowToolbar class="asintVariantToolbarBorderClass">
+						<ToolbarSpacer/>
+                        <HBox visible="{mEquAnalytics>/data/isCorporateMatrixVisible}">
+						    <Button type="Emphasized" visible="{= !${mEquAnalytics>/data/isValuePresentInHC}}" text="{i18n>asint.equipment.analytics.hcRiskMatrix.btn.title}" press="onPressHCRiksMatrix"/>
+						    <Button type="Critical" visible="{mEquAnalytics>/data/isValuePresentInHC}" text="{i18n>asint.equipment.analytics.hcRiskMatrix.btn.title}" press="onPressHCRiksMatrix"/>
+                        </HBox>
+						<Button type="Emphasized" visible="{= !${mEquAnalytics>/data/isCorporateMatrixVisible}}" text="{i18n>asint.equipment.analytics.corporateRiskMatrix.btn.title}" press="onPressCorporateRiksMatrix"/>
+					</OverflowToolbar>
+				</f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader>
+                <f:content>
+                    <fb:FilterBar id="idAnalytcisPagefilterbar" persistencyKey="equipmentList" useToolbar="false" showRestoreButton="true" filterBarExpanded="false"
+							search="onAnalyticsFilterSearch" reset="onFilterReset" showClearOnFB="true" clear="onClearAllFilters">
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic"  visibleInFilterBar="true" name="maintenancePlant" label="{i18n>asint.equipment.field.maintenancePlant.label}">
+                                <fb:control>
+                                    <MultiInput valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="fnHandleValueHelp($event ,'MaintPlant', 'MultiSelect')" 
+                                        tokens="{path: 'mEquAnalytics>/data/filters/maintPlant'}" tokenUpdate="onRemoveMultiInputToken">
+                                        <tokens>
+                                            <Token key="{mEquAnalytics>key}" text="{mEquAnalytics>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic"  visibleInFilterBar="true" name="location" label="{i18n>asint.equipment.analytics.filters.location.text}">
+                                <fb:control>
+                                    <MultiInput valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="fnHandleValueHelp($event ,'Location', 'MultiSelect')" 
+                                        tokens="{path: 'mEquAnalytics>/data/filters/location'}" tokenUpdate="onRemoveMultiInputToken">
+                                        <tokens>
+                                            <Token key="{mEquAnalytics>key}" text="{mEquAnalytics>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic"  visibleInFilterBar="true" name="plantSection" label="{i18n>asint.equipment.analytics.filters.plantSection.text}">
+                                 <fb:control>
+                                    <MultiInput valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="fnHandleValueHelp($event ,'PlantSection', 'MultiSelect')" 
+                                        tokens="{path: 'mEquAnalytics>/data/filters/plantSection'}" tokenUpdate="onRemoveMultiInputToken">
+                                        <tokens>
+                                            <Token key="{mEquAnalytics>key}" text="{mEquAnalytics>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" visibleInFilterBar="true" name="criticality" label="{i18n>asint.equipment.field.ABCIndicator.label}">
+                                <fb:control>
+                                    <MultiInput valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="fnHandleValueHelp($event ,'ABCIndicator','MultiSelect')" 
+                                        tokens="{path: 'mEquAnalytics>/data/filters/abcIndicator'}" tokenUpdate="onRemoveMultiInputToken">
+                                        <tokens>
+                                            <Token key="{mEquAnalytics>text}" text="{mEquAnalytics>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" visibleInFilterBar="true" name="assessmentType" label="{i18n>asint.equipment.analytics.filters.asmtType.text}">
+                                 <fb:control>
+                                    <ComboBox items="{path: 'mEquAnalytics>/metadata/dropDowns/assessmentType'}" showSecondaryValues="true" selectionChange="onAssessmentTypeChange">
+                                        <core:ListItem key="{mEquAnalytics>key}" text="{mEquAnalytics>text}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem visible="{mEquAnalytics>/data/isCorporateMatrixVisible}" groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" visibleInFilterBar="true" name="sheAtTodaysDate" label="{i18n>asint.equipment.analytics.filters.sheAtToday.text}">
+                                 <fb:control>
+                                    <MultiComboBox items="{path: 'mEquipment>/metadata/MitigatedRiskDropDownNonHC'}" showSecondaryValues="true">
+                                        <core:ListItem key="{mEquipment>risk}" text="{mEquipment>risk}" />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem visible="{mEquAnalytics>/data/isCorporateMatrixVisible}" groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" visibleInFilterBar="true" name="finAtTodaysDate" label="{i18n>asint.equipment.analytics.filters.finAtToday.text}">
+                                 <fb:control>
+                                    <MultiComboBox items="{path: 'mEquipment>/metadata/MitigatedRiskDropDownNonHC'}" showSecondaryValues="true">
+                                        <core:ListItem key="{mEquipment>risk}" text="{mEquipment>risk}" />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem visible="{mEquAnalytics>/data/isCorporateMatrixVisible}" groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" visibleInFilterBar="true" name="riskCategory" label="{i18n>asint.equipment.analytics.filters.riskValue.text}">
+                                 <fb:control>
+                                    <ComboBox items="{path: 'mEquAnalytics>/metadata/dropDowns/riskValue'}" showSecondaryValues="true">
+                                        <core:ListItem key="{mEquAnalytics>key}" text="{mEquAnalytics>text}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" visibleInFilterBar="true" name="eddWithRec" label="{i18n>asint.equipment.analytics.filters.recommendations.text}">
+                                 <fb:control>
+                                    <ComboBox id="idEquiAnalyticsRecoFilter" items="{path: 'mEquAnalytics>/metadata/dropDowns/recommendations'}" showSecondaryValues="true">
+                                        <core:ListItem key="{mEquAnalytics>key}" text="{mEquAnalytics>text}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" visibleInFilterBar="true" name="consequenceAssessment" label="{i18n>asint.equipment.analytics.filters.conseqAssessment.text}">
+                                 <fb:control>
+                                    <ComboBox items="{path: 'mEquAnalytics>/metadata/dropDowns/conseqAssessment'}" showSecondaryValues="true">
+                                        <core:ListItem key="{mEquAnalytics>key}" text="{mEquAnalytics>text}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <VBox>
+                <Panel id="idAnalyticsModeMainPanel" expanded="true" expandable="true" headerText="{i18n>asint.equipment.analytics.riskMatrix.title}">
+                    <content>
+                        <VBox visible="{mEquAnalytics>/data/riskMatrixConfig/isNoDataVisible}" justifyContent="Center" alignItems="Center" height="35px">
+                            <Text text="{i18n>asint.reusable.noData.text}"></Text>
+                        </VBox>
+                        <VBox items="{mEquAnalytics>/data/SHERiskAnalysis}" visible="{mEquAnalytics>/data/isCorporateMatrixVisible}">
+                            <ScrollContainer horizontal="true">
+                                <HBox height="100%" width="100%" items="{mEquAnalytics>MatrixList}">
+                                    <VBox alignItems="Center">
+                                        <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                            <Title text="{mEquAnalytics>matrixHeader}"></Title>
+                                            <MultiComboBox width="80%" class="sapUiMediumMarginBegin" visible="{mEquAnalytics>isFilterVisible}" items="{path: 'mEquipment>/metadata/MitigatedRiskDropDownNonHC'}" selectionFinish="oApplySHEMatrixLevelFilters" showSecondaryValues="true">
+                                                <core:ListItem key="{mEquipment>risk}" text="{mEquipment>risk}" />
+                                            </MultiComboBox>
+                                        </HBox>
+                                        <cc:RiskMatrix xAxisData="{mEquAnalytics>xAxisData}" yAxisData="{mEquAnalytics>yAxisData}" cells="{mEquAnalytics>cells}" riskLines="{mEquAnalytics>riskLines}" plotPoints="{mEquAnalytics>plotPoints}" rows="{mEquAnalytics>rows}" cols="{mEquAnalytics>columns}" index="{mEquAnalytics>index}">
+                                            <cc:cells>
+                                                <cc:RiskMatrixCell index="{mEquAnalytics>index}" color="{mEquAnalytics>color}" text="{mEquAnalytics>text}" />
+                                            </cc:cells>
+                                            <cc:xAxisData>
+                                                <cc:RiskXAxis axisValues="{mEquAnalytics>axisValues}" axisKey="{mEquAnalytics>axisKey}" axisDesc="{mEquAnalytics>axisDesc}" showRange="{mEquAnalytics>showRange}" showTextOnly="{mEquAnalytics>showTextOnly}" showValueOnly="{mEquAnalytics>showValueOnly}" showccText="{mEquAnalytics>showCustomText}" doNotShow="{mEquAnalytics>doNotShow}">
+                                                    <cc:axisValues>
+                                                        <cc:RiskAxisValues low="{mEquAnalytics>low}" high="{mEquAnalytics>high}" text1="{mEquAnalytics>text1}" text2="{mEquAnalytics>text2}" textHigh="{mEquAnalytics>textHigh}" textLow="{mEquAnalytics>textLow}"/>
+                                                    </cc:axisValues>
+                                                </cc:RiskXAxis>
+                                            </cc:xAxisData>
+                                            <cc:yAxisData>
+                                                <cc:RiskYAxis axisValues="{mEquAnalytics>axisValues}" axisKey="{mEquAnalytics>axisKey}" axisDesc="{mEquAnalytics>axisDesc}" showRange="{mEquAnalytics>showRange}" showTextOnly="{mEquAnalytics>showTextOnly}" showValueOnly="{mEquAnalytics>showValueOnly}" showccText="{mEquAnalytics>showCustomText}" doNotShow="{mEquAnalytics>doNotShow}">
+                                                    <cc:axisValues>
+                                                        <cc:RiskAxisValues low="{mEquAnalytics>low}" high="{mEquAnalytics>high}" text1="{mEquAnalytics>text1}" text2="{mEquAnalytics>text2}" textHigh="{mEquAnalytics>textHigh}" textLow="{mEquAnalytics>textLow}"/>
+                                                    </cc:axisValues>
+                                                </cc:RiskYAxis>
+                                            </cc:yAxisData>
+                                            <cc:riskLines>
+                                                <cc:RiskLine description="{mEquAnalytics>description}" sequenceNo="{mEquAnalytics>sequenceNo}" color="{mEquAnalytics>color}" xAxisName="{mEquAnalytics>xAxisName}" yAxisName="{mEquAnalytics>yAxisName}" startX="{mEquAnalytics>startX}" startY="{mEquAnalytics>startY}" endX="{mEquAnalytics>endX}" endY="{mEquAnalytics>endY}" />
+                                            </cc:riskLines>
+                                            <cc:plotPoints>
+                                                <cc:PlotPoint pointX="{mEquAnalytics>pointX}" pointY="{mEquAnalytics>pointY}" xTooltip="{mEquAnalytics>xTooltip}" yTooltip="{mEquAnalytics>yTooltip}" axisX="{mEquAnalytics>axisX}" axisY="{mEquAnalytics>axisY}" color="{mEquAnalytics>color}" pointDesc="{mEquAnalytics>pointDesc}" useAxisLabels="{mEquAnalytics>useAxisLabels}" xAxisPointText="{mEquAnalytics>xAxisPointText}" yAxisPointText="{mEquAnalytics>yAxisPointText}" />
+                                            </cc:plotPoints>
+                                        </cc:RiskMatrix>
+                                    </VBox>
+                                </HBox>
+                            </ScrollContainer>
+                        </VBox>
+                        <VBox items="{mEquAnalytics>/data/FINRiskAnalysis}" visible="{mEquAnalytics>/data/isCorporateMatrixVisible}">
+                            <ScrollContainer horizontal="true">
+                                <HBox height="100%" width="100%" items="{mEquAnalytics>MatrixList}">
+                                    <VBox alignItems="Center">
+                                        <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                            <Title text="{mEquAnalytics>matrixHeader}"></Title>
+                                            <MultiComboBox width="80%" class="sapUiMediumMarginBegin" visible="{mEquAnalytics>isFilterVisible}" items="{path: 'mEquipment>/metadata/MitigatedRiskDropDownNonHC'}" selectionFinish="oApplyFINMatrixLevelFilters" showSecondaryValues="true">
+                                                <core:ListItem key="{mEquipment>risk}" text="{mEquipment>risk}" />
+                                            </MultiComboBox>
+                                        </HBox>
+                                        <cc:RiskMatrix xAxisData="{mEquAnalytics>xAxisData}" yAxisData="{mEquAnalytics>yAxisData}" cells="{mEquAnalytics>cells}" riskLines="{mEquAnalytics>riskLines}" plotPoints="{mEquAnalytics>plotPoints}" rows="{mEquAnalytics>rows}" cols="{mEquAnalytics>columns}" index="{mEquAnalytics>index}">
+                                            <cc:cells>
+                                                <cc:RiskMatrixCell index="{mEquAnalytics>index}" color="{mEquAnalytics>color}" text="{mEquAnalytics>text}" />
+                                            </cc:cells>
+                                            <cc:xAxisData>
+                                                <cc:RiskXAxis axisValues="{mEquAnalytics>axisValues}" axisKey="{mEquAnalytics>axisKey}" axisDesc="{mEquAnalytics>axisDesc}" showRange="{mEquAnalytics>showRange}" showTextOnly="{mEquAnalytics>showTextOnly}" showValueOnly="{mEquAnalytics>showValueOnly}" showccText="{mEquAnalytics>showccText}" doNotShow="{mEquAnalytics>doNotShow}">
+                                                    <cc:axisValues>
+                                                        <cc:RiskAxisValues low="{mEquAnalytics>low}" high="{mEquAnalytics>high}" text1="{mEquAnalytics>text1}" text2="{mEquAnalytics>text2}" textHigh="{mEquAnalytics>textHigh}" textLow="{mEquAnalytics>textLow}"/>
+                                                    </cc:axisValues>
+                                                </cc:RiskXAxis>
+                                            </cc:xAxisData>
+                                            <cc:yAxisData>
+                                                <cc:RiskYAxis axisValues="{mEquAnalytics>axisValues}" axisKey="{mEquAnalytics>axisKey}" axisDesc="{mEquAnalytics>axisDesc}" showRange="{mEquAnalytics>showRange}" showTextOnly="{mEquAnalytics>showTextOnly}" showValueOnly="{mEquAnalytics>showValueOnly}" showccText="{mEquAnalytics>showccText}" doNotShow="{mEquAnalytics>doNotShow}">
+                                                    <cc:axisValues>
+                                                        <cc:RiskAxisValues low="{mEquAnalytics>low}" high="{mEquAnalytics>high}" text1="{mEquAnalytics>text1}" text2="{mEquAnalytics>text2}" textHigh="{mEquAnalytics>textHigh}" textLow="{mEquAnalytics>textLow}"/>
+                                                    </cc:axisValues>
+                                                </cc:RiskYAxis>
+                                            </cc:yAxisData>
+                                            <cc:riskLines>
+                                                <cc:RiskLine description="{mEquAnalytics>description}" sequenceNo="{mEquAnalytics>sequenceNo}" color="{mEquAnalytics>color}" xAxisName="{mEquAnalytics>xAxisName}" yAxisName="{mEquAnalytics>yAxisName}" startX="{mEquAnalytics>startX}" startY="{mEquAnalytics>startY}" endX="{mEquAnalytics>endX}" endY="{mEquAnalytics>endY}" />
+                                            </cc:riskLines>
+                                            <cc:plotPoints>
+                                                <cc:PlotPoint pointX="{mEquAnalytics>pointX}" pointY="{mEquAnalytics>pointY}" xTooltip="{mEquAnalytics>xTooltip}" yTooltip="{mEquAnalytics>yTooltip}" axisX="{mEquAnalytics>axisX}" axisY="{mEquAnalytics>axisY}" color="{mEquAnalytics>color}" pointDesc="{mEquAnalytics>pointDesc}" useAxisLabels="{mEquAnalytics>useAxisLabels}" xAxisPointText="{mEquAnalytics>xAxisPointText}" yAxisPointText="{mEquAnalytics>yAxisPointText}" />
+                                            </cc:plotPoints>
+                                        </cc:RiskMatrix>
+                                    </VBox>
+                                </HBox>
+                            </ScrollContainer>
+                        </VBox>
+                        <VBox items="{mEquAnalytics>/data/SHEHCRiskAnalysis/Row1}" visible="{= !${mEquAnalytics>/data/isCorporateMatrixVisible}}">
+                            <ScrollContainer horizontal="true">
+                                <HBox height="100%" width="100%" items="{mEquAnalytics>MatrixList}" justifyContent="Center">
+                                    <VBox alignItems="Center">
+                                        <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                            <Title text="{mEquAnalytics>matrixHeader}"></Title>
+                                            <MultiComboBox width="80%" class="sapUiMediumMarginBegin" visible="{mEquAnalytics>isFilterVisible}" items="{path: 'mEquipment>/metadata/MitigatedRiskDropDownHC'}" selectionFinish="oApplySHEHCMatrixLevelFilters" showSecondaryValues="true">
+                                                <core:ListItem key="{mEquipment>risk}" text="{mEquipment>risk}" />
+                                            </MultiComboBox>
+                                        </HBox>
+                                        <cc:RiskMatrix class="asintRbiCustomRiskMatrixNew" xAxisData="{mEquAnalytics>xAxisData}" yAxisData="{mEquAnalytics>yAxisData}" cells="{mEquAnalytics>cells}" riskLines="{mEquAnalytics>riskLines}" plotPoints="{mEquAnalytics>plotPoints}" rows="{mEquAnalytics>rows}" cols="{mEquAnalytics>columns}" index="{mEquAnalytics>index}">
+                                            <cc:cells>
+                                                <cc:RiskMatrixCell index="{mEquAnalytics>index}" color="{mEquAnalytics>color}" text="{mEquAnalytics>text}" />
+                                            </cc:cells>
+                                            <cc:xAxisData>
+                                                <cc:RiskXAxis axisValues="{mEquAnalytics>axisValues}" axisKey="{mEquAnalytics>axisKey}" axisDesc="{mEquAnalytics>axisDesc}" showRange="{mEquAnalytics>showRange}" showTextOnly="{mEquAnalytics>showTextOnly}" showValueOnly="{mEquAnalytics>showValueOnly}" showccText="{mEquAnalytics>showCustomText}" doNotShow="{mEquAnalytics>doNotShow}">
+                                                    <cc:axisValues>
+                                                        <cc:RiskAxisValues low="{mEquAnalytics>low}" high="{mEquAnalytics>high}" text1="{mEquAnalytics>text1}" text2="{mEquAnalytics>text2}" textHigh="{mEquAnalytics>textHigh}" textLow="{mEquAnalytics>textLow}"/>
+                                                    </cc:axisValues>
+                                                </cc:RiskXAxis>
+                                            </cc:xAxisData>
+                                            <cc:yAxisData>
+                                                <cc:RiskYAxis axisValues="{mEquAnalytics>axisValues}" axisKey="{mEquAnalytics>axisKey}" axisDesc="{mEquAnalytics>axisDesc}" showRange="{mEquAnalytics>showRange}" showTextOnly="{mEquAnalytics>showTextOnly}" showValueOnly="{mEquAnalytics>showValueOnly}" showccText="{mEquAnalytics>showCustomText}" doNotShow="{mEquAnalytics>doNotShow}">
+                                                    <cc:axisValues>
+                                                        <cc:RiskAxisValues low="{mEquAnalytics>low}" high="{mEquAnalytics>high}" text1="{mEquAnalytics>text1}" text2="{mEquAnalytics>text2}" textHigh="{mEquAnalytics>textHigh}" textLow="{mEquAnalytics>textLow}"/>
+                                                    </cc:axisValues>
+                                                </cc:RiskYAxis>
+                                            </cc:yAxisData>
+                                            <cc:riskLines>
+                                                <cc:RiskLine description="{mEquAnalytics>description}" sequenceNo="{mEquAnalytics>sequenceNo}" color="{mEquAnalytics>color}" xAxisName="{mEquAnalytics>xAxisName}" yAxisName="{mEquAnalytics>yAxisName}" startX="{mEquAnalytics>startX}" startY="{mEquAnalytics>startY}" endX="{mEquAnalytics>endX}" endY="{mEquAnalytics>endY}" />
+                                            </cc:riskLines>
+                                            <cc:plotPoints>
+                                                <cc:PlotPoint pointX="{mEquAnalytics>pointX}" pointY="{mEquAnalytics>pointY}" xTooltip="{mEquAnalytics>xTooltip}" yTooltip="{mEquAnalytics>yTooltip}" axisX="{mEquAnalytics>axisX}" axisY="{mEquAnalytics>axisY}" color="{mEquAnalytics>color}" pointDesc="{mEquAnalytics>pointDesc}" useAxisLabels="{mEquAnalytics>useAxisLabels}" xAxisPointText="{mEquAnalytics>xAxisPointText}" yAxisPointText="{mEquAnalytics>yAxisPointText}" />
+                                            </cc:plotPoints>
+                                        </cc:RiskMatrix>
+                                    </VBox>
+                                </HBox>
+                            </ScrollContainer>
+                        </VBox>
+                        <VBox items="{mEquAnalytics>/data/SHEHCRiskAnalysis/Row2}" visible="{= !${mEquAnalytics>/data/isCorporateMatrixVisible}}">
+                            <ScrollContainer horizontal="true">
+                                <HBox height="100%" width="100%" items="{mEquAnalytics>MatrixList}" justifyContent="Center">
+                                    <VBox alignItems="Center">
+                                        <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                            <Title text="{mEquAnalytics>matrixHeader}"></Title>
+                                            <MultiComboBox width="80%" class="sapUiMediumMarginBegin" visible="{mEquAnalytics>isFilterVisible}" items="{path: 'mEquipment>/metadata/MitigatedRiskDropDownHC'}" selectionFinish="oApplySHEHCMatrixLevelFilters" showSecondaryValues="true">
+                                                <core:ListItem key="{mEquipment>risk}" text="{mEquipment>risk}" />
+                                            </MultiComboBox>
+                                        </HBox>
+                                        <cc:RiskMatrix class="asintRbiCustomRiskMatrixNew" xAxisData="{mEquAnalytics>xAxisData}" yAxisData="{mEquAnalytics>yAxisData}" cells="{mEquAnalytics>cells}" riskLines="{mEquAnalytics>riskLines}" plotPoints="{mEquAnalytics>plotPoints}" rows="{mEquAnalytics>rows}" cols="{mEquAnalytics>columns}" index="{mEquAnalytics>index}">
+                                            <cc:cells>
+                                                <cc:RiskMatrixCell index="{mEquAnalytics>index}" color="{mEquAnalytics>color}" text="{mEquAnalytics>text}" />
+                                            </cc:cells>
+                                            <cc:xAxisData>
+                                                <cc:RiskXAxis axisValues="{mEquAnalytics>axisValues}" axisKey="{mEquAnalytics>axisKey}" axisDesc="{mEquAnalytics>axisDesc}" showRange="{mEquAnalytics>showRange}" showTextOnly="{mEquAnalytics>showTextOnly}" showValueOnly="{mEquAnalytics>showValueOnly}" showccText="{mEquAnalytics>showccText}" doNotShow="{mEquAnalytics>doNotShow}">
+                                                    <cc:axisValues>
+                                                        <cc:RiskAxisValues low="{mEquAnalytics>low}" high="{mEquAnalytics>high}" text1="{mEquAnalytics>text1}" text2="{mEquAnalytics>text2}" textHigh="{mEquAnalytics>textHigh}" textLow="{mEquAnalytics>textLow}"/>
+                                                    </cc:axisValues>
+                                                </cc:RiskXAxis>
+                                            </cc:xAxisData>
+                                            <cc:yAxisData>
+                                                <cc:RiskYAxis axisValues="{mEquAnalytics>axisValues}" axisKey="{mEquAnalytics>axisKey}" axisDesc="{mEquAnalytics>axisDesc}" showRange="{mEquAnalytics>showRange}" showTextOnly="{mEquAnalytics>showTextOnly}" showValueOnly="{mEquAnalytics>showValueOnly}" showccText="{mEquAnalytics>showccText}" doNotShow="{mEquAnalytics>doNotShow}">
+                                                    <cc:axisValues>
+                                                        <cc:RiskAxisValues low="{mEquAnalytics>low}" high="{mEquAnalytics>high}" text1="{mEquAnalytics>text1}" text2="{mEquAnalytics>text2}" textHigh="{mEquAnalytics>textHigh}" textLow="{mEquAnalytics>textLow}"/>
+                                                    </cc:axisValues>
+                                                </cc:RiskYAxis>
+                                            </cc:yAxisData>
+                                            <cc:riskLines>
+                                                <cc:RiskLine description="{mEquAnalytics>description}" sequenceNo="{mEquAnalytics>sequenceNo}" color="{mEquAnalytics>color}" xAxisName="{mEquAnalytics>xAxisName}" yAxisName="{mEquAnalytics>yAxisName}" startX="{mEquAnalytics>startX}" startY="{mEquAnalytics>startY}" endX="{mEquAnalytics>endX}" endY="{mEquAnalytics>endY}" />
+                                            </cc:riskLines>
+                                            <cc:plotPoints>
+                                                <cc:PlotPoint pointX="{mEquAnalytics>pointX}" pointY="{mEquAnalytics>pointY}" xTooltip="{mEquAnalytics>xTooltip}" yTooltip="{mEquAnalytics>yTooltip}" axisX="{mEquAnalytics>axisX}" axisY="{mEquAnalytics>axisY}" color="{mEquAnalytics>color}" pointDesc="{mEquAnalytics>pointDesc}" useAxisLabels="{mEquAnalytics>useAxisLabels}" xAxisPointText="{mEquAnalytics>xAxisPointText}" yAxisPointText="{mEquAnalytics>yAxisPointText}" />
+                                            </cc:plotPoints>
+                                        </cc:RiskMatrix>
+                                    </VBox>
+                                </HBox>
+                            </ScrollContainer>
+                        </VBox>
+                    </content>
+                </Panel>
+                <!-- <Table id="idEquAnalyticsListTable" busyIndicatorDelay="0" alternateRowColors="true"
+                    items="{ 
+                        path:'mEquAnalytics>/data/itemsList'
+                    }" growing="true" autoPopinMode="true" contextualWidth="Auto" growingThreshold="20"  growingScrollToLoad="true" sticky="ColumnHeaders,HeaderToolbar" popinLayout="GridSmall">
+                    <headerToolbar>
+                        <OverflowToolbar style="Clear">
+                            <Title text="{mEquAnalytics>/data/listHeader}" busy="{mEquAnalytics>/data/tableTiltleBusy}" level="H2" />
+                            <ToolbarSpacer />
+                            <Button icon="sap-icon://excel-attachment" tooltip="{i18n>asint.equipment.list.tooltip.export}" press="onPressExportExcel" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column importance="High">
+                            <Text customData:tableSettings="maintenancePlant" text="{i18n>asint.equipment.list.analytics.filter.mainplant.text}" />
+                        </Column>
+                        <Column importance="High">
+                            <Text customData:tableSettings="location" text="{i18n>asint.equipment.analytics.filters.location.text}" />
+                        </Column>
+                        <Column importance="High">
+                            <Text customData:tableSettings="plantSection" text="{i18n>asint.equipment.analytics.filters.plantSection.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="damageMechanism" text="{i18n>asint.equipment.analytics.list.damageMechanisam.text}" />
+                        </Column>
+                        <Column importance="High">
+                            <Text customData:tableSettings="equipmentName" text="{i18n>asint.equipment.list.table.columnHeader.equipment}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="equipmentDescription" text="{i18n>asint.equipment.field.description.label}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="sortField" text="{i18n>asint.equipment.field.sortField.label}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="recommendationClosedDate" text="{i18n>asint.equipment.analytics.list.recoClosedDate.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="NRDDate" text="{i18n>asint.equipment.analytics.list.nrdDate.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="sheAtTodaysDate" text="{i18n>asint.equipment.analytics.filters.sheAtToday.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="finAtTodaysDate" text="{i18n>asint.equipment.analytics.filters.finAtToday.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="validThroughDate" text="{i18n>asint.equipment.analytics.list.validThrough.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="sheAtTargetDate" text="{i18n>asint.equipment.analytics.list.sheAtTargetDate.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="sheMrAtDueDate" text="{i18n>asint.equipment.analytics.list.sheMRAtTargetDate.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="finAtTargetDate" text="{i18n>asint.equipment.analytics.list.finAtTargetDate.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="finMrAtDueDate" text="{i18n>asint.equipment.analytics.list.finMRAtTargetDate.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="targetDate" text="{i18n>asint.equipment.analytics.list.targetDate.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="sheAtNrd" text="{i18n>asint.equipment.analytics.list.sheAtNRD.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="finAtNrd" text="{i18n>asint.equipment.analytics.list.finAtNRD.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="recommendationOverdue" text="{i18n>asint.equipment.analytics.list.recoOverDue.text}" />
+                        </Column>
+                        <Column importance="High" popinDisplay="Inline">
+                            <Text customData:tableSettings="assessmentDisplayId" text="{i18n>asint.equipment.analytics.list.assessment.text}" />
+                        </Column>
+                        <Column importance="High" demandPopin="true" popinDisplay="Inline">
+                            <Text customData:tableSettings="recommendationDisplayId" text="{i18n>asint.equipment.analytics.list.reco.text}" />
+                        </Column>
+                        <Column importance="High" demandPopin="true" popinDisplay="Inline">
+                            <Text customData:tableSettings="recommendationDescription" text="{i18n>asint.equipment.analytics.list.recoDesc.text}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{mEquAnalytics>maintenancePlant}" />
+                                <Text text="{mEquAnalytics>location}" />
+                                <Text text="{mEquAnalytics>plantSection}" />
+                                <Text text="{mEquAnalytics>damageMechanism}" />
+                                <Text text="{mEquAnalytics>equipmentName}" />
+                                <Text text="{mEquAnalytics>equipmentDescription}" />
+                                <Text text="{mEquAnalytics>sortField}" />
+                                <Text text="{parts: ['mEquAnalytics>recommendationClosedDate'], formatter:'.formatter.formatDate'}" />
+                                <Text text="{parts: ['mEquAnalytics>NRDDate'], formatter:'.formatter.formatDate'}" />
+                                <Text text="{mEquAnalytics>sheAtTodaysDate}" />
+                                <Text text="{mEquAnalytics>finAtTodaysDate}" />
+                                <Text text="{parts: ['mEquAnalytics>validThroughDate'], formatter:'.formatter.formatDate'}" />
+                                <Text text="{mEquAnalytics>sheAtTargetDate}" />
+                                <Text text="{mEquAnalytics>sheMrAtDueDate}" />
+                                <Text text="{mEquAnalytics>finAtTargetDate}" />
+                                <Text text="{mEquAnalytics>finMrAtDueDate}" />
+                                <Text text="{parts: ['mEquAnalytics>targetDate'], formatter:'.formatter.formatDate'}" />
+                                <Text text="{mEquAnalytics>sheAtNrd}" />
+                                <Text text="{mEquAnalytics>finAtNrd}" />
+                                <Text text="{mEquAnalytics>recommendationOverdue}" />
+                                <Text text="{mEquAnalytics>assessmentDisplayId}" />
+                                <Text text="{mEquAnalytics>recommendationDisplayId}" />
+                                <Text text="{mEquAnalytics>recommendationDescription}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table> -->
+                <t:TreeTable class="sapUiSmallMarginTop"
+                    id="idEquAnalyticsListTable"
+                    rows="{path:'mEquAnalytics>/data/itemsList'}"
+                    selectionMode="None"
+                    enableSelectAll="false"
+                    ariaLabelledBy="title"
+                    visibleRowCount="20" threshold="20"
+                    rowActionCount="1" visibleRowCountMode="Fixed" minAutoRowCount="30">
+                    <t:extension>
+                        <OverflowToolbar style="Clear">
+                            <Title text="{mEquAnalytics>/data/listHeader}" busy="{mEquAnalytics>/data/tableTiltleBusy}" level="H2" />
+                            <ToolbarSpacer />
+                            <Button icon="sap-icon://excel-attachment" tooltip="{i18n>asint.equipment.list.tooltip.export}" press="onPressExportExcel" />
+                        </OverflowToolbar>
+                    </t:extension>
+                    <t:columns>
+                        <t:Column width="13rem" customData:exportProperty="maintenancePlant">
+                            <Label text="{i18n>asint.equipment.list.analytics.filter.mainplant.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>maintenancePlant}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="location">
+                            <Label text="{i18n>asint.equipment.analytics.filters.location.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>location}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="plantSection">
+                            <Label text="{i18n>asint.equipment.analytics.filters.plantSection.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>plantSection}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="equipmentName">
+                            <Label text="{i18n>asint.equipment.list.table.columnHeader.equipment}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>equipmentName}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="equipmentDescription">
+                            <Label text="{i18n>asint.equipment.field.description.label}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>equipmentDescription}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="sortField">
+                            <Label text="{i18n>asint.equipment.field.sortField.label}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>sortField}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="damageMechanism">
+                            <Label text="{i18n>asint.equipment.analytics.list.damageMechanisam.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>damageMechanism}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="recommendationClosedDate">
+                            <Label text="{i18n>asint.equipment.analytics.list.recoClosedDate.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{parts: ['mEquAnalytics>recommendationClosedDate'], formatter:'.formatter.formatDate'}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="NRDDate">
+                            <Label text="{i18n>asint.equipment.analytics.list.nrdDate.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{parts: ['mEquAnalytics>NRDDate'], formatter:'.formatter.formatDate'}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="sheAtTodaysDate">
+                            <Label text="{i18n>asint.equipment.analytics.filters.sheAtToday.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>sheAtTodaysDate}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="finAtTodaysDate">
+                            <Label text="{i18n>asint.equipment.analytics.filters.finAtToday.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>finAtTodaysDate}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="validThroughDate">
+                            <Label text="{i18n>asint.equipment.analytics.list.validThrough.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{parts: ['mEquAnalytics>validThroughDate'], formatter:'.formatter.formatDate'}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="sheAtTargetDate">
+                            <Label text="{i18n>asint.equipment.analytics.list.sheAtTargetDate.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>sheAtTargetDate}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="sheMrAtDueDate">
+                            <Label text="{i18n>asint.equipment.analytics.list.sheMRAtTargetDate.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>sheMrAtDueDate}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="finAtTargetDate">
+                            <Label text="{i18n>asint.equipment.analytics.list.finAtTargetDate.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>finAtTargetDate}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="finMrAtDueDate">
+                            <Label text="{i18n>asint.equipment.analytics.list.finMRAtTargetDate.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>finMrAtDueDate}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="targetDate">
+                            <Label text="{i18n>asint.equipment.analytics.list.targetDate.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{parts: ['mEquAnalytics>targetDate'], formatter:'.formatter.formatDate'}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="sheAtNrd">
+                            <Label text="{i18n>asint.equipment.analytics.list.sheAtNRD.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>sheAtNrd}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="finAtNrd">
+                            <Label text="{i18n>asint.equipment.analytics.list.finAtNRD.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>finAtNrd}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="recommendationOverdue">
+                            <Label text="{i18n>asint.equipment.analytics.list.recoOverDue.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>recommendationOverdue}" />
+                            </t:template>
+                        </t:Column>
+                         <t:Column width="13rem" customData:exportProperty="assessmentDisplayId">
+                            <Label text="{i18n>asint.equipment.analytics.list.assessment.text}" wrapping="true" />
+                            <t:template>
+                                <!-- <Text text="{mEquAnalytics>assessmentDisplayId}" /> -->
+                                <Link text="{mEquAnalytics>assessmentDisplayId}" press="onPressAssessmentLinkAnalyticsMode" />
+                            </t:template>
+                        </t:Column>
+                         <t:Column width="13rem" customData:exportProperty="recommendationDisplayId">
+                            <Label text="{i18n>asint.equipment.analytics.list.reco.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>recommendationDisplayId}" />
+                            </t:template>
+                        </t:Column>
+                         <t:Column width="13rem" customData:exportProperty="recommendationDescription">
+                            <Label text="{i18n>asint.equipment.analytics.list.recoDesc.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>recommendationDescription}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="failureMode">
+                            <Label text="{i18n>asint.equipment.analytics.list.failureMode.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>failureMode}" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column width="13rem" customData:exportProperty="maintenableItem">
+                            <Label text="{i18n>asint.equipment.analytics.list.maintenableItem.text}" wrapping="true" />
+                            <t:template>
+                                <Text text="{mEquAnalytics>maintenableItem}" />
+                            </t:template>
+                        </t:Column>
+                    </t:columns>
+                </t:TreeTable>
+                <VBox visible="{= !${mEquAnalytics>/data/page/isLastPage}}" class="sapUiTinyMarginTop" justifyContent="Center" alignItems="Center" height="35px">
+                    <Button text="Load More" press="onPressLoadMore" />
+                </VBox>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

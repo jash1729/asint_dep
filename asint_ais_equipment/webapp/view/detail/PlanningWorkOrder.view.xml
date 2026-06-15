@@ -1,0 +1,250 @@
+<mvc:View controllerName="com.asint.ais.mi.equipment.controller.detail.Planning" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<l:VerticalLayout>
+		<l:content>
+			<Table id="idTableWOSegment" growing="true" growingScrollToLoad="false" growingThreshold="5" mode="None"
+				noDataText="No Data" popinLayout="GridLarge" alternateRowColors="true"
+				items="{path: 'mEquipmentDetail>/data/tabs/planning/workOrder'}">
+				<headerToolbar>
+					<OverflowToolbar design="Transparent">
+						<SegmentedButton id="idWOSegment" selectionChange="onSelectWOSegment" selectedKey="all">
+							<items>
+									<SegmentedButtonItem text="All" key="all"/>
+									<SegmentedButtonItem icon="sap-icon://fob-watch" text="Pending" key="pending"/>
+									<SegmentedButtonItem icon="sap-icon://future" text="Planned" key="planned"/>
+									<SegmentedButtonItem icon="sap-icon://complete" text="Completed" key="completed"/>
+								</items>
+						</SegmentedButton>
+						<ToolbarSpacer/>
+						<SearchField id="idWOSearch" liveChange="onHandlePlanningWOsearch" 
+							placeholder="{i18n>asint.equipment.tab.planned.resuable.table.searchWO.text}" search="onHandlePlanningWOsearch" width="20%"></SearchField>
+						<Button icon="sap-icon://action-settings" tooltip="{i18n>asint.equipment.list.tooltip.settings}" press="onPressWOTableSettings" />
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column popinDisplay="Inline" vAlign="Top">
+						<Text customData:tableSettings="workOrderName" customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.workOrder.text}"/>
+					</Column>
+					<Column visible="false" popinDisplay="Inline" vAlign="Top">
+						<Text customData:tableSettings="workOrderDescp" customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.workOrder.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettings="workOrderType" text="{i18n>asint.equipment.tab.planned.resuable.table.type.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettings="workOrderPriority" text="{i18n>asint.equipment.tab.planned.resuable.table.priority.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettings="workOrderProgress" customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.progress.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettings="workOrderStatus" text="{i18n>asint.equipment.tab.planned.resuable.table.status.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.startEndDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="StartDate" text="{i18n>asint.equipment.tab.planned.resuable.table.StartDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="EndDate" text="{i18n>asint.equipment.tab.planned.resuable.table.EndDate.text}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{mEquipmentDetail>workOrderName}" text="{mEquipmentDetail>workOrderDescp}" titleActive="true" titlePress="onClickWOTitle"/>
+							<Text visible="false" text="{mEquipmentDetail>workOrderDescp}"/>
+							<Text text="{mEquipmentDetail>workOrderType}" wrapping="true" wrappingType="Normal"/>
+							<HBox>
+								<core:Icon class="iotAinCustomTitleColor sapUiTinyMarginEnd" color="{= ${mEquipmentDetail>workOrderPriority} === 'High' ? '#BB0000' : ${mEquipmentDetail>workOrderPriority} === 'Very High' ? '#BB0000' : ${mEquipmentDetail>workOrderPriority} === 'Emergency' ? '#BB0000' : ''}" src="{path: 'mEquipmentDetail>workOrderPriority', formatter : '.formatter.fnIconBasedPriority'}"></core:Icon>
+								<Text text="{mEquipmentDetail>workOrderPriority}"/>
+							</HBox>
+							<Text text="{mEquipmentDetail>workOrderProgress}"/>
+							<Text text="{mEquipmentDetail>workOrderStatus}"/>
+							<Text text="{mEquipmentDetail>workOrderStartEndDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>workOrderStartDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>workOrderEndDate}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!-- <Table id="idTableWOPendingSegment" growing="true" growingScrollToLoad="false" growingThreshold="5" mode="None" visible="false"
+				noDataText="No Data" popinLayout="GridLarge" alternateRowColors="true"
+				items="{ path: 'mEquipmentDetail>/data/tabs/planning/workOrder/Pending' }">
+				<headerToolbar>
+					<OverflowToolbar class="asintWOToolbar" design="Transparent">
+						<SegmentedButton id="idWOPendingSegment" selectionChange="onSelectWOSegment" selectedKey="pending">
+							<items>
+								<SegmentedButtonItem text="All" key="all"/>
+								<SegmentedButtonItem icon="sap-icon://fob-watch" text="Pending" key="pending"/>
+								<SegmentedButtonItem icon="sap-icon://future" text="Planned" key="planned"/>
+								<SegmentedButtonItem icon="sap-icon://complete" text="Completed" key="completed"/>
+							</items>
+						</SegmentedButton>
+						<ToolbarSpacer/>
+						<SearchField id="idWOPendingSearch" liveChange="fnsearchPlanning" 
+							placeholder="{i18n>asint.equipment.tab.planned.resuable.table.searchWO.text}" search="fnsearchPlanning" width="20%"></SearchField>
+						<Button icon="sap-icon://action-settings" tooltip="{i18n>asint.equipment.list.tooltip.settings}" press="onPressTableSettings" />
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column popinDisplay="Inline" vAlign="Top">
+						<Text customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.workOrder.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.planned.resuable.table.type.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.planned.resuable.table.priority.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.planned.resuable.table.status.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.startEndDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="StartDate" text="{i18n>asint.equipment.tab.planned.resuable.table.StartDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="EndDate" text="{i18n>asint.equipment.tab.planned.resuable.table.EndDate.text}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{mEquipmentDetail>workOrderName}" text="{mEquipmentDetail>workOrderDescp}" titleActive="true" titlePress="onClickWOTitle"/>
+							<Text text="{mEquipmentDetail>workOrderType}" wrapping="true" wrappingType="Normal"/>
+							<HBox>
+								<core:Icon class="iotAinCustomTitleColor sapUiTinyMarginEnd" color="{= ${mEquipmentDetail>workOrderPriority} === 'High' ? '#BB0000' : ${mEquipmentDetail>workOrderPriority} === 'Very High' ? '#BB0000' : ${mEquipmentDetail>workOrderPriority} === 'Emergency' ? '#BB0000' : ''}" src="{path: 'mEquipmentDetail>workOrderPriority', formatter : '.formatter.fnIconBasedPriority'}"></core:Icon>
+								<Text text="{mEquipmentDetail>workOrderPriority}"/>
+							</HBox>
+							<Text text="{mEquipmentDetail>workOrderStatus}"/>
+							<Text text="{mEquipmentDetail>workOrderStartEndDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>workOrderStartDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>workOrderEndDate}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<Table id="idTableWOPlannedSegment" growing="true" growingScrollToLoad="false" growingThreshold="5" mode="None" visible="false"
+				noDataText="No Data" popinLayout="GridLarge" alternateRowColors="true"
+				items="{ path: 'mEquipmentDetail>/data/tabs/planning/workOrder/Planned' }">
+				<headerToolbar>
+					<OverflowToolbar class="asintWOToolbar" design="Transparent">
+						<SegmentedButton id="idWOPlannedSegment" selectionChange="onSelectWOSegment" selectedKey="planned">
+							<items>
+								<SegmentedButtonItem text="All" key="all"/>
+								<SegmentedButtonItem icon="sap-icon://fob-watch" text="Pending" key="pending"/>
+								<SegmentedButtonItem icon="sap-icon://future" text="Planned" key="planned"/>
+								<SegmentedButtonItem icon="sap-icon://complete" text="Completed" key="completed"/>
+							</items>
+						</SegmentedButton>
+						<ToolbarSpacer/>
+						<SearchField id="idWOPlannedSearch" liveChange="fnsearchPlanning" 
+							placeholder="{i18n>asint.equipment.tab.planned.resuable.table.searchWO.text}" search="fnsearchPlanning" width="20%"></SearchField>
+						<Button icon="sap-icon://action-settings" tooltip="{i18n>asint.equipment.list.tooltip.settings}" press="onPressTableSettings" />
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column popinDisplay="Inline" vAlign="Top">
+						<Text customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.workOrder.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.planned.resuable.table.type.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.planned.resuable.table.priority.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.planned.resuable.table.status.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.startEndDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="StartDate" text="{i18n>asint.equipment.tab.planned.resuable.table.StartDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="EndDate" text="{i18n>asint.equipment.tab.planned.resuable.table.EndDate.text}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{mEquipmentDetail>workOrderName}" text="{mEquipmentDetail>workOrderDescp}" titleActive="true" titlePress="onClickWOTitle"/>
+							<Text text="{mEquipmentDetail>workOrderType}" wrapping="true" wrappingType="Normal"/>
+							<HBox>
+								<core:Icon class="iotAinCustomTitleColor sapUiTinyMarginEnd" color="{= ${mEquipmentDetail>workOrderPriority} === 'High' ? '#BB0000' : ${mEquipmentDetail>workOrderPriority} === 'Very High' ? '#BB0000' : ${mEquipmentDetail>workOrderPriority} === 'Emergency' ? '#BB0000' : ''}" src="{path: 'mEquipmentDetail>workOrderPriority', formatter : '.formatter.fnIconBasedPriority'}"></core:Icon>
+								<Text text="{mEquipmentDetail>workOrderPriority}"/>
+							</HBox>
+							<Text text="{mEquipmentDetail>workOrderStatus}"/>
+							<Text text="{mEquipmentDetail>workOrderStartEndDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>workOrderStartDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>workOrderEndDate}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<Table id="idTableWOCompletedSegment" growing="true" growingScrollToLoad="false" growingThreshold="5" mode="None" visible="false"
+				noDataText="No Data" popinLayout="GridLarge" alternateRowColors="true"
+				items="{ path: 'mEquipmentDetail>/data/tabs/planning/workOrder/Completed' }">
+				<headerToolbar>
+					<OverflowToolbar class="asintWOToolbar" design="Transparent">
+						<SegmentedButton id="idWOCompletedSegment" selectionChange="onSelectWOSegment" selectedKey="completed">
+							<items>
+								<SegmentedButtonItem text="All" key="all"/>
+								<SegmentedButtonItem icon="sap-icon://fob-watch" text="Pending" key="pending"/>
+								<SegmentedButtonItem icon="sap-icon://future" text="Planned" key="planned"/>
+								<SegmentedButtonItem icon="sap-icon://complete" text="Completed" key="completed"/>
+							</items>
+						</SegmentedButton>
+						<ToolbarSpacer/>
+						<SearchField id="idWOCompletedSearch" liveChange="fnsearchPlanning" 
+							placeholder="{i18n>asint.equipment.tab.planned.resuable.table.searchWO.text}" search="fnsearchPlanning" width="20%"></SearchField>
+						<Button icon="sap-icon://action-settings" tooltip="{i18n>asint.equipment.list.tooltip.settings}" press="onPressTableSettings" />
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column popinDisplay="Inline" vAlign="Top">
+						<Text customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.workOrder.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.planned.resuable.table.type.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.planned.resuable.table.priority.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.planned.resuable.table.status.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.startEndDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="StartDate" text="{i18n>asint.equipment.tab.planned.resuable.table.StartDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="EndDate" text="{i18n>asint.equipment.tab.planned.resuable.table.EndDate.text}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{mEquipmentDetail>workOrderName}" text="{mEquipmentDetail>workOrderDescp}" titleActive="true" titlePress="onClickWOTitle"/>
+							<Text text="{mEquipmentDetail>workOrderType}" wrapping="true" wrappingType="Normal"/>
+							<HBox>
+								<core:Icon class="iotAinCustomTitleColor sapUiTinyMarginEnd" color="{= ${mEquipmentDetail>workOrderPriority} === 'High' ? '#BB0000' : ${mEquipmentDetail>workOrderPriority} === 'Very High' ? '#BB0000' : ${mEquipmentDetail>workOrderPriority} === 'Emergency' ? '#BB0000' : ''}" src="{path: 'mEquipmentDetail>workOrderPriority', formatter : '.formatter.fnIconBasedPriority'}"></core:Icon>
+								<Text text="{mEquipmentDetail>workOrderPriority}"/>
+							</HBox>
+							<Text text="{mEquipmentDetail>workOrderStatus}"/>
+							<Text text="{mEquipmentDetail>workOrderStartEndDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>workOrderStartDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>workOrderEndDate}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table> -->
+		</l:content>
+	</l:VerticalLayout>
+</mvc:View>

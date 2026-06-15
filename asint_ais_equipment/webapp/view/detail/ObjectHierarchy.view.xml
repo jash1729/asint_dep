@@ -1,0 +1,70 @@
+<mvc:View
+    controllerName="com.asint.ais.mi.equipment.controller.detail.ObjectHierarchy"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:ng="sap.suite.ui.commons.networkgraph"
+>
+    <VBox width="100%">
+        <ng:Graph
+            id="idNetworkGraph"
+            enableWheelZoom="false"
+            orientation="TopBottom"
+            nodes="{mEquipment>/data/currentAssetHierarchy/nodes}"
+            lines="{mEquipment>/data/currentAssetHierarchy/lines}"
+            noData="{= ${mEquipment>/data/isHierarchyAvailable} === false ? true : false}"
+            noDataText="{i18n>asint.reusable.noDataFound.text}"
+            beforeLayouting = "fnResetGraphZoomandSearch"
+        >
+        <ng:statuses>
+            <ng:Status key="Information" title="BTP Asset" />
+
+            <ng:Status key="Neutral" title="S4 Asset" />
+
+            <ng:Status key="Warning" title="Selected Asset" />
+        </ng:statuses>
+            <ng:nodes>
+                <ng:Node
+                    key="{mEquipment>id}"
+                    selected="{mEquipment>isSelected}"
+                    title="{mEquipment>name}"
+                    shape="{mEquipment>shape}"
+                    icon="{mEquipment>icon}"
+                    attributes="{path:'mEquipment>attributes', templateShareable:true}"
+                    showDetailButton="{mEquipment>detailbutton}"
+                    showExpandButton="{mEquipment>expandbutton}"
+                    status="{mEquipment>status}"
+                >
+                    <ng:attributes>
+                        <ng:ElementAttribute
+                            label="{mEquipment>label}"
+                            value="{mEquipment>value}"
+                            valueStatus="{valueStatus}"
+                        />
+                    </ng:attributes>
+                    <ng:actionButtons>
+                        <ng:ActionButton
+                            icon="sap-icon://show"
+                            title="Navigate to detail"
+                            press="onNodeNavigate"
+                        />
+                    </ng:actionButtons>
+                </ng:Node>
+            </ng:nodes>
+            <ng:lines>
+                <ng:Line
+                    from="{mEquipment>from}"
+                    to="{mEquipment>to}"
+                    press="onLinePress"
+                />
+            </ng:lines>
+            <ng:layoutData>
+                <l:SplitterLayoutData
+                    id="idAsintASDContainer1"
+                    size="100%"
+                    resizable="false"
+                />
+            </ng:layoutData>
+        </ng:Graph>
+    </VBox>
+</mvc:View>

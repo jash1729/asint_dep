@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog
+        title="{i18n>asint.equipment.detail.valuehelp.currency.title}"
+        class="asintAddRemoveTempDialogWidth"
+        contentWidth="30rem" contentHeight="auto">
+        <Table id="idcurrencyCode" visible="true" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="SingleSelectMaster" noDataText="" popinLayout="GridLarge" alternateRowColors="true" 
+        items="{path:'masterService>/GenCurrency'}" selectionChange="onSelectCurrency" sticky="ColumnHeaders,HeaderToolbar">
+            <columns>
+                <Column width="10rem">
+                    <Text text="{i18n>asint.equipment.detail.valuehelp.currency}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.valuehelp.currencyDesc}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{masterService>currencyCode}"/>
+                        <Text text="{masterService>text}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+         <buttons>
+                <Button text="{i18n>asint.reusable.close.button}" press="onCloseCurrency"/>
+        </buttons>
+ </Dialog>
+</core:FragmentDefinition>

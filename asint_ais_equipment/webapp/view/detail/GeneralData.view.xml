@@ -1,0 +1,193 @@
+<mvc:View controllerName="com.asint.ais.mi.equipment.controller.detail.GeneralData" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns="sap.m">
+    <VBox direction="Row">
+        <Label vAlign="Bottom" showColon="true" text="{i18n>asint.equipment.field.longDescription.label}" />
+        <TextArea editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/to_description/0/longDescription}" class="sapUiTinyMarginBegin" rows="10" cols="60" />
+    </VBox>
+    <f:SimpleForm id="_ID_GeneralSection" editable="{mEquipmentDetail>/metadata/detail/isEditable}" layout="ColumnLayout" title="{i18n>asint.equipment.generalData.genaralData.title}" columnsM="2" columnsL="2" columnsXL="2">
+        <f:content>
+            <core:Title text="" />
+            <Label text="{i18n>asint.equipment.field.shortDescription.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/to_description/0/shortDescription}" />
+            <Label text="{i18n>asint.equipment.field.inventoryNumber.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/inventoryNumber}" />
+            <Label text="{i18n>asint.equipment.field.operationStartDate.label}" />
+            <DatePicker
+                value="{
+					'type': 'sap.ui.model.type.Date',
+					'path': 'mEquipmentDetail>/data/detail/operationStartDate',
+					'formatOptions': {
+						source: {
+							pattern: 'yyyy-MM-dd'
+						}, 
+						pattern: 'yyyy-MM-dd'
+					}
+				}"
+                editable="{mEquipmentDetail>/metadata/detail/isEditable}"
+                class="sapUiSmallMarginBottom"
+            />
+			<Label text="{i18n>asint.equipment.field.validityEndDateTime.label}" />
+				<DateTimePicker
+					value="{
+						'type': 'sap.ui.model.type.DateTime',
+						'path': 'mEquipmentDetail>/data/detail/validityEndDateTime',
+						'formatOptions': {
+							source: {
+								pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+							}, 
+							pattern: 'yyyy-MM-ddTHH:mm:ssZ',
+							UTC: true
+						}
+					}"
+					editable="{mEquipmentDetail>/metadata/detail/isEditable}"
+					class="sapUiSmallMarginBottom"
+				/>
+            <Label text="{i18n>asint.equipment.field.authorizationGroup.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/authorizationGroup}" />
+            <Label text="{i18n>asint.equipment.field.weightUnitMeasure.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{ 
+					path: 'mEquipmentDetail>/data/detail/grossWeight',
+					type: 'sap.ui.model.odata.type.Decimal',
+					constraints: {
+						precision: 13,
+						scale: 3
+					}
+			 	}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/grossWeightUnit}">
+                <layoutData>
+                    <f:ColumnElementData cellsSmall="2" cellsLarge="1" />
+                </layoutData>
+            </Input>
+            <Label text="{i18n>asint.equipment.field.sizeOrDimensionText.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/sizeOrDimensionText}" />
+
+            <core:Title text="" />
+            <Label text="{i18n>asint.equipment.field.class.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="" />
+        </f:content>
+    </f:SimpleForm>
+
+    <f:SimpleForm id="_ID_ManufacturerData" editable="{mEquipmentDetail>/metadata/detail/isEditable}" layout="ColumnLayout" title="{i18n>asint.equipment.tab.generalData.manufacturerData.title}" columnsM="2" columnsL="2" columnsXL="2">
+        <f:content>
+            <core:Title text="" />
+            <Label text="{i18n>asint.equipment.field.assetManufacturerName.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/assetManufacturerName}" />
+            <Label text="{i18n>asint.equipment.field.modelNmbr.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="" />
+            <Label text="{i18n>asint.equipment.field.manufacturerPartNmbr.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/manufacturerPartNmbr}" />
+
+            <core:Title text="" />
+            <Label text="{i18n>asint.equipment.field.manufactureCountryAndRegion.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/manufacturerCountry}" />
+            <Label text="{i18n>asint.equipment.field.constructionYearAndMonth.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/constructionMonth}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/constructionYear}"/>
+            <Label text="{i18n>asint.equipment.field.manufacturerSerialNumber.label}" />
+            <Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/manufacturerSerialNumber}" />
+        </f:content>
+    </f:SimpleForm>
+
+    <!-- <f:SimpleForm id="_ID_ReferenceData"
+		editable="{mEquipmentDetail>/metadata/detail/isEditable}"
+		layout="ColumnLayout"
+		title="Reference Data"
+		columnsM="2"
+		columnsL="2"
+		columnsXL="2">
+		<f:content>
+			<core:Title text="" />
+			<Label text="Acquisition Value/Currency" />
+			<Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/tabs/GeneralData/AcquisitionValue}" />
+			<Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/tabs/GeneralData/Currency}">
+				<layoutData>
+					<f:ColumnElementData cellsSmall="2" cellsLarge="1" />
+				</layoutData>
+			</Input>			
+			
+			<core:Title text="" />
+			<Label text="Acquisition Date" />	
+			<DatePicker 
+				value="{
+					'type': 'sap.ui.model.type.Date',
+					'path': 'mEquipmentDetail>/data/tabs/GeneralData/AcquisitionDate',
+					'formatOptions': {
+						'pattern': 'MM/dd/y'
+					}
+				}" editable="{mEquipmentDetail>/metadata/detail/isEditable}" class="sapUiSmallMarginBottom"/>
+		</f:content>
+	</f:SimpleForm> -->
+
+    <!-- <f:SimpleForm id="_ID_CustomerWarranty"
+		editable="{mEquipmentDetail>/metadata/detail/isEditable}"
+		layout="ColumnLayout"
+		title="Customer Warranty"
+		columnsM="2"
+		columnsL="2"
+		columnsXL="2">
+		<f:content>
+			<core:Title text="" />
+			<Label text="Warranty Start/End" />
+			<DatePicker
+				value="{
+					'type': 'sap.ui.model.type.Date',
+					'path': 'mEquipmentDetail>/data/tabs/GeneralData/CWarrentyStartDate',
+					'formatOptions': {
+						'pattern': 'MM/dd/y'
+					}
+				}" editable="{mEquipmentDetail>/metadata/detail/isEditable}" change="handleChange" class="sapUiSmallMarginBottom"/>
+			<DatePicker
+				value="{
+					'type': 'sap.ui.model.type.Date',
+					'path': 'mEquipmentDetail>/data/tabs/GeneralData/CWarrentyEndDate',
+					'formatOptions': {
+						'pattern': 'MM/dd/y'
+					}
+				}" change="handleChange" editable="{mEquipmentDetail>/metadata/detail/isEditable}" class="sapUiSmallMarginBottom"/>
+			<Label text="Inherit Warranty" />
+			<CheckBox editable="{mEquipmentDetail>/metadata/detail/isEditable}" selected="true" />		
+			
+			<core:Title text="" />
+			<Label text="Master Warranty" />
+			<Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/tabs/GeneralData/CMasterWarrenty}" />
+			<Label text="Pass On Warranty" />
+			<CheckBox editable="{mEquipmentDetail>/metadata/detail/isEditable}" selected="true" />
+		</f:content>
+	</f:SimpleForm>
+
+	<f:SimpleForm id="_ID_VendorWarranty"
+		editable="{mEquipmentDetail>/metadata/detail/isEditable}"
+		layout="ColumnLayout"
+		title="Vendor Warranty"
+		columnsM="2"
+		columnsL="2"
+		columnsXL="2" >
+		<f:content>
+			<core:Title text="" />
+			<Label text="Warranty Start/End" />
+			<DatePicker
+				value="{
+					'type': 'sap.ui.model.type.Date',
+					'path': 'mEquipmentDetail>/data/tabs/GeneralData/CWarrentyStartDate',
+					'formatOptions': {
+						'pattern': 'MM/dd/y'
+					}
+				}" editable="{mEquipmentDetail>/metadata/detail/isEditable}" change="handleChange" class="sapUiSmallMarginBottom"/>
+			<DatePicker
+				value="{
+					'type': 'sap.ui.model.type.Date',
+					'path': 'mEquipmentDetail>/data/tabs/GeneralData/CWarrentyEndDate',
+					'formatOptions': {
+						'pattern': 'MM/dd/y'
+					}
+				}" change="handleChange" editable="{mEquipmentDetail>/metadata/detail/isEditable}" class="sapUiSmallMarginBottom"/>				
+			<Label text="Inherit Warranty" />
+			<CheckBox editable="{mEquipmentDetail>/metadata/detail/isEditable}" selected="true" />		
+			
+			<core:Title text="" />
+			<Label text="Master Warranty" />
+			<Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/tabs/GeneralData/VMasterWarrenty}" />
+			<Label text="Pass On Warranty" />
+			<CheckBox editable="{mEquipmentDetail>/metadata/detail/isEditable}" selected="true" />
+		</f:content>
+	</f:SimpleForm> -->
+</mvc:View>

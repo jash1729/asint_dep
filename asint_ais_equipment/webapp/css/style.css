@@ -1,0 +1,575 @@
+/* Hierarchy table CSS */
+
+.asintrbiSplitterClass.sapUiLoSplitter.sapUiLoSplitterV>.sapUiLoSplitterBar {
+    display: none !important;
+}
+
+/* .asintrbiSplitterClass.sapUiLoSplitter.sapUiLoSplitterH>.sapUiLoSplitterBar{ */
+
+/*	display:none !important; */
+
+/* } */
+
+.asintDynamicPage .sapFDynamicPageContent,
+.sapFDynamicPageContentFitContainer {
+    padding: 5px !important;
+}
+
+.asintrbiTreeTableClass .sapUiTableTr {
+    height: 49px !important;
+}
+
+.asintAddRemoveTempDialogWidth {
+    width: 50%;
+}
+
+.asintTemplateListDialogWidth {
+    width: 55%;
+}
+
+.asintCalBuilderReadonlyClass.sapCalculationBuilderReadOnly .sapCalculationBuilderItemLabel {
+    color: #758ca4;
+}
+
+.sapMObjStatusIndication03 span{
+    color: #0f0 !important;
+}
+
+.sapMObjStatusIndication02 span{
+    color: #f8ea25 !important;
+}
+
+.sapMObjStatusIndication01 span{
+    color: #f00 !important;
+}
+
+.sapMObjStatusIndication04 span{
+    color: #ffc000 !important;
+}
+
+.sapMObjStatusIndication05 span{
+    color: #0f0 !important;
+}
+
+.sapMObjStatusIndication06 span{
+    color: #f70808 !important;
+}
+
+.asintStyleFindingClassRed .sapMObjStatusText {
+    color: #AA0808 !important;
+    margin-top: 2px !important;
+}
+
+.asintStyleFindingClassGreen .sapMObjStatusText {
+    color: #256F3A !important;
+    margin-top: 2px !important;
+}
+
+.asintStyleFindingClassOrange .sapMObjStatusText {
+    color: #B95100 !important;
+    margin-top: 2px !important;
+}
+
+.asintStyleFindingClassBlue.sapMObjStatusText {
+    color: #0064D8 !important;
+    margin-top: 2px !important;
+}
+
+.asintNoTokenBorderCls .sapMInputBaseContentWrapper {
+    background: none !important;
+    border: none !important;
+}
+
+.asintStyleFindingClassIndigo .sapMObjStatusText {
+    color: #1d2d3e !important;
+    margin-top: 2px !important;
+}
+
+.tokenTopAlignmentCls {
+    margin-top: -3px !important;
+}
+
+/* CSS for time line */
+
+.timeLineMaxWidthCls {
+    max-width: 90% !important;
+}
+
+.asintFeedListItemPaddingCls .sapMFeedListItem {
+    padding-top: 0 !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.asintTimelineAvatarFontSize .sapFAvatarXS {
+    height: 2.5rem !important;
+    width: 2.5rem !important;
+}
+
+.asintTimelineAvatarFontSize .sapSuiteUiCommonsTimelineItemUserPicture {
+    margin-left: -4px !important;
+}
+
+/* .sapSuiteUiCommonsNetworkGraphDivNodeTitleText {
+    color: #ffffff !important;
+} */
+
+/* CSS for time line */
+
+/* stylelint-disable selector-class-pattern, color-hex-length */
+
+/* .GenericTagCustomRed .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #FF0000, #FF0000) !important;
+} */
+
+/* .GenericTagCustomOrange .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #FF9700, #FF9700) !important;
+} */
+
+/* .GenericTagCustomGreen .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #92D050, #92D050) !important;
+} */
+
+/* .GenericTagCustomYellow .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #FFFF00, #FFFF00) !important;
+} */
+
+.GenericTagCustomRed.sapMGenericTag,
+.GenericTagCustomRed .sapMGenericTagWrap,
+.GenericTagCustomRed .sapMGenericTagNone {
+    background: none !important;
+    border-left: none !important;
+}
+
+.GenericTagCustomRed .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #FF0000, #FF0000) !important;
+    border-radius: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 0.5rem !important;
+}
+
+.GenericTagCustomRed .sapMGenericTagText {
+    text-align: center !important;
+}
+
+.GenericTagCustomOrange.sapMGenericTag,
+.GenericTagCustomOrange .sapMGenericTagWrap,
+.GenericTagCustomOrange .sapMGenericTagNone {
+    background: none !important;
+    border-left: none !important;
+}
+
+.GenericTagCustomOrange .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #FF9700, #FF9700) !important;
+    border-radius: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 0.5rem !important;
+}
+
+.GenericTagCustomOrange .sapMGenericTagText {
+    text-align: center !important;
+}
+
+.GenericTagCustomGreen.sapMGenericTag,
+.GenericTagCustomGreen .sapMGenericTagWrap,
+.GenericTagCustomGreen .sapMGenericTagNone {
+    background: none !important;
+    border-left: none !important;
+}
+
+.GenericTagCustomGreen .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #92D050, #92D050) !important;
+    border-radius: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 0.5rem !important;
+}
+
+.GenericTagCustomGreen .sapMGenericTagText {
+    text-align: center !important;
+}
+
+
+.GenericTagCustomYellow.sapMGenericTag,
+.GenericTagCustomYellow .sapMGenericTagWrap,
+.GenericTagCustomYellow .sapMGenericTagNone {
+    background: none !important;
+    border-left: none !important;
+}
+
+.GenericTagCustomYellow .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #FFFF00, #FFFF00) !important;
+    border-radius: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 0.5rem !important;
+}
+
+.GenericTagCustomYellow .sapMGenericTagText {
+    text-align: center !important;
+}
+
+.GenericTagCustomLightGrey.sapMGenericTag,
+.GenericTagCustomLightGrey .sapMGenericTagWrap,
+.GenericTagCustomLightGrey .sapMGenericTagNone {
+    background: none !important;
+    border-left: none !important;
+}
+
+.GenericTagCustomLightGrey .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #C1C1C1,#C1C1C1) !important;
+    border-radius: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 0.5rem !important;
+}
+
+.GenericTagCustomLightGrey .sapMGenericTagText {
+    text-align: center !important;
+}
+
+.GenericTagCustomDarkGrey.sapMGenericTag,
+.GenericTagCustomDarkGrey .sapMGenericTagWrap,
+.GenericTagCustomDarkGrey .sapMGenericTagNone {
+    background: none !important;
+    border-left: none !important;
+}
+
+.GenericTagCustomDarkGrey .sapMGenericTagWrap {
+    background: 0 0 / 0.375rem 100% no-repeat linear-gradient(0deg, #7F7F7F, #7F7F7F) !important;
+    border-radius: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 0.5rem !important;
+}
+
+.GenericTagCustomDarkGrey .sapMGenericTagText {
+    text-align: center !important;
+}
+
+.asintVariantToolbarBorderClass {
+    border : none !important;
+}
+
+/* CSS for risk matrix begin */
+
+.asintRbiLabelAlign {
+    vertical-align: baseline;
+    vertical-align: -webkit-baseline-middle;
+}
+
+.asintRbiCustomRiskMatrix {
+    position: relative;
+    height: 320px;
+    width: 400px;
+}
+
+.asintRbiCustomRiskMatrixNew {
+    position: relative;
+    height: 250px;
+    width: 510px;
+}
+
+.asintRbiRMatWrap {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: 48%;
+}
+
+.asintRbiCustomRiskMatrix svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.asIntRbiRMatGrid rect {
+    stroke: #000;
+    stroke-width: 2;
+}
+
+.asintRbiDialogWidthLg {
+    width: 40% !important;
+}
+
+.asintRbiBackground {
+    background: transparent !important;
+}
+
+.asintRbiColorSaveBar {
+    padding: 0.02rem 0.5rem;
+    margin: 0.5rem auto;
+    background-color: #F4F5F6;
+    color: #333;
+    border: 1px solid;
+    border-radius: 0.18rem;
+}
+
+.asintRbiColorSaveBar div>span {
+    color: #333;
+}
+
+.asintRbiDynamicSideContent aside {
+    visibility: visible;
+    position: inherit;
+}
+
+.asintRbiColorBtn {
+    display: block;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    text-align: center;
+    background: #f7f7f7;
+    border: 0.0325rem solid #DEDDDD;
+    border-radius: 0.2rem;
+}
+
+.asintRbiColorBtnInner {
+    display: block;
+    content: "";
+    width: 25px;
+    height: 60%;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    border-radius: 0.2rem;
+}
+
+.asIntRbiRMYLabelPoint,
+.asIntRbiRMXLabelPoint {
+    fill: #000;
+}
+
+@media (width <=440px) {
+    .asintRbiCustomRiskMatrix {
+        width: 320px;
+        height: 320px;
+        margin-top: 2rem;
+    }
+}
+
+@media (width <=615px) {
+    .asintRbiColorSaveBar {
+        flex-direction: column;
+    }
+
+    .asintRbiColorSaveBar span {
+        text-align: center !important;
+    }
+}
+
+@media all and (-ms-high-contrast: none),
+    (-ms-high-contrast: active) {
+    ul li {
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 0.5rem 0.5rem 0;
+    }
+
+    .asintRbiRMatWrap {
+        position: static;
+    }
+
+    .asIntRBIAxisPointForm>div>div>div {
+        box-sizing: content-box !important;
+    }
+}
+
+.asintRbiMarginRightP5Rem {
+    margin-right: 0.5rem;
+}
+
+#line {
+    height: 2px;
+    position: fixed;
+    transition: transform .2s;
+}
+
+div#line::before {
+    content: "";
+    top: -6.5px;
+    left: 0;
+    position: absolute;
+    z-index: 9;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-right: 13px solid;
+    border-bottom: 8px solid transparent;
+    border-right-color: var(--color);
+}
+
+.idAsIntRbiRiskPoint {
+    z-index: 999;
+}
+
+/* Risk Matrix */
+
+/* Dark Theme Matrix CSS - Start */
+
+.sapUiTheme-sap_fiori_3_dark .asIntRbiRMYLabelPoint,
+.sapUiTheme-sap_fiori_3_dark .asIntRbiRMYSubLabelPoint,
+.sapUiTheme-sap_fiori_3_dark .asIntRbiRMXLabelPoint,
+.sapUiTheme-sap_fiori_3_dark .asIntRbiRMXSubLabelPoint,
+.sapUiTheme-sap_horizon_hcb .asIntRbiRMYLabelPoint,
+.sapUiTheme-sap_horizon_hcb .asIntRbiRMYSubLabelPoint,
+.sapUiTheme-sap_horizon_hcb .asIntRbiRMXLabelPoint,
+.sapUiTheme-sap_horizon_hcb .asIntRbiRMXSubLabelPoint,
+.sapUiTheme-sap_belize_hcb .asIntRbiRMYLabelPoint,
+.sapUiTheme-sap_belize_hcb .asIntRbiRMYSubLabelPoint,
+.sapUiTheme-sap_belize_hcb .asIntRbiRMXLabelPoint,
+.sapUiTheme-sap_belize_hcb .asIntRbiRMXSubLabelPoint,
+.sapUiTheme-sap_horizon_dark .asIntRbiRMYLabelPoint,
+.sapUiTheme-sap_horizon_dark .asIntRbiRMYSubLabelPoint,
+.sapUiTheme-sap_horizon_dark .asIntRbiRMXLabelPoint,
+.sapUiTheme-sap_horizon_dark .asIntRbiRMXSubLabelPoint,
+.sapUiTheme-asint_evening_horizon .asIntRbiRMYLabelPoint,
+.sapUiTheme-asint_evening_horizon .asIntRbiRMYSubLabelPoint,
+.sapUiTheme-asint_evening_horizon .asIntRbiRMXLabelPoint,
+.sapUiTheme-asint_evening_horizon .asIntRbiRMXSubLabelPoint {
+    fill: #fff;
+}
+
+.sapUiTheme-sap_fiori_3_dark .asintRbiLabelText,
+.sapUiTheme-sap_horizon_hcb .asintRbiLabelText,
+.sapUiTheme-sap_belize_hcb .asintRbiLabelText,
+.sapUiTheme-sap_horizon_dark .asintRbiLabelText,
+.sapUiTheme-asint_evening_horizon .asintRbiLabelText {
+    fill: #fff;
+}
+
+/* CSS for risk matrix end */
+
+
+.asIntNoGrowingCount .sapMGrowingListDescription.sapMSLIDescription {
+    display: none !important;
+}
+
+.rbiPanel {
+    margin: 8px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+.rbiPanelHeader.sapMTB {
+    border-bottom: none !important;
+    position: relative !important;
+}
+
+.rbiPanelHeader.sapMTB::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.rbiSectionIcon {
+    margin-right: 8px;
+}
+
+.rbiSectionTitle {
+    font-weight: bold;
+    font-size: 14px;
+    color: #1d2d3e;
+}
+
+.rbiKVRow {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 4px 12px;
+    align-items: flex-start;
+    padding: 5px 0;
+    border-bottom: 1px solid #e5e5e5;
+    flex-wrap: wrap;
+}
+
+.rbiKVRow:last-child {
+    border-bottom: none;
+}
+
+.rbiKey {
+    min-width: 0;
+    word-break: break-word;
+    font-size: 14px;
+    color: #666;
+}
+
+.rbiValue {
+    font-size: 14px;
+    color: #1d2d3e;
+    flex: 1;
+}
+
+.rbiBullet {
+    margin-right: 6px;
+    color: #0070f2;
+    font-size: 14px;
+}
+
+.rbiArrayItem {
+    font-size: 14px;
+    color: #1d2d3e;
+}
+
+.rbiNestedKVRow {
+    padding: 2px 0;
+    margin-bottom: 6px;
+}
+
+.rbiNestedKey {
+    min-width: 120px;
+    max-width: 120px;
+    color: #666;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+.customTitle {
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: #1D2D3E;
+}
+
+/* Custom AI Insights Button Styles */
+.aiRecommendationButton .sapMBtnInner {
+    background: #EBF0F5 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    height: 28px !important;
+    padding: 0 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.aiRecommendationButton .sapMBtnIcon {
+    width: 18px !important;
+    height: 14px !important;
+    margin-right: -5px !important;
+    transform: translateY(-2px) !important;
+}
+
+.aiRecommendationButton .sapMBtnContent {
+    color: #1d2d3e !important;
+    font: 500 17px/1 inherit !important;
+}
+
+.customHeaderIcon {
+    width: 32px !important;
+    height: 25px !important;
+    transform: translateY(-3px) !important;
+    margin-right: -4px !important;
+}

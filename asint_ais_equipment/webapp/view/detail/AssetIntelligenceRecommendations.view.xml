@@ -1,0 +1,74 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="com.asint.ais.mi.equipment.controller.detail.AssetIntelligence"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:card="sap.f.cards"
+    xmlns:w="sap.ui.integration.widgets">
+    <Panel id="idAsintRecommendationPanel">
+        <Table id="idAsintAIRecommendation" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar"
+            growing="true" growingThreshold="5"
+            items="{mEquipmentDetail>/data/assetIntelligence/recommendation/data/list}"
+            updateFinished="" noDataText="{i18n>asint.reusable.noData.text}">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{mEquipmentDetail>/data/assetIntelligence/recommendation/header}" />
+                    <ToolbarSpacer />
+                    <SearchField width="200px" placeholder="{i18n>asint.reusable.search.text}"
+                        liveChange="onSearchRecommendation" />
+                    <Button icon="sap-icon://sort"
+                        tooltip="{i18n>asint.equipment.tab.sort.targetDate.text}"
+                        press="onSortRecommendationTable" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.assetIntelligence.recommendation.table.recommendation.column.text}" />
+                </Column>
+                  <Column>
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.assetIntelligence.recommendation.table.sourceasset.column.text}" />
+                </Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.assetIntelligence.recommendation.table.longDescription.column.text}" />
+                </Column>
+                <Column>
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.assetIntelligence.recommendation.table.assessment.column.text}" />
+                </Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.assetIntelligence.recommendation.table.objectType.column.text}" />
+                </Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.assetIntelligence.recommendation.table.targetDate.column.text}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier titleActive="false" title="{mEquipmentDetail>DisplayId}"
+                            text="{mEquipmentDetail>ShortDescription}" />
+                            <ObjectIdentifier
+                            titleActive="false"
+                            title="{mEquipmentDetail>EquipmentComponentName}"
+                            text="{mEquipmentDetail>EquipmentComponentShortDesc}" />
+
+                        <ExpandableText
+                            class="sapUiTinyMarginBottom sapUiTinyMarginTop"
+                            text="{mEquipmentDetail>LongDescription}"
+                            overflowMode="Popover">
+                        </ExpandableText>
+                        <ObjectIdentifier titleActive="true" titlePress="onAssessmentTitlePress"
+                            title="{mEquipmentDetail>AssessmentDisplayId}"
+                            text="{mEquipmentDetail>AssessmentDescription}" />
+                        <Text text="Equipment" />
+                        <Text
+                            text="{ path: 'mEquipmentDetail>TargetDate', formatter : '.formatter.formatDate'}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Panel>
+</mvc:View>

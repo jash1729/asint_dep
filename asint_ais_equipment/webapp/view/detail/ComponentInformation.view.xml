@@ -1,0 +1,60 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.asint.ais.mi.equipment.controller.detail.ComponentInformation"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:table="sap.ui.table"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core" core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
+	xmlns="sap.m">
+	<l:VerticalLayout>
+		<l:content>
+			<Table id="idTableComponentInformation" growing="true" growingScrollToLoad="false" growingThreshold="5" mode="MultiSelect" noDataText="{i18n>asint.reusable.noData.text}" popinLayout="GridLarge" alternateRowColors="true" items="{path:'mEquipmentDetail>/data/tabs/components/componentInformation/components'}" selectionChange="onComponentInformationSelectionChange">
+				<headerToolbar>
+					<OverflowToolbar design="Transparent">
+						<Title level="H2" text="{
+							parts: [        
+								'i18n>asint.equipment.tab.componentInformation.toolbar.title',
+								'mEquipmentDetail>/data/tabs/components/componentInformation/componentsLength'
+							],
+							formatter: 'formatMessage'
+						}"/>
+						<ToolbarSpacer />
+						<SearchField width="20%" placeholder="{i18n>asint.reusable.search.text}" liveChange="onSearchComponentsTable"/>
+						<MenuButton type="Emphasized" enabled="{mEquipmentDetail>/metadata/enabled/assign}" visible="{=${mEquipmentDetail>/metadata/isAssignAllowed} &amp;&amp; ${mEquipmentDetail>/data/userRoles/edit}}" text="{i18n>asint.reusable.button.assign.text}">
+							<menu>
+								<Menu>
+									<MenuItem text="{i18n>asint.equipment.tab.componentInformation.toolbar.button.equipment.text}" icon="sap-icon://BusinessSuiteInAppSymbols/icon-equipment" press="onAssignComponents"/>
+								</Menu>
+							</menu>
+						</MenuButton>
+						<Button text="{i18n>asint.reusable.button.unassign.text}" enabled="{= ${mEquipmentDetail>/data/tabs/components/componentInformation/selectedComponents/length} &gt; 0}" visible="{=${mEquipmentDetail>/metadata/isAssignAllowed} &amp;&amp; ${mEquipmentDetail>/data/userRoles/edit}}" press="onUnassignComponents" />
+						<Button icon="sap-icon://sort" tooltip="{i18n>asint.equipment.tab.sort.text}" press="onSortComponentsTable" />
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column popinDisplay="Inline">
+						<Text text="{i18n>asint.equipment.tab.componentInformation.table.column.name.text}" />
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline">
+						<Text text="{i18n>asint.equipment.tab.componentInformation.table.column.description.text}" />
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+						<Text text="{i18n>asint.equipment.tab.componentInformation.table.column.category.text}" />
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+						<Text text="{i18n>asint.equipment.tab.componentInformation.table.column.objectType.text}" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation" press="onPressComponents">
+						<cells>
+							<!-- <Text text="{mEquipmentDetail>name}" /> -->
+							<ObjectIdentifier text="{mEquipmentDetail>displayId}" title="{mEquipmentDetail>name}" titleActive="true" titlePress="onPressComponents"/>
+							<Text text="{mEquipmentDetail>to_description/0/shortDescription}" />
+							<Text text="{parts:['mEquipmentDetail>category','mEquipment>/data/equipmentCategoryArray'], formatter:'.formatter.formatCategory'}" />
+							<Text text="{parts:['mEquipmentDetail>objectType','mEquipment>/data/equipmentTypeArray'], formatter:'.formatter.formatTechnicalType'}" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</l:content>
+	</l:VerticalLayout>
+</mvc:View>

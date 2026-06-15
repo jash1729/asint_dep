@@ -1,0 +1,226 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="com.asint.ais.mi.equipment.controller.detail.Recommendations"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:card="sap.f.cards"
+    xmlns:w="sap.ui.integration.widgets">
+        <SegmentedButton id="idSegmented" selectionChange="onSwitchWorkordertable" selectedKey="s4">
+            <items>
+                <SegmentedButtonItem text="{i18n>asint.equipment.detail.tab.maintenance.recommendation.segmented.apm.text}" key="s4"/>
+                <SegmentedButtonItem text="{i18n>asint.equipment.detail.tab.maintenance.recommendation.segmented.asset.text}" key="comp"/>
+                <SegmentedButtonItem text="{i18n>asint.equipment.detail.tab.maintenance.recommendation.segmented.adhoc.text}" key="standalone"/>
+            </items>
+        </SegmentedButton>
+        <Table id="idRecommendationTable1" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar" 
+            growing="true" growingThreshold="5" mode="SingleSelectLeft" selectionChange="onRecomendationSelect"
+            items="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/list}"
+            updateFinished="" noDataText="{i18n>asint.reusable.noData.text}" visible="{mEquipmentDetail>/metadata/detail/tabs/recommendations/isS4}">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/list/tableHeader}" />
+                    <ToolbarSpacer />
+                    <SearchField id="searchField" width="30%" search="onSearch" />
+                    <Button text="{i18n>asint.equipment.detail.tab.recommendations.table.create.notificaion.text}"
+                        visible="{mEquipmentDetail>/data/userRoles/edit}"
+                        enabled="{mEquipmentDetail>/metadata/detail/tabs/recommendations/selection}"
+                        tooltip="{i18n>asint.equipment.detail.tab.recommendations.table.create.notificaion.tooltip}"
+                        press="onCreateNotificcationPress" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column hAlign="Begin">
+				<Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.nameDescp.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.technical.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.component.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.type.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.subType.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.cycle.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.activityType.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.status.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.valid.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{mEquipmentDetail>displayId}" text="{mEquipmentDetail>to_description/shortDescription}" titleActive="true" titlePress="onClickRecommendationTitle"/>
+                        <ObjectIdentifier title="{mEquipmentDetail>equipment}" text="{mEquipmentDetail>equipmentDesc}" titleActive="false" titlePress=""/>
+                        <ExpandableText maxCharacters="50" overflowMode="Popover"
+							text="{
+								parts: [
+									'mEquipmentDetail>to_equipment_component',
+									'mEquipmentDetail>to_floc_component'
+								],
+								formatter: '.formatter.componentNameFormatter'
+							    }" />
+                        <Text text="{path: 'mEquipmentDetail>type',formatter:'.formatter.fnTypeFormatter'}"></Text>			
+                        <Text text="{path: 'mEquipmentDetail>subType',formatter:'.formatter.fnSubTypeFormatter'}"></Text>			
+                        <Text text="{parts:['mEquipmentDetail>cycle','mEquipmentDetail>cycleUnit'] , formatter: '.formatter.formatCycle'}"></Text>
+                        <Text text="{mEquipmentDetail>maintenanceActivityDescription}"></Text>
+                        <Text text="{path:'mEquipmentDetail>status', formatter:'.formatter.formatStatusText'}"></Text>
+                        <VBox>
+                            <Text text="{path: 'mEquipmentDetail>validFrom', formatter: '.formatter.formatDate'}"/>
+                            <Text text="{path: 'mEquipmentDetail>validTo', formatter: '.formatter.formatDate'}"/>
+                        </VBox>				
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <Table id="idRecommendationTable2" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar"
+            growing="true" growingThreshold="5" mode="SingleSelectLeft" selectionChange="onRecomendationSelect"
+            items="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/btpList}"
+            updateFinished="" noDataText="{i18n>asint.reusable.noData.text}" visible="{mEquipmentDetail>/metadata/detail/tabs/recommendations/isComponent}">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/btpList/tableHeader}" />
+                    <ToolbarSpacer />
+                    <SearchField id="searchField1" width="200px" />
+                    <Button text="{i18n>asint.equipment.detail.tab.recommendations.table.create.notificaion.text}"
+                        enabled="{mEquipmentDetail>/metadata/detail/tabs/recommendations/selection}"
+                        tooltip="{i18n>asint.equipment.detail.tab.recommendations.table.create.notificaion.tooltip}"
+                        press="onCreateNotificcationPress" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column hAlign="Begin">
+				<Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.nameDescp.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.technical.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.component.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.assessment.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.status.text}"/>
+                </Column>
+                <Column>
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.maintenance.table.target.column.text}" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                       <ObjectIdentifier title="{mEquipmentDetail>displayId}"
+                        text="{mEquipmentDetail>to_description/shortDescription}" titleActive="true" titlePress="onClickRecommendationTitle" />
+                    <ObjectIdentifier title="{mEquipmentDetail>equipment}"
+                        text="{mEquipmentDetail>equipmentDesc}" titleActive="false" titlePress="" />
+                        <ExpandableText maxCharacters="50" overflowMode="Popover"
+							text="{
+								parts: [
+									'mEquipmentDetail>to_equipment_component',
+									'mEquipmentDetail>to_floc_component'
+								],
+								formatter: '.formatter.componentNameFormatter'
+								}" />
+                    <ObjectIdentifier title="{mEquipmentDetail>to_assessment/displayId}"
+                        text="{mEquipmentDetail>to_assessment/to_description/shortDescription}" titleActive="true"
+                        titlePress="onClickASDTitle" />
+                    <Text text="{path:'mEquipmentDetail>status', formatter:'.formatter.formatStatusText'}"></Text>
+                    <Text text="{path: 'mEquipmentDetail>targetDate', formatter: '.formatter.formatDate'}"/>				
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <Table id="idRecommendationTable3" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar"
+            growing="true" growingThreshold="5" mode="SingleSelectLeft" selectionChange="onRecomendationSelect"
+            items="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/standaloneList}"
+            updateFinished="" noDataText="{i18n>asint.reusable.noData.text}" visible="{mEquipmentDetail>/metadata/detail/tabs/recommendations/isStandalone}">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/standaloneList/tableHeader}" />
+                    <ToolbarSpacer />
+                    <SearchField id="searchField2" width="200px" search="onSearchStandalone" />
+                    <Button text="{i18n>asint.equipment.detail.tab.recommendations.table.create.notificaion.text}"
+                        enabled="{mEquipmentDetail>/metadata/detail/tabs/recommendations/selection}"
+                        tooltip="{i18n>asint.equipment.detail.tab.recommendations.table.create.notificaion.tooltip}"
+                        press="onCreateNotificcationPress" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column hAlign="Begin">
+				<Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.nameDescp.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.technical.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.component.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.type.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.subType.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.cycle.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.activityType.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.status.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.valid.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.tab.recommendations.table.column.source.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.maintenance.table.target.column.text}" />
+                </Column>
+            </columns>
+            <items>
+            <ColumnListItem>
+                 <ObjectIdentifier title="{mEquipmentDetail>displayId}"
+                        text="{mEquipmentDetail>to_description/shortDescription}" titleActive="true"
+                        titlePress="onClickRecommendationTitle" />
+                    <ObjectIdentifier title="{mEquipmentDetail>equipment}"
+                        text="{mEquipmentDetail>equipmentDesc}" titleActive="false" titlePress="" />
+
+                        <ExpandableText maxCharacters="50" overflowMode="Popover"
+							text="{
+								parts: [
+								    'mEquipmentDetail>to_equipment_component',
+									'mEquipmentDetail>to_floc_component'
+								],
+								formatter: '.formatter.componentNameFormatter'
+								}" />
+                    <Text text="{path: 'mEquipmentDetail>type',formatter:'.formatter.fnTypeFormatter'}"></Text>			
+                    <Text text="{path: 'mEquipmentDetail>subType',formatter:'.formatter.fnSubTypeFormatter'}"></Text>
+                    <Text text="{parts:['mEquipmentDetail>cycle','mEquipmentDetail>cycleUnit'] , formatter: '.formatter.formatCycle'}"></Text>
+                    <Text text="{mEquipmentDetail>maintenanceActivityDescription}"></Text>
+                    <Text text="{path:'mEquipmentDetail>status', formatter:'.formatter.formatStatusText'}"></Text>
+                    <VBox>
+                        <Text
+                            text="{path: 'mEquipmentDetail>validFrom', formatter: '.formatter.formatDate'}" />
+                        <Text
+                            text="{path: 'mEquipmentDetail>validTo', formatter: '.formatter.formatDate'}" />
+                    </VBox>	
+                    <Text text="{mEquipmentDetail>source}"></Text>
+                    <Text text="{path: 'mEquipmentDetail>targetDate', formatter: '.formatter.formatDate'}"/>				
+            </ColumnListItem>
+            </items>
+        </Table>
+</mvc:View>

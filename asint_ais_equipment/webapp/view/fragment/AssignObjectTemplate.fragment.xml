@@ -1,0 +1,56 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog title="{i18n>asint.equipment.tab.assignments.assignTemplate.title}" contentWidth="50%" contentHeight="70%">
+        <Table id="idAsintAssignTemplatesTable" class="rbiAssessmentList" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar"
+            items="{
+                    path: 'objectTemplateService>/ObjectTemplate',
+                    events:{dataReceived:'.onDataReceivedAssignObjectTemplates'},
+                    parameters : {countMode:'Inline', $select:'isS4Template'},
+                    sorter: {path: 'modifiedAt', descending: true}
+            }" growing="true" growingThreshold="20" growingScrollToLoad="true"
+            noDataText="{i18n>asint.reusable.noData.text}" selectionChange="onDialogTemplateSelect">
+            <headerToolbar>
+                <OverflowToolbar design="Transparent">
+                    <Title busy="{mEquipmentDetail>/data/assignments/objectTemplate/isShowBusy}" text="{mEquipmentDetail>/data/assignments/objectTemplate/assignTableHeader}"/>
+                    <ToolbarSpacer/>
+                    <SearchField id="idAssignTemplateSearch" width="30%" change="fnSearchDialogTemplatesListForAssignTemplate"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.tab.objectTemplate.resuable.table.template}"/>
+                </Column>
+                <Column hAlign="Begin" minScreenWidth="Tablet" demandPopin="true">
+                    <Text text="{i18n>asint.equipment.tab.objectTemplate.resuable.table.displayID.text}"/>
+                </Column>
+                <Column hAlign="Begin" minScreenWidth="Tablet" demandPopin="true">
+                    <Text text="{i18n>asint.equipment.tab.objectTemplate.resuable.table.type}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{objectTemplateService>name}" text="{objectTemplateService>to_description/0/shortDescription}"/>
+                        <Text text="{objectTemplateService>displayId}"></Text>
+                        <Text text="{parts: [{ path : 'objectTemplateService>type' }], formatter : '.formatter.fnGetTemplateType'}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <footer>
+        <OverflowToolbar>
+                <ToolbarSpacer />
+                <CheckBox text="{i18n>asint.assign.class.button.text}"
+                          selected="{mEquipmentDetail>/data/assignments/objectTemplate/assignClass}" enabled="{mEquipmentDetail>/data/assignments/objectTemplate/IsOkEnabled}"/>
+                <Button text="{i18n>asint.reusable.button.ok.text}" 
+                        enabled="{mEquipmentDetail>/data/assignments/objectTemplate/IsOkEnabled}" 
+                        press="onAssignTemplateOkPress" />
+                <Button text="{i18n>asint.reusable.button.cancel.text}" 
+                        press="onCloseAssignDialog" />
+            </OverflowToolbar>
+    </footer>
+        <!-- <buttons>
+            <Button text="{i18n>asint.reusable.button.ok.text}" enabled="{mEquipmentDetail>/data/assignments/objectTemplate/IsOkEnabled}" press="onAssignTemplateOkPress" />
+            <Button text="{i18n>asint.reusable.button.cancel.text}" press="onCloseAssignDialog" />
+        </buttons> -->
+    </Dialog>
+</core:FragmentDefinition>

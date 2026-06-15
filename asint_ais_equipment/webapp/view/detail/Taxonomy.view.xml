@@ -1,0 +1,29 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:ng="sap.suite.ui.commons.networkgraph" controllerName="com.asint.ais.mi.equipment.controller.detail.Taxonomy">
+    <Toolbar>
+        <ToolbarSpacer/>
+        <!-- <HBox>
+            <core:Icon src="sap-icon://circle-task-2" color="#30914c"/>
+            <Label class="sapUiTinyMarginBegin sapUiTinyMarginEnd" text="Published"></Label>
+            <core:Icon src="sap-icon://circle-task-2" color="#788fa6"/>
+            <Label class="sapUiTinyMarginBegin sapUiTinyMarginEnd" text="Unpublished"></Label>
+        </HBox> -->
+        <Button class="sapUiTinyMarginBegin" text="{i18n>asint.equipment.tab.taxonomy.manageButton.text}" press="fnNetworkGraphMapper"></Button>
+    </Toolbar>
+    <ng:Graph id="idNetworkGraph" enableWheelZoom="false" orientation="TopBottom" nodes="{mEquipmentDetail>/data/hierarchyData/nodes}" lines="{mEquipmentDetail>/data/hierarchyData/lines}">
+        <ng:nodes>
+            <ng:Node key="{mEquipmentDetail>id}" title="{mEquipmentDetail>name}" shape="{mEquipmentDetail>shape}" icon="{mEquipmentDetail>icon}" attributes="{path:'mEquipmentDetail>attributes',
+                templateShareable:true}" showDetailButton="{mEquipmentDetail>detailbutton}" showExpandButton="{mEquipmentDetail>expandbutton}" status="{mEquipmentDetail>status}" press="onNodePress">
+                <ng:attributes>
+                    <ng:ElementAttribute label="{mEquipmentDetail>label}" value="{mEquipmentDetail>value}" />
+                </ng:attributes>
+                <ng:actionButtons>
+                    <ng:ActionButton icon="sap-icon://show" title="{i18n>asint.equipment.tab.taxonomy.navToDetail.text}" press="onNodeNavigate" />
+                    <ng:ActionButton icon="sap-icon://write-new-document" title="{i18n>asint.equipment.tab.taxonomy.manageButton.text}" press="fnNetworkGraphMapper($event,'Update')" />
+                </ng:actionButtons>
+            </ng:Node>
+        </ng:nodes>
+        <ng:lines>
+            <ng:Line arrowPosition="Middle" from="{mEquipmentDetail>from}" to="{mEquipmentDetail>to}" press="onLinePress" />
+        </ng:lines>
+    </ng:Graph>
+</mvc:View>

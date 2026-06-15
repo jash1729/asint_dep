@@ -1,0 +1,56 @@
+<mvc:View controllerName="com.asint.ais.mi.equipment.controller.detail.MaintenancePlan"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+  
+   >
+        <Table id="idMaintenancePlanTable" class="asIntNoGrowingCount" popinLayout="GridLarge" alternateRowColors="true" busy="{mEquipmentDetail>/data/tabs/maintenanceservice/maintenancePlan/tableBusy}" busyIndicatorDelay="0" items="{mEquipmentDetail>/data/tabs/maintenanceservice/maintenancePlan/list}" growing="true" growingThreshold="5" growingScrollToLoad="false" growingTriggerText="{i18n>asint.reusable.loadMore.text}">
+            <headerToolbar>
+                <OverflowToolbar design="Transparent">
+                    <Title text="{mEquipmentDetail>/data/tabs/maintenanceservice/maintenancePlan/listHeader}"/>
+                    <ToolbarSpacer/>
+                    <SearchField width="14rem" placeholder="{i18n>asint.equipment.detail.tab.mPlan.search.placeholder}" value="{mEquipmentDetail>/data/tabs/maintenanceservice/maintenancePlan/searchQuery}" change="onSearchMaintenancePlans"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.mPlan.column.mPlan}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet">
+                    <Text text="{i18n>asint.equipment.detail.tab.mPlan.column.shortdescription.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Center">
+                    <Text text="{i18n>asint.equipment.detail.tab.mPlan.column.cycle}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" hAlign="Center">
+                    <Text text="{i18n>asint.equipment.detail.tab.mPlan.table.column.maintainanceitems.text}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet">
+                    <Text text="{i18n>asint.equipment.detail.tab.mPlan.column.taskList}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet" >
+                    <Text text="{i18n>asint.equipment.detail.tab.mPlan.column.maintenanceStrategy}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.mPlan.column.status}"/>
+                </Column>
+                <Column demandPopin="true" minScreenWidth="Tablet">
+                    <Text text="{i18n>asint.equipment.detail.tab.mPlan.column.reco}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                       	<ObjectIdentifier title="{mEquipmentDetail>maintPlanName}"  titleActive="true" titlePress="onClickMPlan"/>
+							<Text text="{mEquipmentDetail>maintPlanShortDescription}"/>
+							<Link text="{= ${mEquipmentDetail>planCycleLength} === 1 ? ${mEquipmentDetail>planCycleLength} + ' item' : ${mEquipmentDetail>planCycleLength} + ' items' }" visible="{= ${mEquipmentDetail>planCycleLength} > 0 }" press="onMPlantDetailsPress($event, 'maintenanceCycle')"/>
+							<Link text="{= ${mEquipmentDetail>maintenanceItemLength} === 1 ? ${mEquipmentDetail>maintenanceItemLength} + ' item' : ${mEquipmentDetail>maintenanceItemLength} + ' items' }" visible="{= ${mEquipmentDetail>maintenanceItemLength} > 0 }" press="onMPlantDetailsPress($event, 'maintenanceItem')"/>
+							<ObjectIdentifier title="{mEquipmentDetail>taskListName}" text="{mEquipmentDetail>taskListShortDescription}" />
+							<Text text="{mEquipmentDetail>maintenanceStrategy}"/>
+							<Text text="{mEquipmentDetail>status}"/>
+							<ObjectIdentifier titleActive="true" titlePress="onClickReco" title="{mEquipmentDetail>recoDisplayId}" text="{mEquipmentDetail>recoShortDescription}" />
+						</cells>
+					</ColumnListItem>
+				</items>
+        </Table>
+</mvc:View>

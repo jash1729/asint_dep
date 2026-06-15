@@ -1,0 +1,132 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="com.asint.ais.mi.equipment.controller.detail.ClassificationMDA"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+    xmlns:cmi="com.asint.ais.library.control.CustomControl"
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:grid="sap.ui.layout.cssgrid" xmlns:f="sap.f"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+    <!-- Maintenance Data Attribute Section -->
+    <VBox class="sapUiMediumMargin" width="100%">
+        <Title text="{i18n>asint.equipment.field.maintenance.label}" level="H5" class="sapUiSmallMarginBottom" />
+       <form:SimpleForm editable="true" layout="GridLayout">
+            <form:content>
+                <Label text="{i18n>asint.equipment.detail.general.mda.text}" />
+                <VBox>
+                    <cmi:CustomMultiInput class="sapUiSmallMarginEnd asintNoTokenBorderCls" stringValues="{mEquipmentDetail>/data/detail/masterDataAttribution}"/>
+                </VBox>
+            </form:content>
+        </form:SimpleForm>
+    </VBox>
+
+    <!-- Characteristics Table -->
+    <OverflowToolbar class="sapUiSmallMarginTop" design="Transparent">
+        <ComboBox items="{path: 'mEquipmentDetail>/data/assignments/Classes/assignedClassListS4'}" selectedKey="{mEquipmentDetail>/data/assignments/Chars/selectedClassKey}" showSecondaryValues="true"
+            change="onClassChange">
+            <core:ListItem key="{mEquipmentDetail>ID}" text="{mEquipmentDetail>to_description/0/shortDescription}" />
+        </ComboBox>
+        <Title text="{mEquipmentDetail>/data/assignments/Chars/filteredCharsHeader}" level="H2" />
+        <ToolbarSpacer />
+        <SearchField placeholder="{i18n>asint.equipment.tab.classification.search.tooltip.text}" tooltip="{i18n>asint.equipment.tab.chars.search.tooltip.text}" width="20%" liveChange="onSearchClassificationChars"/>
+        <Button visible="{= !${mEquipmentDetail>/data/assignments/Chars/isClassificationEditable} &amp;&amp; ${mEquipmentDetail>/data/detail/srcId} === 'BTP' &amp;&amp; ${mEquipmentDetail>/data/assignments/Chars/isClassificationTableVisible} &amp;&amp; ${mEquipmentDetail>/data/userRoles/edit}}" text="{i18n>asint.reusable.button.edit.text}" press="onCharValuesEditBtnPress" />
+        <Button visible="{mEquipmentDetail>/data/assignments/Chars/isClassificationEditable}" text="{i18n>asint.reusable.button.save.text}" press="onPressCharValuesSave"></Button>
+        <Button text="{i18n>asint.reusable.button.cancel.text}" visible="{mEquipmentDetail>/data/assignments/Chars/isClassificationEditable}" press="onCanceCharValuesEdit"></Button>
+        <Button type="Emphasized" text="{i18n>asint.reusable.button.assign.text}" visible="{= ${mEquipmentDetail>/data/detail/srcId} === 'BTP' &amp;&amp; ${mEquipmentDetail>/data/userRoles/edit}}" press="onOpenAssignClassDialog" />
+        <Button text="{i18n>asint.reusable.button.unassign.text}" visible="{=${mEquipmentDetail>/data/userRoles/edit} &amp;&amp; ${mEquipmentDetail>/data/detail/srcId} === 'BTP'}" press="onUnassignClasses" />
+        <SegmentedButton selectedKey="grid" selectionChange="onSwitchView">
+            <items>
+                <SegmentedButtonItem icon="sap-icon://dimension" key="grid" />
+                <SegmentedButtonItem icon="sap-icon://table-view" key="table" />
+            </items>
+        </SegmentedButton>
+    </OverflowToolbar>
+    <f:GridList id="idCharsGrid" class="sapUiSmallMarginTop" items="{path: 'mEquipmentDetail>/data/assignments/Chars/filteredCharsForClass'}" growing="false"
+        visible="{= !${mEquipmentDetail>/data/assignments/Chars/isClassificationTableVisible}}">
+        <!-- <f:headerToolbar>
+            <Toolbar>
+                <content>
+                    <Title text="{mMatrix>/Data/Detail/MatricesCount}"/>
+                    <ToolbarSpacer />
+                    <SearchField width="30%" search=".onFilterMatrices"/>
+                    <Button icon="sap-icon://add" tooltip="{i18n>asint.rbi.configApp.riskMatrix.add.text}" press="onCreateNewMatrix"/>
+                </content>
+            </Toolbar>
+        </f:headerToolbar> -->
+        <f:customLayout>
+            <grid:GridBoxLayout boxWidth="24.5%"/>
+        </f:customLayout>
+        <CustomListItem>
+            <VBox>
+                <VBox class="sapUiSmallMargin">
+                    <layoutData>
+                        <FlexItemData growFactor="1" shrinkFactor="0" />
+                    </layoutData>
+                    <HBox justifyContent="SpaceBetween">
+                        <Title text="{mEquipmentDetail>to_description/0/shortDescription}" wrapping="true" />
+                        <Text text="{parts: ['mEquipmentDetail>charValue','mEquipmentDetail>charUom', 'mEquipmentDetail>/metadata/detail/uomList'], formatter: '.formatter.fnFormatCharValueandUom' }"/>
+                    </HBox>
+                    <Text class="sapUiSmallMarginTop" text="{mEquipmentDetail>name}"/>
+                </VBox>
+            </VBox>
+        </CustomListItem>
+    </f:GridList>
+
+    <Table class="sapUiSmallMarginTop" id="idClassificationChars" growing="true" growingScrollToLoad="false" growingThreshold="20"
+		noDataText="{i18n>asint.reusable.noData.text}" items="{path: 'mEquipmentDetail>/data/assignments/Chars/filteredCharsForClass'}"
+        visible="{mEquipmentDetail>/data/assignments/Chars/isClassificationTableVisible}">
+        <columns>
+            <Column popinDisplay="Inline" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.charName.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.charDesc.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.dataType.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.value.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.dimension.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.uom.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.sourceSystme.label}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <ObjectIdentifier title="{mEquipmentDetail>displayId}" text="{mEquipmentDetail>name}"/>
+                    <Text text="{mEquipmentDetail>to_description/0/shortDescription}" wrapping="true" wrappingType="Normal" />
+                    <Text text="{mEquipmentDetail>dataType}"/>
+                    <HBox>
+                        <Text visible="{= !${mEquipmentDetail>/data/assignments/Chars/isClassificationEditable} &amp;&amp; ${mEquipmentDetail>renderField} !== 'MultiComboBox' }" text="{parts: ['mEquipmentDetail>charValue', 'mEquipmentDetail>renderField', 'mEquipmentDetail>codeList/to_codeListItem'], formatter: '.formatter.fnFormatCodeListText' }"/>
+                        <HBox visible="{mEquipmentDetail>/data/assignments/Chars/isClassificationEditable}">     
+                            <Input visible="{= ${mEquipmentDetail>renderField} === 'Input'}"   editable="{= ${mEquipmentDetail>/data/detail/srcId} === 'BTP' }" value="{mEquipmentDetail>charValue}" type="{mEquipmentDetail>inputType}"></Input>
+                            <DatePicker visible="{= ${mEquipmentDetail>renderField} === 'Date'}" editable="{= ${mEquipmentDetail>/data/detail/srcId} === 'BTP' }" value="{mEquipmentDetail>charValue}" valueFormat="MMM dd, yyyy" displayFormat="MMM dd, yyyy"></DatePicker>
+                            <ComboBox visible="{= ${mEquipmentDetail>renderField} === 'ComboBox'}" editable="{= ${mEquipmentDetail>/data/detail/srcId} === 'BTP' }"  selectedKey="{mEquipmentDetail>charValue}" items="{mEquipmentDetail>codeList/to_codeListItem}" showSecondaryValues="true">
+                                <core:ListItem key="{mEquipmentDetail>code}" text="{mEquipmentDetail>to_description/0/shortDescription}" additionalText="{mEquipmentDetail>code}"></core:ListItem>
+                            </ComboBox>
+                            <MultiComboBox visible="{= ${mEquipmentDetail>renderField} === 'MultiComboBox'}" editable="{= ${mEquipmentDetail>/data/detail/srcId} === 'BTP'}"  selectedKeys="{parts: ['mEquipmentDetail>charValue'], formatter: '.formatter.fnFormatMultiComboBoxValue' }" items="{mEquipmentDetail>codeList/to_codeListItem}" showSecondaryValues="true" selectionFinish="onMultiComboBoxSelectionFinish">
+                                <core:ListItem key="{mEquipmentDetail>code}" text="{mEquipmentDetail>to_description/0/shortDescription}" additionalText="{mEquipmentDetail>code}"></core:ListItem>
+                            </MultiComboBox>
+                        </HBox>
+                        <HBox visible="{=  ${mEquipmentDetail>renderField} === 'MultiComboBox' &amp;&amp; !${mEquipmentDetail>/data/assignments/Chars/isClassificationEditable}}">            
+                            <Tokenizer editable="false" renderMode="Narrow" maxWidth="150px" tokens="{mEquipmentDetail>charValue}">
+                                <tokens>
+                                    <Token key="{mEquipmentDetail>}" text="{mEquipmentDetail>}" />
+                                </tokens>
+                            </Tokenizer>
+                        </HBox>
+                    </HBox>
+                    <Text text="{mEquipmentDetail>dimension}"/>
+                    <Text text="{parts: ['mEquipmentDetail>charUom', 'mEquipmentDetail>/metadata/detail/uomList'], formatter: '.formatter.fnFormatUom' }"/>
+                    <Text text="{mEquipmentDetail>srcId}"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</mvc:View>

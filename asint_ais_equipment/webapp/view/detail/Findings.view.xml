@@ -1,0 +1,51 @@
+<mvc:View xmlns:core="sap.ui.core"
+	controllerName="com.asint.ais.mi.equipment.controller.detail.Findings"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:cmi="com.asint.ais.library.control.CustomControl"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+    <Table id="idAsintEquipmentFindings" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar" growing="true" growingThreshold="5"
+        items="{mEquipmentDetail>/data/assetIntelligence/findings/list}" updateFinished="" noDataText="{i18n>asint.reusable.noData.text}">
+        <headerToolbar>
+            <OverflowToolbar>
+                <Title text="{mEquipmentDetail>/data/assetIntelligence/findings/header}"/>
+                <ToolbarSpacer/>
+                <SearchField width="30%" value="" placeholder="{i18n>asint.reusable.search.text}" liveChange="onSearch"/>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+			<Column hAlign="Begin">
+				<Text text="{i18n>asint.equipment.detail.finding.form.equipment.text}"/>
+			</Column>
+			<Column hAlign="Begin">
+				<Text text="{i18n>asint.equipment.detail.finding.form.displayId.text}"/>
+			</Column>
+			<Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+				<Text text="{i18n>asint.equipment.detail.finding.form.findingNumber.text}"/>
+			</Column>
+			<Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin" visible="{= ${mEquipment>/metadata/featureFlag/hideFindingType} !== '1'}">
+				<Text text="{i18n>asint.reusable.findingType.text}"/>
+			</Column>
+			<Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+				<Text text="{i18n>asint.equipment.detail.finding.form.status.text}"/>
+			</Column>
+			<Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+				<Text text="{i18n>asint.equipment.detail.finding.form.isNotificationCreated.text}"/>
+			</Column>
+			<Column demandPopin="true" minScreenWidth="Tablet" hAlign="Begin">
+				<Text text="{i18n>asint.equipment.detail.finding.form.assignedTo.text}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier title="{mEquipmentDetail>equipmentName}" text="{mEquipmentDetail>equiShortDescription}"/>
+					<ObjectIdentifier title="{mEquipmentDetail>displayId}" text="{mEquipmentDetail>findingName}" titleActive="true" titlePress="onClickFindingsTitle"/>
+					<Text text="{mEquipmentDetail>number}"/>
+					<cmi:CustomMultiInput class="tokenTopAlignmentCls sapUiSmallMarginEnd" stringValues="{mEquipmentDetail>finding}"/>
+					<ObjectStatus  text="{parts: [{ path : 'mEquipmentDetail>status' }], formatter:'com.asint.ais.mi.equipment.model.localFormatter.fnGetStatusStateByCodeFindinginFindingsDetail'}" />
+					<Switch customTextOn="{i18n>asint.reusable.button.yes.text}" customTextOff="{i18n>asint.reusable.button.no.text}" enabled="false" state="{mEquipmentDetail>isNotificationCreated}"/>
+					<Text text="{mEquipmentDetail>assignedTo}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+    </Table>
+</mvc:View>

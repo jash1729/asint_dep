@@ -1,0 +1,264 @@
+{
+    "_version": "1.48.0",
+    "sap.app": {
+        "id": "com.asint.ais.mi.equipment",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.1.5"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.8.4",
+            "toolsId": "2d57c713-e707-43e2-8293-fb32b10e5bd7"
+        },
+        "dataSources": {
+            "masterService": {
+                "uri": "/asint/odata/v4/MasterDataService/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            },
+            "masterS4Service":{
+                "uri": "/asint/odata/v4/S4Service/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            },
+            "objectTemplateMasterService": {
+                "uri": "/asint/odata/v4/MasterDataService/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            },
+            "failureDataProfileService":{
+               "uri": "/asint/odata/v4/FailureDataProfileService/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                } 
+            },
+            "S4ValueHelpService":{
+                "uri": "/asint/odata/v4/S4DataService/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "com-asint-ais-mi-equipment-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "equipment",
+                    "action": "manage",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",                     
+                    "info": "Copyright © AsInt, Inc.",
+                    "icon": "sap-icon://machine",
+                    "indicatorDataSource": {
+                        "dataSource": "masterService",
+                        "path": "EquipmentListService(language='EN')/Set/$count",
+                        "refresh": 1000
+                    }
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        },
+        "fullWidth": true
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.108.0",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.asint.ais.mi.equipment.i18n.i18n"
+                }
+            },
+            "mMessage": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.asint.ais.mi.equipment.i18n.message"
+				}
+			},
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "useBatch": false
+                }
+            },
+            "masterService": {
+                "dataSource": "masterService",
+                "preload": true,
+                "settings": {
+                    "autoExpandSelect": true,
+                    "synchronizationMode": "None",
+                    "operationMode": "Server"
+                }
+            },
+            "masterS4Service":{
+                "dataSource": "masterS4Service",
+                "preload": true,
+                "settings": {
+                    "autoExpandSelect": true,
+                    "synchronizationMode": "None",
+                    "operationMode": "Server"
+                }
+            },
+            "valueHelpService":{
+                "dataSource":"S4ValueHelpService",
+                "preload": true,
+                "settings": {
+                    "autoExpandSelect": true,
+                    "synchronizationMode": "None",
+                    "operationMode": "Server"
+                }
+            },
+            "objectTemplateService": {
+                "dataSource": "objectTemplateMasterService",
+                "preload": true,
+                "settings": {
+                    "autoExpandSelect": true,
+                    "synchronizationMode": "None",
+                    "operationMode": "Server"
+                }
+            },
+            "failureDataProfileService" : {
+                "dataSource": "failureDataProfileService",
+                "preload": true,
+                "settings": {
+                    "autoExpandSelect": true,
+                    "synchronizationMode": "None",
+                    "operationMode": "Server"
+                }
+            }
+        },
+        "resources": {
+            "js": [],
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "com.asint.ais.mi.equipment.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "nEquipmentList",
+                    "pattern": "",
+                    "target": [
+                        "tEquipmentList"
+                    ]
+                },
+                {
+                    "name": "nEquipmentAnalytics",
+                    "pattern": "equipment/analytics",
+                    "target": [
+                        "tEquipmentAnalytics"
+                    ]
+                },
+                {
+                    "name": "nEquipmentDetail",
+                    "pattern": "equipment/{equipmentId}/detail",
+                    "target": [
+                        "tEquipmentDetail"
+                    ]
+                }
+            ],
+            "targets": {
+                "tEquipmentList": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewPath": "com.asint.ais.mi.equipment.view.list",
+                    "viewName": "EquipmentList",
+                    "viewId": "idEquipmentListPage"
+                },
+                "tEquipmentAnalytics": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewPath": "com.asint.ais.mi.equipment.view.list",
+                    "viewName": "EquAnalyticsMode",
+                    "viewId": "idEquipmentAnalytcisModePage"
+                },
+                "tEquipmentDetail": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewPath": "com.asint.ais.mi.equipment.view.detail",
+                    "viewName": "EquipmentDetail",
+                    "viewId": "idEquipmentDetailPage"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "com.asint.ais.mi.equipment.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    },
+    "sap.platform.cf": {
+        "ui5VersionNumber": "1.120.32",
+        "oAuthScopes": [
+            "$XSAPPNAME.AIS_SUPER_ADMIN"
+        ]
+    },
+    "sap.cloud": {
+		"public": true,
+		"service": "asint.ais"
+	}
+}

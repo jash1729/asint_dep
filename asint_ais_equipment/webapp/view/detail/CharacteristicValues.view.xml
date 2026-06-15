@@ -1,0 +1,10 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.asint.ais.mi.equipment.controller.detail.CharacteristicValues"
+    xmlns="sap.m">
+    <Toolbar>
+        <ToolbarSpacer/>
+        <Button icon="sap-icon://expand-group" press="onPanelExpand(true)"/>
+        <Button icon="sap-icon://collapse-group" press="onPanelExpand(false)"/>
+
+    </Toolbar>
+    <VBox id="idEquipmentCharacteristicFields" />
+</mvc:View>

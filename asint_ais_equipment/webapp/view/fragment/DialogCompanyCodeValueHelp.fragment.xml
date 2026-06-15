@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog
+        title="{i18n>asint.equipment.detail.valuehelp.companyCode.title}"
+        class="asintAddRemoveTempDialogWidth"
+        contentWidth="30rem" contentHeight="auto">
+        <Table id="idObjectCompany" visible="true" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="SingleSelectMaster" noDataText="" popinLayout="GridLarge" alternateRowColors="true" 
+        items="{path:'masterS4Service>/CompanyCode'}" selectionChange="onSelectCompany" sticky="ColumnHeaders,HeaderToolbar">
+            <columns>
+                <Column width="10rem">
+                    <Text text="{i18n>asint.equipment.detail.valuehelp.companyCode}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.valuehelp.companyCodeDesc}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{masterS4Service>companyCode}"/>
+                        <Text text="{masterS4Service>companyCodeName}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+         <buttons>
+                <Button text="{i18n>asint.reusable.close.button}" press="onCloseCompany"/>
+        </buttons>
+ </Dialog>
+</core:FragmentDefinition>

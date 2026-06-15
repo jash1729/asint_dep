@@ -1,0 +1,99 @@
+<mvc:View controllerName="com.asint.ais.mi.equipment.controller.detail.Planning" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<l:VerticalLayout>
+		<l:content>
+			<Table id="idTableNotificationSegment" growing="true" growingScrollToLoad="false" growingThreshold="5" mode="None"
+				noDataText="No Data" popinLayout="GridLarge" alternateRowColors="true"
+				items="{path: 'mEquipmentDetail>/data/tabs/planning/notifications'}">
+				<headerToolbar>
+					<OverflowToolbar design="Transparent">
+						<SegmentedButton id="idNotificationSegment" selectionChange="onSelectNotificationSegment" selectedKey="all">
+							<items>
+									<SegmentedButtonItem text="All" key="all"/>
+									<SegmentedButtonItem icon="sap-icon://fob-watch" text="Pending" key="pending"/>
+									<SegmentedButtonItem icon="sap-icon://future" text="Planned" key="planned"/>
+									<SegmentedButtonItem icon="sap-icon://complete" text="Completed" key="completed"/>
+								</items>
+						</SegmentedButton>
+						<ToolbarSpacer/>
+						<SearchField id="idNotificationSearch" liveChange="onHandlePlanningNotifiSearch" 
+							placeholder="{i18n>asint.equipment.tab.planned.resuable.table.searchNotification.text}" search="onHandlePlanningNotifiSearch" width="20%"></SearchField>
+						<!-- <Button text="{i18n>asint.equipment.tab.planned.resuable.table.settings.evidence.text}" id="idPlanningAllEvidence"
+							press="fnPlanningEvidence"/>
+						<Button text="{i18n>asint.equipment.tab.planned.resuable.table.settings.new.text}" id="idPlanningAllNew"
+							press="fnPlanningNew"/> -->
+						<Button icon="sap-icon://action-settings" tooltip="{i18n>asint.equipment.list.tooltip.settings}" press="onPressNotificationTableSettings" />
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column popinDisplay="Inline" vAlign="Top">
+						<Text customData:tableSettings="notificationName" customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.notification.text}"/>
+					</Column>
+					<Column visible="false" popinDisplay="Inline" vAlign="Top">
+						<Text customData:tableSettings="notificationDescp" customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.notification.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettings="notificationType" customData:tableSettingsAll="true" text="{i18n>asint.equipment.tab.planned.resuable.table.type.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettings="notificationPriority" customData:tableSettingsAll="true" text="{i18n>asint.equipment.tab.planned.resuable.table.priority.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettings="notificationStatus" customData:tableSettingsAll="true" text="{i18n>asint.equipment.tab.planned.resuable.table.status.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettings="notificationBreakdown" customData:tableSettingsFilter="true" text="{i18n>asint.equipment.tab.planned.resuable.table.breakdown.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.RequiredStartEndDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="notificationReqStartDate" text="{i18n>asint.equipment.tab.planned.resuable.table.RequiredStartDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="notificationReqEndDate" text="{i18n>asint.equipment.tab.planned.resuable.table.RequiredEndDate.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.MalfunStartEndDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="notificationMalfunStartDate" text="{i18n>asint.equipment.tab.planned.resuable.table.MalfunctionStartDate.text}"/>
+					</Column>
+					<Column visible="false">
+						<Text customData:tableSettings="notificationMalfunEndDate" text="{i18n>asint.equipment.tab.planned.resuable.table.MalfunctionEndDate.text}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text customData:tableSettings="notificationFailureMode" customData:tableSettingsEnable="false" text="{i18n>asint.equipment.tab.planned.resuable.table.failureMode.text}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{mEquipmentDetail>notificationName}" text="{mEquipmentDetail>notificationDescp}" titleActive="true" titlePress="onClickNotificationTitle"/>
+							<Text visible="false" text="{mEquipmentDetail>notificationDescp}"/>
+							<Text text="{mEquipmentDetail>notificationType}" wrapping="true" wrappingType="Normal"/>
+							<HBox>
+								<core:Icon class="iotAinCustomTitleColor sapUiTinyMarginEnd" color="{= ${mEquipmentDetail>notificationPriority} === 'High' ? '#BB0000' : ${mEquipmentDetail>notificationPriority} === 'Very High' ? '#BB0000' : ${mEquipmentDetail>notificationPriority} === 'Emergency' ? '#BB0000' : ''}" src="{path: 'mEquipmentDetail>notificationPriority', formatter : '.formatter.fnIconBasedPriority'}"></core:Icon>
+								<Text text="{mEquipmentDetail>notificationPriority}"/>
+							</HBox>
+							<Text text="{mEquipmentDetail>notificationStatus}"/>
+							<Text text="{mEquipmentDetail>notificationBreakdown}"/>
+							<VBox>
+								<Text text="{mEquipmentDetail>notificationReqStartDate}"/>
+								<Text text="{mEquipmentDetail>notificationReqEndDate}"/>
+							</VBox>
+							<Text visible="false" text="{mEquipmentDetail>notificationReqStartDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>notificationReqEndDate}"/>
+							<VBox>
+								<Text text="{mEquipmentDetail>notificationMalfunStartDate}"/>
+								<Text text="{mEquipmentDetail>notificationMalfunEndDate}"/>
+							</VBox>
+							<Text visible="false" text="{mEquipmentDetail>notificationMalfunStartDate}"/>
+							<Text visible="false" text="{mEquipmentDetail>notificationMalfunEndDate}"/>				
+							<Text text="{mEquipmentDetail>notificationFailureMode}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</l:content>
+	</l:VerticalLayout>
+</mvc:View>

@@ -1,0 +1,620 @@
+<mvc:View controllerName="com.asint.ais.mi.equipment.controller.detail.EquipmentDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:m="sap.m"
+    xmlns:nb="com.asint.ais.mi.equipment.view.blocks"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" height="100%">
+    <m:Page showHeader="false">
+        <l:FlexibleColumnLayout id="idFlexiColLayoutDetail" layout="OneColumn">
+            <l:beginColumnPages>
+                <ObjectPageLayout id="_ID_ObjectPageLayout" showTitleInHeaderContent="true" sectionChange="onSectionChange" useIconTabBar="true" upperCaseAnchorBar="false" showFooter="false">
+                    <headerTitle>
+                        <ObjectPageDynamicHeaderTitle>
+                            <expandedHeading>
+                                <m:Title text="{mEquipmentDetail>/data/detail/name}" wrapping="true" />
+                            </expandedHeading>
+
+                            <snappedHeading>
+                                <m:FlexBox fitContainer="true" alignItems="Center">
+                                    <m:Title text="{mEquipmentDetail>/data/detail/name}" wrapping="true" />
+                                </m:FlexBox>
+                            </snappedHeading>
+
+                            <expandedContent>
+                                <m:Text text="{mEquipmentDetail>/data/detail/to_description/0/shortDescription}" />
+                            </expandedContent>
+
+                            <snappedContent>
+                                <m:Text text="{mEquipmentDetail>/data/detail/to_description/0/shortDescription}" />
+                            </snappedContent>
+
+                            <snappedTitleOnMobile>
+                                <m:Title text="{mEquipmentDetail>/data/detail/name}" />
+                            </snappedTitleOnMobile>
+
+                            <actions>
+                            	<ObjectPageHeaderActionButton hideIcon="false" hideText="false" text="Insights" type="Transparent" icon="{value: 'com/asint/ais/mi/equipment/icons/AIicon.png', formatter: 'sap.ui.require.toUrl'}"  visible="{= ${mEquipment>/metadata/featureFlag/equipmentEnableAIRecommendationButton} === '1'}" press="onPressAIRecommendation" class="aiRecommendationButton"/>					
+                                <!-- <m:Button src="./icons/aiIcon.svg" press="onPressAIRecommendation" visible="{= ${mEquipment>/metadata/featureFlag/equipmentEnableAIRecommendationButton} === '1'}"/> -->
+                                <ObjectPageHeaderActionButton icon="sap-icon://org-chart" hideText="true" press="onPressShowHierarchy" tooltip="{i18n>asint.equipment.detail.header.hierarchy.text}" type="Transparent" />
+                                <ObjectPageHeaderActionButton hideIcon="true" hideText="false" visible="{= !${mEquipmentDetail>/metadata/isExternal} &amp;&amp; ${mEquipmentDetail>/data/userRoles/edit} }" press="onEdit($event,'header')" text="{i18n>asint.equipment.detail.changeHeader.dialog.title}" type="Transparent" />
+                                <ObjectPageHeaderActionButton hideIcon="true" hideText="false" visible="{= !${mEquipmentDetail>/metadata/isExternal} &amp;&amp; ${mEquipmentDetail>/data/userRoles/delete} }" press="onDelete" text="{i18n>asint.reusable.button.delete.text}" type="Transparent" />
+                                <ObjectPageHeaderActionButton hideIcon="true" hideText="false" type="Transparent" visible="{mEquipmentDetail>/metadata/isExternal}" press="onExternalIdPress" text="{i18n>asint.equipment.detail.header.externalObject.text}" />
+                                <ObjectPageHeaderActionButton hideIcon="true" hideText="false" type="Transparent" press="onDownloadReport" text="{i18n>asint.equipment.detail.header.downloadReport.text}"/>
+                                <ObjectPageHeaderActionButton hideIcon="false" icon="sap-icon://action" hideText="false" type="Transparent" press="onPressNavigateToCML" text="{i18n>asint.equipment.detail.header.navToCML.text}"/>
+                            </actions>
+                        </ObjectPageDynamicHeaderTitle>
+                    </headerTitle>
+
+                    <headerContent>
+                        <layout:VerticalLayout class="sapUiSmallMarginEnd">
+                            <m:HBox renderType="Bare">
+                                <m:Label text="{i18n>asint.equipment.field.displayId.label}: " />
+                                <m:Text class="sapUiTinyMarginBegin" text="{mEquipmentDetail>/data/detail/displayId}"></m:Text>
+                            </m:HBox>
+                        </layout:VerticalLayout>
+
+                        <layout:VerticalLayout class="sapUiSmallMarginEnd">
+                            <m:HBox renderType="Bare">
+                                <m:Label text="{i18n>asint.equipment.field.category.label}: " />
+                                <m:Text class="sapUiTinyMarginBegin" text="{parts:['mEquipmentDetail>/data/detail/category','mEquipment>/data/equipmentCategoryArray'], formatter:'.formatter.formatCategory'}"></m:Text>
+                            </m:HBox>
+                        </layout:VerticalLayout>
+
+                        <!-- <layout:HorizontalLayout>
+                            <m:ObjectAttribute title="{i18n>asint.equipment.field.createdOn.label}" text="{
+                                    path: 'mEquipmentDetail>/data/detail/createdAt',
+                                    formatter: '.formatter.formatDate'
+                                }" />
+                        </layout:HorizontalLayout>
+
+                        <layout:HorizontalLayout class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom">
+                            <m:ObjectAttribute title="{i18n>asint.equipment.field.modifiedOn.label}" text="{
+                                path: 'mEquipmentDetail>/data/detail/modifiedAt',
+                                formatter: '.formatter.formatDate'
+                            }" />
+                        </layout:HorizontalLayout> -->
+
+                        <!-- <layout:HorizontalLayout class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom">
+                            <m:ObjectAttribute title="{i18n>asint.equipment.field.assetManufacturerName.label}" text="{mEquipmentDetail>/data/detail/assetManufacturerName}" />
+                        </layout:HorizontalLayout> -->
+
+                        <layout:VerticalLayout class="sapUiSmallMarginEnd">
+                            <m:HBox renderType="Bare">
+                                <m:Label text="{i18n>asint.equipment.field.validityStartDate.label}: " />
+                                <m:Text class="sapUiTinyMarginBegin" text="{path: 'mEquipmentDetail>/data/detail/validityStartDate',formatter: '.formatter.formatDate'}"></m:Text>
+                            </m:HBox>
+                        </layout:VerticalLayout>
+
+                        <layout:VerticalLayout class="sapUiSmallMarginEnd">
+                            <m:HBox renderType="Bare">
+                                <m:Label text="{i18n>asint.equipment.field.validityEndDateTime.label}: " />
+                                <m:Text class="sapUiTinyMarginBegin" text="{path: 'mEquipmentDetail>/data/detail/validityEndDate',formatter: '.formatter.formatDate'}"></m:Text>
+                            </m:HBox>
+                        </layout:VerticalLayout>
+
+                        <layout:VerticalLayout class="sapUiSmallMarginEnd" visible="{parts:['mEquipmentDetail>/data/detail/flagComponent'], formatter:'.formatter.formatFlagComponentVisibility'}">
+                            <m:HBox renderType="Bare">
+                                <m:Label text="{i18n>asint.equipment.field.flagComponent.label}: " />
+                                <m:Text class="sapUiTinyMarginBegin" text="{mEquipmentDetail>/data/detail/flagComponent}"></m:Text>
+                            </m:HBox>
+                        </layout:VerticalLayout>
+
+                        <layout:VerticalLayout class="sapUiSmallMarginEnd">
+                            <m:HBox renderType="Bare">
+                                <m:Label text="{i18n>asint.equipment.field.userStatus.label}: " />
+                                <m:Text class="sapUiTinyMarginBegin" text="{mEquipmentDetail>/data/detail/userStatus}"></m:Text>
+                            </m:HBox>
+                        </layout:VerticalLayout>
+
+                        <layout:VerticalLayout class="sapUiSmallMarginEnd" >
+                            <m:HBox renderType="Bare">
+                                <m:Label text="{i18n>asint.equipment.field.systemStatus.label}: " />
+                                <m:Text class="sapUiTinyMarginBegin" text="{mEquipmentDetail>/data/detail/systemStatus}"></m:Text>
+                            </m:HBox>
+                        </layout:VerticalLayout>
+
+                        <!-- <layout:HorizontalLayout>
+                            <m:HBox>
+                                <m:Label text="{i18n>asint.equipment.detail.header.objectTemplate.label}: " />
+                                <m:Link text="{mEquipmentDetail>/data/templatesData/templatesLinkText}" press="onPressObjectTemplatesLink" />
+                            </m:HBox>
+                        </layout:HorizontalLayout> -->
+                    </headerContent>
+
+                    <sections>
+                        <ObjectPageSection id="idObjectHierarchy" titleUppercase="false" customData:name="objectHierarchy" title="{i18n>asint.equipment.tab.objectHierarchy.title}">
+                            <subSections>
+                                <ObjectPageSubSection id="idObjectHierarchySubSection" visible="{mEquipmentDetail>/metadata/isObjectHierarchy}" title="{i18n>asint.equipment.tab.objectHierarchy.title}" titleUppercase="false">
+                                    <!-- <blocks>
+                                        <nb:ObjectHierarchy id="_ID_ObjectHierarchy" />
+                                    </blocks> -->
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection titleUppercase="false" customData:name="generalData" title="{i18n>asint.equipment.tab.generalInfo.title}">
+
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.generalInfo.title}" showTitle="false" titleUppercase="false">
+                                    <blocks>
+                                        <m:VBox>
+                                            <m:Toolbar visible="{mEquipmentDetail>/metadata/isEditable}">
+                                                <m:ToolbarSpacer />
+                                                <m:Button 
+                                                        visible="{= !${mEquipmentDetail>/metadata/detail/isEditable} &amp;&amp; ${mEquipmentDetail>/data/userRoles/edit} }" 
+                                                        text="{i18n>asint.reusable.button.edit.text}" 
+                                                        press="onEditDetailFields">
+                                                    </m:Button>
+                                                <m:Button visible="{mEquipmentDetail>/metadata/detail/isEditable}" text="{i18n>asint.reusable.button.save.text}" press="onPressSaveFieldsData"></m:Button>
+                                                <!-- <m:Button icon="sap-icon://show" tooltip="{i18n>asint.equipment.tab.generalData.review.tooltip.text}" enabled="{mEquipmentDetail>/metadata/detail/isEditable}" press="onPressReviewChanges"></m:Button> -->
+                                                <m:Button text="{i18n>asint.reusable.button.cancel.text}" visible="{mEquipmentDetail>/metadata/detail/isEditable}" press="onCancelEditFields"></m:Button>
+                                            </m:Toolbar>
+                                            <f:SimpleForm editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                                <f:content>
+                                                    <core:Title text="" />
+                                                    <!-- <m:Label text="{i18n>asint.equipment.field.parentName.label}" />
+                                                    <m:Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/to_description/0/shortDescription}"/>
+                                                    <m:Label text="{i18n>asint.equipment.field.parentDesc.label}" />
+                                                    <m:Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/inventoryNumber}" /> -->
+                                                    <m:Label visible="{= ${mEquipment>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}" text="{i18n>asint.equipment.field.technicalIdentificationNumber.label}" />
+                                                    <m:Input visible="{= ${mEquipment>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}" editable="false" value="{mEquipmentDetail>/data/detail/technicalObjectSortCode}" />
+                                                    <m:Label text="{i18n>asint.equipment.field.objectType.label}" />
+                                                    <m:Input editable="false" value="{mEquipmentDetail>/data/detail/objectType}" valueHelpOnly="true" showClearIcon="true" showValueHelp="true" valueHelpRequest="openValueHelp($event ,'OBTP','SingleSelectLeft')" />
+                                                    <m:Label visible="{=!${mEquipmentDetail>/metadata/isExternal}}" text="{i18n>asint.equipment.field.componentType.label}" />
+                                                    <m:ComboBox 
+                                                        visible="{=!${mEquipmentDetail>/metadata/isExternal}}" 
+                                                        items="{path: 'mEquipmentDetail>/data/componentTypes'}"
+                                                        editable="{=${mEquipmentDetail>/metadata/detail/isEditable} &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" 
+                                                        value="{mEquipmentDetail>/data/detail/componentType}" 
+                                                        showClearIcon="true">
+                                                        <core:ListItem key="{mEquipmentDetail>componentType}" text="{mEquipmentDetail>componentType}"/>
+                                                    </m:ComboBox>    
+                                                    <m:Label text="{i18n>asint.equipment.field.inventoryNumber.label}" />
+                                                    <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/inventoryNumber}" />
+                                                    <m:Label text="{i18n>asint.equipment.field.activationState.label}" />
+                                                    <m:ComboBox editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" items="{path: 'mEquipmentDetail>/metadata/dropDown/activationState'}" selectedKey="{mEquipmentDetail>/data/detail/activationState}" showSecondaryValues="true">
+                                                        <core:ListItem key="{mEquipmentDetail>key}" text="{mEquipmentDetail>text}"/>
+                                                    </m:ComboBox>
+                                                    <m:Label  visible="{= ${mEquipment>/metadata/featureFlag/legacyEquiTag} === '1'}"  text="{i18n>asint.equipment.field.legacyEquipmentTag.label}" />
+                                                    <m:Input visible="{= ${mEquipment>/metadata/featureFlag/legacyEquiTag} === '1'}"  editable="false" value="{mEquipmentDetail>/data/detail/legacyEquipmentTag}"/>
+                                                    <core:Title text="" />
+                                                    <m:Label text="{i18n>asint.equipment.field.authorizationGroup.label}" />
+                                                    <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/authorizationGroup}" />
+                                                    <m:Label text="{i18n>asint.equipment.field.startUpDate.label}" />
+                                                    <m:DatePicker value="{mEquipmentDetail>/data/detail/startUpDate}" valueFormat="yyyy-MM-dd" displayFormat="MMM dd, yyyy" editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" change="onDateChange"/>
+                                                    <m:Label text="{i18n>asint.equipment.field.deactivationDate.label}" />
+                                                    <m:DatePicker value="{mEquipmentDetail>/data/detail/deactivationDate}" valueFormat="yyyy-MM-dd" displayFormat="MMM dd, yyyy" editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" />
+                                                    <m:Label visible="{=!${mEquipmentDetail>/metadata/isExternal}}" text="{i18n>asint.equipment.field.componentRegulatoryId.label}" />
+                                                    <m:Input editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/componentRegulatoryID}" visible="{=!${mEquipmentDetail>/metadata/isExternal}}"  />
+                                                    <m:Label text="{i18n>asint.equipment.field.comments.label}" />
+                                                    <m:TextArea editable="{mEquipmentDetail>/metadata/detail/isEditable}" value="{mEquipmentDetail>/data/detail/comments}" showExceededText="true" rows="4" maxLength="5000" />
+                                                </f:content>
+                                            </f:SimpleForm>
+                                            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" columnsM="1" columnsL="1" columnsXL="1">
+                                                <f:content>
+                                                    <m:Label text="{i18n>asint.equipment.field.longDescription.label}" />
+                                                    <m:TextArea 
+                                                        visible="{= ${mEquipmentDetail>/metadata/detail/isEditable} &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }"
+                                                        rows="8" value="{mEquipmentDetail>/data/detail/to_description/0/longDescription}" />
+                                                    <m:Label 
+                                                        visible="{= !${mEquipmentDetail>/metadata/detail/isEditable} || ${mEquipmentDetail>/metadata/isExternal} }" 
+                                                        text="{i18n>asint.equipment.field.longDescription.label}" />
+                                                    <m:ExpandableText 
+                                                        visible="{= !${mEquipmentDetail>/metadata/detail/isEditable} || ${mEquipmentDetail>/metadata/isExternal} }" 
+                                                        maxCharacters="500" overflowMode="Popover" text="{mEquipmentDetail>/data/detail/to_description/0/longDescription}" />
+                                                </f:content>
+                                            </f:SimpleForm>
+                                        </m:VBox>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.referenceData.title}" titleUppercase="false">
+                                    <blocks>
+                                        <f:SimpleForm editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                            <f:content>
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.field.acquisitionValCurrency.label}" />
+                                                <m:Input type="Number" editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/acquisitionValue}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/acquisitionCurrency}" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'currencyCode','SingleSelectLeft')" >
+                                                    <m:layoutData>
+                                                        <f:ColumnElementData cellsSmall="4" cellsLarge="4" />
+                                                    </m:layoutData>
+                                                </m:Input>
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.manufacturerData.title}" titleUppercase="false">
+                                    <blocks>
+                                        <f:SimpleForm editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                            <f:content>
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.field.assetManufacturerName.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" change="fnValueChange" value="{mEquipmentDetail>/data/detail/assetManufacturerName}" />
+                                                <m:Label text="{i18n>asint.equipment.field.partNmbr.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/manufacturerPartNmbr}" />
+                                                <m:Label text="{i18n>asint.equipment.field.country.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/manufacturerCountry}"  valueHelpOnly="true" showClearIcon="true" showValueHelp="true"  valueHelpRequest="openValueHelp($event ,'CNTR','SingleSelectLeft')"/>
+
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.field.modelNmbr.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/modelNumber}" />
+                                                <m:Label text="{i18n>asint.equipment.field.manufacturerSerialNumber.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/manufacturerSerialNumber}" />
+                                                <m:Label text="{i18n>asint.equipment.field.constructionYear.label}" />
+                                                <m:DatePicker value="{mEquipmentDetail>/data/detail/constructionYear}" valueFormat="yyyy" displayFormat="yyyy" editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" change="onDateChange"/>
+                                                <m:ComboBox change="onComboBoxChange" editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" items="{path: 'mEquipmentDetail>/metadata/dropDown/constructionMonths'}" selectedKey="{mEquipmentDetail>/data/detail/constructionMonth}" showSecondaryValues="true">
+                                                    <core:ListItem key="{mEquipmentDetail>key}" text="{mEquipmentDetail>text}" additionalText="{mEquipmentDetail>key}" />
+                                                    <m:layoutData>
+                                                        <f:ColumnElementData cellsSmall="4" cellsLarge="4" />
+                                                    </m:layoutData>
+                                                </m:ComboBox>
+                                                <!-- <m:Label text="{i18n>asint.equipment.field.constructionMonth.label}" />
+                                                <m:ComboBox editable="{mEquipmentDetail>/metadata/detail/isEditable}" items="{path:
+                                                'mEquipmentDetail>/metadata/dropDown/constructionMonths'}" 
+                                                    selectedKey = "{mEquipmentDetail>/data/detail/constructionMonth}" showSecondaryValues = "true">
+                                                    <core:ListItem key="{mEquipmentDetail>key}" text="{mEquipmentDetail>text}" additionalText="{mEquipmentDetail>key}" />
+                                                </m:ComboBox> -->
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.locationData.title}" titleUppercase="false">
+                                    <blocks>
+                                        <f:SimpleForm editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                            <f:content>
+                                                <core:Title text="" />                                              
+                                                <m:Label text="{i18n>asint.equipment.field.maintPlant.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/maintenancePlant}"   valueHelpOnly="true" showClearIcon="true" showValueHelp="true"  valueHelpRequest="openValueHelp($event ,'PLMT','SingleSelectLeft')"/> 
+                                                <m:Label text="{i18n>asint.equipment.field.plantSection.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/plantSection}" valueHelpOnly="true" showClearIcon="true" showValueHelp="true" valueHelpRequest="openValueHelp($event ,'PLSC','SingleSelectLeft')" />
+                                                <m:Label text="{i18n>asint.equipment.field.location.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/location}" valueHelpOnly="true" showClearIcon="true" showValueHelp="true" valueHelpRequest="openValueHelp($event ,'PLSC','SingleSelectLeft')" />
+                                                <m:Label text="{i18n>asint.equipment.field.workCenter.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/maintenanceWorkCenter}"  valueHelpOnly="true" showClearIcon="true" showValueHelp="true" valueHelpRequest="openValueHelp($event ,'WCTR','SingleSelectLeft')" />
+                                                <m:Label text="{i18n>asint.equipment.field.ABCIndicator.label}" />                                                                                                           
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/abcIndicator}" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'ABCIndicator','SingleSelectLeft')" />
+
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.field.functionalLocationNameGen.label}" />
+                                                <m:Input editable="false" value="{mEquipmentDetail>/data/detail/parent_functional_location/name}" />
+                                                <m:Label text="{i18n>asint.equipment.field.functionalLocationDesc.label}" />
+                                                <m:Input editable="false" value="{mEquipmentDetail>/data/detail/parent_functional_location/to_description/0/shortDescription}" />
+                                                <m:Label text="{i18n>asint.equipment.field.sortField.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/sortField}" />
+                                                <m:Label visible="{= ${mEquipment>/metadata/featureFlag/legacyEquiTag} === '1'}" text="{i18n>asint.equipment.field.unitLocation.label}" />
+                                                <m:ComboBox visible="{= ${mEquipment>/metadata/featureFlag/legacyEquiTag} === '1'}" editable="{mEquipmentDetail>/metadata/detail/isEditable}" selectedKey="{mEquipmentDetail>/data/detail/unitLocation}" items="{path: 'mEquipment>/metadata/unitLocations'}">
+                                                <core:Item key="{mEquipment>name}" text="{mEquipment>description}" />
+                                                </m:ComboBox>
+
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.organisation.title}" titleUppercase="false">
+                                    <blocks>
+                                        <f:SimpleForm editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                            <f:content>
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.field.companyCode.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/companyCode}" showValueHelp="true" showClearIcon="true" valueHelpOnly="true" valueHelpRequest="openValueHelp($event ,'CNCD','SingleSelectLeft')" />
+                                                <m:Label text="{i18n>asint.equipment.field.costCenter.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/costCenter}" showValueHelp="true" showClearIcon="true" valueHelpOnly="true" valueHelpRequest="openValueHelp($event ,'COST','SingleSelectLeft')" />
+
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.field.businessArea.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/businessArea}" showValueHelp="true" showClearIcon="true" valueHelpOnly="true" valueHelpRequest="openValueHelp($event ,'BUSA','SingleSelectLeft')" />
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.responsibilities.title}" titleUppercase="false">
+                                    <blocks>
+                                        <f:SimpleForm editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                            <f:content>
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.field.planningPlant.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/planningPlant}" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event,'PLPT','SingleSelectLeft')"/>
+                                                <m:Label text="{i18n>asint.equipment.field.plannerGroup.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/plannerGroup}"  valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event,'PRGP','SingleSelectLeft')"/>
+
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.field.catalogProfile.label}" />
+                                                <m:Input editable="{=${mEquipmentDetail>/metadata/detail/isEditable}  &amp;&amp; !${mEquipmentDetail>/metadata/isExternal} }" value="{mEquipmentDetail>/data/detail/catalogProfile}" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'CTPL','SingleSelectLeft')"/>
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection titleUppercase="false" customData:name="components" title="{i18n>asint.equipment.tab.components.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.parentInformation.title}" id="idAsIntParentInfoSubSection" customData:name="parentInformation">
+                                    <blocks>
+                                        <f:SimpleForm id="idCreateNotificationForm" editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                            <f:toolbar>
+                                                <m:Toolbar visible="{mEquipmentDetail>/metadata/isEditable}">
+                                                    <m:ToolbarSpacer />
+                                                    <m:Button visible="{= !${mEquipmentDetail>/metadata/detail/isEditable} &amp;&amp; ${mEquipmentDetail>/data/userRoles/edit}}" text="{i18n>asint.reusable.button.edit.text}" press="onEditParentInformation"/>
+                                                    <m:Button visible="{mEquipmentDetail>/metadata/detail/isEditable}" text="{i18n>asint.reusable.button.save.text}" press="onSaveParentInformation"/>
+                                                    <m:Button text="{i18n>asint.reusable.button.cancel.text}" visible="{mEquipmentDetail>/metadata/detail/isEditable}" press="onCancelParentInformation"/>
+                                                </m:Toolbar>
+                                            </f:toolbar>
+                                            <f:content>
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.tab.parentInformation.form.superOrdinateEquipmentName.text}"/>
+                                                <m:Input value="{mEquipmentDetail>/data/detail/parent_equipment/name}" editable="{= !${mEquipmentDetail>/metadata/isExternal} &amp;&amp; ${mEquipmentDetail>/metadata/detail/isEditable} ? true : false}" showValueHelp="true" showClearIcon="true"   valueHelpOnly="true"  valueHelpRequest="fnHandleSuperOrdinateEquipmentValueHelp"/>
+                                                <m:Label visible="{= ${mEquipment>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}" text="{i18n>asint.equipment.field.technicalId.label}" />
+                                                <m:Input visible="{= ${mEquipment>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}" editable="false" value="{mEquipmentDetail>/data/detail/parent_equipment/technicalObjectSortCode}" />    
+                                                <m:Label text="{i18n>asint.equipment.tab.parentInformation.form.superOrdinateEquipmentDesc.text}"/>
+                                                <m:Input editable="false" value="{mEquipmentDetail>/data/detail/parent_equipment/to_description/0/shortDescription}"/>
+                                                <core:Title text="" />
+                                                <m:Label text="{i18n>asint.equipment.tab.parentInformation.form.functionalLocationName.text}"/>
+                                                <m:Input value="{mEquipmentDetail>/data/detail/parent_functional_location/name}" editable="{= !${mEquipmentDetail>/metadata/isExternal} &amp;&amp; ${mEquipmentDetail>/metadata/detail/isEditable} ? true : false}" showValueHelp="true" valueHelpOnly="true" showClearIcon="true" valueHelpRequest="fnHandleSuperiorfunctionalLocationValueHelp"/>
+                                                <m:Label visible="{= ${mEquipment>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}" text="{i18n>asint.equipment.field.technicalId.label}" />
+                                                <m:Input visible="{= ${mEquipment>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}" editable="false" value="{mEquipmentDetail>/data/detail/parent_functional_location/technicalObjectSortCode}" />    
+                                                <m:Label text="{i18n>asint.equipment.tab.parentInformation.form.functionalLocationDesc.text}"/>
+                                                <m:Input editable="false" value="{mEquipmentDetail>/data/detail/parent_functional_location/to_description/0/shortDescription}"/>
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.componentInformation.title}" id="idAsIntComponentInfoSubSection" customData:name="componentInformation">
+                                    <blocks>
+                                        <nb:ComponentInformation id="idAsIntComponentInfoBlock" />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.componentInformation.groups.title}" id="idAsIntGroupsSubSection" customData:name="groups">
+                                    <blocks>
+                                        <nb:Groups id="idAsIntGroupsInfoBlock" />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <!-- <ObjectPageSection titleUppercase="false" customData:name="classes" title="{i18n>asint.equipment.tab.classes.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.classes.title}" titleUppercase="false">
+                                    <blocks>
+                                        <nb:Classes />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection titleUppercase="false" customData:name="characteristicValue" title="{i18n>asint.equipment.tab.characteristicValue.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.characteristicValue.title}" titleUppercase="false">
+                                    <blocks>
+                                        <nb:CharacteristicValues id="_ID_CharacteristicValues" />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection> -->
+
+                        <ObjectPageSection titleUppercase="false" customData:name="assessments" title="{i18n>asint.equipment.tab.assignment.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.equipmentTemplates.title}" id="idAsIntObjectTemplateSubSection" customData:name="objectTemplate">
+                                    <blocks>
+                                        <nb:ObjectTemplate id="idAsIntObjectTemplateBlock" />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.tab.classChar.title}">
+                                    <blocks>
+                                        <nb:Classes />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection 
+                                    title="{i18n>asint.equipment.tab.failureDataProfile.title}" 
+                                    id="idFailureDataProfileSubSection"
+                                    visible="{= ${mEquipment>/metadata/featureFlag/equipmentEnableFailureDataProfile} === '1' }"
+                                >
+                                    <blocks>
+                                        <nb:FailureDataProfile />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <!-- <ObjectPageSubSection id="idAsIntRBISubSection" customData:name="assessStrategy" title="{i18n>asint.equipment.tab.assessments.assessStrategy.title}">
+                                    <blocks>
+                                        <nb:AssessmentsRBI id="idAsIntRBIBlock" />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection id="idAsIntIDMSSubSection" customData:name="assessInspection" title="{i18n>asint.equipment.tab.assessments.assessInspection.title}">
+                                    <blocks>
+                                        <nb:AssessmentsIDMS id="idAsIntIDMSBlock" />
+                                    </blocks>
+                                </ObjectPageSubSection> -->
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection id="idMDASection" customData:name="classificationmda" title="{i18n>asint.equipment.detail.tab.mda.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.mda.title}">
+                                    <blocks>
+                                        <nb:ClassificationMDA id="idMDASubSection"/>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection titleUppercase="true" customData:name="assetIntelligence" title="{i18n>asint.equipment.detail.tab.assetIntelligence.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.assetIntelligence.highLight.title}" id="idAssetIntelligenceHighLight">
+                                    <blocks>
+                                        <nb:AssetIntelligenceHighlight />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.assetIntelligence.rca.title}" id="idAssetIntelligenceRiskandCriticality">
+                                    <blocks>
+                                        <nb:AssetIntelligenceRiskandCriticality />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.assetIntelligence.assetStrategy.title}" id="idAssetIntelligenceAssetStrategy">
+                                    <blocks>
+                                        <nb:AssetIntelligenceAssetStrategy />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.assetIntelligence.assetInspection.title}">
+                                    <blocks>
+                                        <nb:AssetIntelligenceAssetInspection />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.assetIntelligence.finding.title}">
+                                    <blocks>
+                                        <nb:Findings />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.assetIntelligence.recommendations.title}" id="idAssetIntelligenceRecommendations">
+                                    <blocks>
+                                        <nb:AssetIntelligenceRecommendations />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection id="idRiskSumarySection" customData:name="riskSummary" title="{i18n>asint.equipment.detail.tab.riskSummary.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.riskSummary.title}">
+                                    <blocks>
+                                        <nb:RiskSummary id="idRiskSumarySubSection"/>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection titleUppercase="true"  title="{i18n>asint.equipment.detail.tab.maintenance.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.notification.title}">
+                                    <blocks>
+                                        <nb:Notifications/>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.mPlan.column.mPlan}">
+                                    <blocks>
+                                        <nb:MaintenancePlan/>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.maintenaceOrder.title}">
+                                    <blocks>
+                                        <nb:Maintenance/>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection  title="{i18n>asint.equipment.detail.tab.recoWorkBench.title}">
+                                    <blocks>
+                                        <nb:Recommendations/>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection  title="{i18n>asint.equipment.detail.tab.maintenance.tasklist.table.header}">
+                                    <blocks>
+                                        <nb:TaskList/>
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection titleUppercase="true" customData:name="attachments" title="{i18n>asint.equipment.detail.tab.documents.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.documents.title}">
+                                    <blocks>
+                                        <nb:Documents id="_ID_Documents" />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection titleUppercase="true" customData:name="timeline" title="{i18n>asint.equipment.detail.tab.timeline.title}">
+                            <subSections>
+                                <ObjectPageSubSection title="{i18n>asint.equipment.detail.tab.timeline.title}">
+                                    <blocks>
+                                        <nb:Timeline />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <!-- <ObjectPageSection titleUppercase="false" customData:name="planning" title="{i18n>asint.equipment.tab.planning.title}">
+                            <subSections>
+                                <ObjectPageSubSection id="idAsIntNotificationSubSection" customData:name="notification" title="{i18n>asint.equipment.tab.planning.notification.title}">
+                                    <blocks>
+                                        <nb:PlanningNotification id="idAsIntNotificationBlock" />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                                <ObjectPageSubSection id="idAsIntWorkOrderSubSection" customData:name="workorder" title="{i18n>asint.equipment.tab.planning.workorder.title}">
+                                    <blocks>
+                                        <nb:PlanningWorkOrder id="idAsIntWorkOrderBlock" />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection>
+                        <ObjectPageSection titleUppercase="false" customData:name="taxonomy" title="{i18n>asint.equipment.tab.taxonomy.title}">
+                            <subSections>
+                                <ObjectPageSubSection id="idAsIntEquipmentTaxonomy" title="{i18n>asint.equipment.tab.taxonomy.title}">
+                                    <blocks>
+                                        <nb:Taxonomy id="idAsIntEquipmentTaxonomyTab" />
+                                    </blocks>
+                                </ObjectPageSubSection>
+                            </subSections>
+                        </ObjectPageSection> -->
+                    </sections>
+                </ObjectPageLayout>
+            </l:beginColumnPages>
+            <l:midColumnPages>
+                <m:Page showHeader="false">
+                    <ObjectPageLayout showTitleInHeaderContent="false">
+                        <headerTitle>
+                            <ObjectPageDynamicHeaderTitle>
+                                <expandedHeading>
+                                    <m:HBox alignItems="Center">
+                                        <!-- <m:Image src="./icons/aiIcon.svg" width="32px" height="32px"/> -->
+                                        <m:Image src="{value: 'com/asint/ais/mi/equipment/icons/AIicon.png', formatter: 'sap.ui.require.toUrl'}" class="customHeaderIcon" />
+                                        <m:Title text="Insights" class="sapUiTinyMarginBegin customTitle"/>
+                                    </m:HBox>
+                                </expandedHeading>
+
+                                <snappedHeading>
+                                    <m:HBox alignItems="Center">
+                                        <m:Image src="{value: 'com/asint/ais/mi/equipment/icons/AIicon.png', formatter: 'sap.ui.require.toUrl'}" class="customHeaderIcon" />
+                                        <m:Title text="Insights" class="sapUiTinyMarginBegin customTitle"/>
+                                    </m:HBox>
+                                </snappedHeading>
+                                <navigationActions>
+                                    <m:Button type="Emphasized" text="Refresh" press=".fnGetDataForAIRecommendationQuery"/>
+                                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://full-screen" press=".handleFullScreenDetail" id="enterFullScreenBtn" tooltip="Enter Full Screen Mode" visible = "{= !${mEquipmentDetail>/metadata/aiRecommendation/isFullScreenActive}}" />
+                                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://exit-full-screen" press=".handleExitFullScreenDetail" id="exitFullScreenBtn" tooltip="Exit Full Screen Mode" visible = "{= ${mEquipmentDetail>/metadata/aiRecommendation/isFullScreenActive}}"/>
+                                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press=".handleCloseAi" tooltip="Close middle column" />
+                                </navigationActions>
+                            </ObjectPageDynamicHeaderTitle>
+                        </headerTitle>
+
+                        <headerContent>
+                            <layout:VerticalLayout class="sapUiSmallMarginEnd">
+                                <m:HBox renderType="Bare">
+                                    <m:Label text="{i18n>asint.equipment.field.createdBy.label}: " />
+                                    <m:Text class="sapUiTinyMarginBegin" text="{mEquipmentDetail>/data/detail/createdBy}" />
+                                </m:HBox>
+                            </layout:VerticalLayout>
+
+                            <layout:VerticalLayout class="sapUiSmallMarginEnd">
+                                <m:HBox renderType="Bare">
+                                    <m:Label text="{i18n>asint.equipment.field.createdOn.label}: " />
+                                    <m:Text class="sapUiTinyMarginBegin" text="{path: 'mEquipmentDetail>/data/detail/createdAt',formatter: '.formatter.formatDate'}" />
+                                </m:HBox>
+                            </layout:VerticalLayout>
+                        </headerContent>
+
+                        <sections>
+                            <ObjectPageSection titleUppercase="false" showTitle="false">
+                                <subSections>
+                                    <ObjectPageSubSection titleUppercase="false" showTitle="false">
+                                        <blocks>
+                                            <m:VBox id="idAiSuggestions" renderType="Bare" class="sapUiSmallMargin">
+                                                <m:Panel headerText="AI Recommendations" expandable="false" class="sapUiTinyMarginBottom">
+                                                    <m:VBox renderType="Bare" class="sapUiSmallMargin">
+                                                        <m:Text text="Select Refresh to load the latest AI insights for this equipment." wrapping="true" />
+                                                    </m:VBox>
+                                                </m:Panel>
+                                            </m:VBox>
+                                        </blocks>
+                                    </ObjectPageSubSection>
+                                </subSections>
+                            </ObjectPageSection>
+                        </sections>
+                    </ObjectPageLayout>
+                </m:Page>
+            </l:midColumnPages>
+        </l:FlexibleColumnLayout>
+    </m:Page>
+    
+</mvc:View>

@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:c="sap.suite.ui.commons" 
+xmlns:l="sap.ui.layout">
+	<Dialog title="{mEquipmentList>/data/AdvancedFilters/showExpression/FilterName} - {i18n>asint.equipment.advancedFilters.table.expression.text}" contentWidth="50%">
+        <c:CalculationBuilder class="asintCalBuilderReadonlyClass" id="idExpressionDialog" allowComparisonOperators="true" allowLogicalOperators="true" allowStringLiterals="true" allowStringConstants="true"
+            layoutType="VisualOnly" expression="{mEquipmentList>/data/AdvancedFilters/showExpression/Expression}"
+            readOnly="true" validateFunction="validateFunction" showToolbar="false"
+            afterValidation="afterValidation" variables="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/Variable}" showInputToolbar="false" disabledDefaultTokens="-">
+            <c:variables>
+                <c:CalculationBuilderVariable key="{mEquipmentList>key}" group="{mEquipmentList>group}" label="{mEquipmentList>text}" items="{path:'mEquipmentList>items', templateShareable:true}">
+                    <c:items>
+                        <c:CalculationBuilderItem key="{mEquipmentList>key}" />
+                    </c:items>
+                </c:CalculationBuilderVariable>
+            </c:variables>
+            <c:groups>
+                <c:CalculationBuilderGroup setSelection="setSelection" title="{i18n>asint.equipment.advancedFilters.create.characteristic.text}"
+							key="TreeData" icon="sap-icon://simulate" description="{i18n>asint.equipment.advancedFilters.calcBuilder.charDesc.text}">
+							<c:customView>
+								<Tree selectionChange="onSelectTreeNode" mode="SingleSelectMaster" items="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/TreeData}"
+									includeItemInSelection="true">
+									<StandardTreeItem title="{mEquipmentList>text}">
+										<customData>
+											<core:CustomData key="{mEquipmentList>key}" value="{mEquipmentList>key}"/>
+										</customData>
+									</StandardTreeItem>
+								</Tree>
+							</c:customView>
+						</c:CalculationBuilderGroup>
+            </c:groups>
+        </c:CalculationBuilder>
+    <buttons>
+        <Button text="{i18n>asint.reusable.close.button}" press="onCloseShowExpressionDialog"/>
+    </buttons>
+	</Dialog>
+</core:FragmentDefinition>

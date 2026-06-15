@@ -1,0 +1,73 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="com.asint.ais.mi.equipment.controller.detail.TaskList"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:card="sap.f.cards"
+    xmlns:w="sap.ui.integration.widgets">
+	<SegmentedButton id="idSegmentedButton" selectionChange="onSwitchTaskListSegmentButton" selectedKey="all">
+		<items>
+			<SegmentedButtonItem text="All" key="all"/>
+			<SegmentedButtonItem icon="sap-icon://request" text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.status.new}" key="NEW"/>
+			<SegmentedButtonItem icon="sap-icon://fob-watch" text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.status.inprogress}" key="INPROG"/>
+			<SegmentedButtonItem icon="sap-icon://complete" text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.status.completed}" key="COMP"/>
+			<SegmentedButtonItem icon="sap-icon://decline" text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.status.rejected}" key="REJ"/>
+		</items>
+	</SegmentedButton>
+	<Table id="tasklists" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar"
+		growing="true" growingThreshold="5"
+		items="{mEquipmentDetail>/data/tabs/maintenanceservice/tasksList}"
+		noDataText="{i18n>asint.reusable.noData.text}">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="{mEquipmentDetail>/data/tabs/maintenanceservice/tasksList/tableHeader}" />
+				<ToolbarSpacer />
+				<SearchField width="200px" search="onSearch" />
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+			<Column popinDisplay="Inline" vAlign="Top">
+				<Text text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.task.column.text}"/>
+			</Column>
+			<!-- <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+				<Text text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.equipment.column.text}"/>
+			</Column> -->
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+				<Text text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.status.column.text}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+				<Text text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.priority.column.text}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+				<Text text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.assignedTo.column.text}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+				<Text text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.startDate.column.text}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+				<Text text="{i18n>asint.equipment.detail.tab.maintenance.tasklist.endDate.column.text}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier title="{mEquipmentDetail>displayId}" text="{mEquipmentDetail>to_description/0/shortDescription}" titleActive="true" titlePress="onTaskTitlePress"/>
+					<!-- <ObjectIdentifier title="{mEquipmentDetail>equipmentName}" text="{mEquipmentDetail>equipmentDesc}" /> -->
+                    <ObjectStatus text="{path: 'mEquipmentDetail>status',
+                    formatter: '.formatter.fnGetTaskStatusByCode'}" state="{path:'mEquipmentDetail>status',formatter:'.formatter.fnGetTaskStatusStateByCode'}"/>
+					<ObjectStatus text="{
+						path: 'mEquipmentDetail>priority',
+						formatter: '.formatter.fnGetPriorityByCode'
+					}" icon="{
+						path: 'mEquipmentDetail>priority',
+						formatter: '.formatter.fnGetPriorityIconByCode'
+					}" state="{
+						path: 'mEquipmentDetail>priority',
+						formatter: '.formatter.fnGetPriorityStateByCode'
+					}"/>
+                    <Text text="{path: 'mEquipmentDetail>assignedTo'}"/>
+                    <Text text="{path: 'mEquipmentDetail>startDate', formatter: '.formatter.formatDate'}"/>
+                    <Text text="{path: 'mEquipmentDetail>endDate', formatter: '.formatter.formatDate'}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</mvc:View>

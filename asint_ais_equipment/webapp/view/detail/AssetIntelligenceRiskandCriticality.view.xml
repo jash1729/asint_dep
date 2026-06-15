@@ -1,0 +1,51 @@
+<mvc:View xmlns:core="sap.ui.core"
+	controllerName="com.asint.ais.mi.equipment.controller.detail.AssetIntelligence"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:card="sap.f.cards"
+	xmlns:w="sap.ui.integration.widgets">
+	<Panel id="idAsintRACPanel" headerText="{mEquipmentDetail>/data/assetIntelligence/RiskCriticality/header}">
+		<!-- <HBox >
+			<ToolbarSpacer />
+			<SearchField width="200px" value="" placeholder="{i18n>asint.reusable.search.text}" liveChange=""/>
+		</HBox> -->  
+		<Table id="idAsintRCA" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar" growing="true" growingThreshold="5"
+		items="{mEquipmentDetail>/data/assetIntelligence/RiskCriticality/assessmentFinalData}" updateFinished="onLoadMorePress" noDataText="{i18n>asint.reusable.noData.text}">
+            <columns>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.rca.table.assessment.column.text}"/>
+                </Column>
+				<Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.rca.table.assessmentTemp.column.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.rca.table.techObj.column.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.rca.table.status.column.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.rca.table.riskScore.column.text}"/>
+                </Column>
+				<Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.rca.table.criticality.column.text}"/>
+                </Column>
+				<Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.rca.table.created.column.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier text="{mEquipmentDetail>rcaassesmentshortdesc}" title="{mEquipmentDetail>rcaassesmentname}" titleActive="true" titlePress="onRCAAssessmentTitlePress" />
+						<ObjectIdentifier title="{mEquipmentDetail>rcatemplatename}" text="{mEquipmentDetail>rcatemplateshortdesc}" />
+						<ObjectIdentifier title="{mEquipmentDetail>technicalObjectNumber}" text="{mEquipmentDetail>technicalObjectDescription}" />
+                        <ObjectStatus text="{path: 'mEquipmentDetail>rcaassesmentstatus', formatter: '.formatter.fnGetStatusText'}" state="{path: 'mEquipmentDetail>rcaassesmentstatus', formatter: '.formatter.fnGetStatusType'}"/>
+                        <Text text="{mEquipmentDetail>riskscore}"/>
+                        <Text text="{parts:['mEquipmentDetail>criticalitycode','mEquipmentDetail>criticalitytext'],formatter:'.formatter.fnFormatCriticalityText'}" />
+						<Text text="{mEquipmentDetail>rcaassesmentcreatedat}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+	</Panel>
+</mvc:View>

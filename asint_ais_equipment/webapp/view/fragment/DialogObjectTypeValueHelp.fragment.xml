@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog
+        title="{i18n>asint.equipment.detail.valuehelp.type.title}"
+        class="asintAddRemoveTempDialogWidth"
+        contentWidth="30rem" contentHeight="auto">
+        <Table id="idObjectType" visible="true" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="SingleSelectMaster" noDataText="" popinLayout="GridLarge" alternateRowColors="true" 
+        items="{path:'masterS4Service>/TechnicalObjectTypeList'}" selectionChange="onSelectObjectType" sticky="ColumnHeaders,HeaderToolbar">
+            <columns>
+                <Column width="10rem">
+                    <Text text="{i18n>asint.equipment.detail.valuehelp.type}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.valuehelp.objectTypeDesc}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{masterS4Service>objectType}"/>
+                        <Text text="{masterS4Service>objectTypeDesc}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+                <Button text="{i18n>asint.reusable.close.button}" press="onCloseType"/>
+        </buttons>
+ </Dialog>
+</core:FragmentDefinition>

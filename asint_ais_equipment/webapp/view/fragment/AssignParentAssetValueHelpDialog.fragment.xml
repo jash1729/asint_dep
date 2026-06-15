@@ -1,0 +1,112 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog
+        title="{i18n>asint.equipment.list.dialog.createNewEquipment.select.parentAsset.dialog.title}"
+        class="asintAddRemoveTempDialogWidth"
+        contentWidth="40rem" contentHeight="60%">
+        <Table id="idParentEquipmentTable" visible="true" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="SingleSelectMaster" noDataText="" popinLayout="GridLarge" alternateRowColors="true" 
+            items="{path:'masterService>/EquipmentListService(language=\'en\')/Set',
+            parameters : {$select: 'equipmentId,name,srcId,displayId,objectType,equipmentDescription'},
+            filters: [{ 
+                    path: 'srcId', 
+                    operator: 'NE', 
+                    value1: null 
+                },
+                {
+                    path: 'srcId',
+                    operator: 'NE',
+                    value1: ''
+                }]}" selectionChange="onSelectParentAsset" sticky="ColumnHeaders,HeaderToolbar">
+            <headerToolbar>
+                <OverflowToolbar>
+                            <SegmentedButton selectionChange="onSegmentSelect" selectedKey="{mEquipmentList>/data/createNewEquipment/sParentAssetKey}">
+                                <items>
+                                    <SegmentedButtonItem key="equipment" text="{i18n>asint.equipment.list.table.columnHeader.equipment}"/>
+                                    <SegmentedButtonItem key="functionalLocation" text="{i18n>asint.equipment.detail.header.functionalLocation.label}"/>
+                                </items>
+                            </SegmentedButton>
+                            <ToolbarSpacer/>
+                            <SearchField id="sParentAssetEquiSearch" width="30%" search="onSearch"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text text="{i18n>asint.reusable.name.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.reusable.description.text}"/>
+                </Column>
+                <Column visible="{= ${mEquipment>/metadata/featureFlag/hideSortField} !== 'true'}">
+                    <Text text="{i18n>asint.equipment.field.sortField.label}"/>
+                </Column>
+                <Column visible="{= ${mEquipment>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}">
+                    <Text text="{i18n>asint.equipment.field.technicalId.label}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{masterService>name}"/>
+                        <Text text="{masterService>equipmentDescription}"/>
+                        <Text text="{masterService>sortField}" />
+                        <Text text="{masterService>technicalObjectSortCode}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <Table id="idParentFunctionalLocationTable" visible="false" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="SingleSelectMaster" noDataText="No Data" popinLayout="GridLarge" alternateRowColors="true" 
+            items="{path:'masterService>/FunctionalLocationListService(language=\'en\')/Set' , parameters : {$select: 'functionalLocationId,srcId,objectType'},
+            filters: [{ 
+                    path: 'srcId', 
+                    operator: 'NE', 
+                    value1: null 
+                },
+                {
+                    path: 'srcId',
+                    operator: 'NE',
+                    value1: ''
+                }]}" selectionChange="onSelectParentAsset" sticky="ColumnHeaders,HeaderToolbar">
+            <headerToolbar>
+                <OverflowToolbar>
+                            <SegmentedButton selectionChange="onSegmentSelect" selectedKey="{mEquipmentList>/data/createNewEquipment/sParentAssetKey}">
+                                <items>
+                                    <SegmentedButtonItem key="equipment" text="{i18n>asint.equipment.list.table.columnHeader.equipment}"/>
+                                    <SegmentedButtonItem key="functionalLocation" text="{i18n>asint.equipment.detail.header.functionalLocation.label}"/>
+                                </items>
+                            </SegmentedButton>
+                            <ToolbarSpacer/>
+                            <SearchField width="30%" id="sParentAssetFlocSearch" search="onSearch"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text text="{i18n>asint.reusable.name.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.reusable.description.text}"/>
+                </Column>
+                <Column visible="{= ${mEquipment>/metadata/featureFlag/hideSortField} !== 'true'}">
+                    <Text text="{i18n>asint.equipment.field.sortField.label}"/>
+                </Column>
+                <Column visible="{= ${mEquipment>/metadata/featureFlag/hideTechnicalIdField} !== 'true'}">
+                    <Text text="{i18n>asint.equipment.field.technicalId.label}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{masterService>name}"/>
+                        <Text text="{masterService>functionalLocationDescription}"/>
+                        <Text text="{masterService>sortField}" />
+                        <Text text="{masterService>technicalObjectSortCode}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>asint.reusable.button.confirm.text}" visible="false" type="Emphasized" enabled="{mEquipmentList>/data/createNewEquipment/isConfirmEnabled}" press="onParentAssetValueHelpDialogConfirm"/>
+            <Button text="{i18n>asint.reusable.close.button}" press="onParentAssetValueHelpDialogClose"/>
+        </buttons>
+        
+    </Dialog>
+</core:FragmentDefinition>

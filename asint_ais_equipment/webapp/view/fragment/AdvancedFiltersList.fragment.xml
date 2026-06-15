@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog title="{mEquipmentList>/data/AdvancedFilters/tableHeader}" contentWidth="50%" contentHeight="55%">
+        <Table id="idAdvancedFiltersList" sticky="ColumnHeaders,HeaderToolbar" mode="MultiSelect"
+            items="{path: 'mEquipmentList>/data/AdvancedFilters/filtersList',sorter:{path:'modifiedAt',descending:true}}"
+            noDataText="{i18n>asint.reusable.noData.text}" selectionChange="onSelectAdvancedFiltersforAction">
+            <headerToolbar>
+                <OverflowToolbar design="Transparent">
+                    <!-- <Title text="{mEquipmentList>/data/AdvancedFilters/tableHeader}"/> -->
+                    <ToolbarSpacer/>
+                    <SearchField width="30%" placeholder="{i18n>asint.equipment.advancedFilters.table.search.tooltip.text}" tooltip="{i18n>asint.equipment.advancedFilters.table.search.tooltip.text}" liveChange="fnSearchAdvancedFiltersList"/>
+                    <Button icon="sap-icon://add" tooltip="{i18n>asint.equipment.advancedFilters.createFilter.text}" visible="{mEquipmentList>/data/userRoles/edit}" press="onPressCreateAdvancedFilter"/>
+                    <Button icon="sap-icon://edit" tooltip="{i18n>asint.reusable.button.edit.text}" visible="{mEquipmentList>/data/userRoles/edit}" press="onEditAdvancedFilters"
+                        enabled="{=${mEquipmentList>/data/userRoles/edit} &amp;&amp; ${mEquipmentList>/data/AdvancedFilters/isEditEnabled}}"/>
+                    <Button icon="sap-icon://delete" tooltip="{i18n>asint.reusable.button.delete.text}" visible="{mEquipmentList>/data/userRoles/delete}" press="onDeleteAdvancedFilters"
+                        enabled="{mEquipmentList>/data/AdvancedFilters/isDeleteEnabled}"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.advancedFilters.table.filterName.text}"/>
+                </Column>
+                <Column hAlign="Begin" demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+                    <Text text="{i18n>asint.equipment.advancedFilters.table.expression.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem visible="{= !!${mEquipmentList>name} }">
+                    <cells>
+                        <ObjectIdentifier title="{mEquipmentList>name}"/>
+                        <Link text="{i18n>asint.equipment.advancedFilters.table.showexpression.text}" press="onPressShowExpression"></Link>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>asint.reusable.button.apply.text}" enabled="{mEquipmentList>/data/AdvancedFilters/isApplyEnabled}" press="onPressApllyAdvancedFilters" />
+            <Button text="{i18n>asint.reusable.close.button}" press="onCloseAdvancedFilter" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

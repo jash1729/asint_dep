@@ -1,0 +1,161 @@
+<mvc:View xmlns:core="sap.ui.core"
+	controllerName="com.asint.ais.mi.equipment.controller.detail.AssetStratergy"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:card="sap.f.cards"
+	xmlns:w="sap.ui.integration.widgets" xmlns:table="sap.ui.table"
+    xmlns:unified="sap.ui.unified">
+	<Panel id="idAsintAssessmentPanel">
+        <HBox justifyContent="SpaceBetween">
+            <items>
+                <SegmentedButton width="100%" id="idAssetStrategySegmentedbtn" selectedKey="rbi" selectionChange="onSegmentChange">
+                    <items>
+                        <SegmentedButtonItem width="100%" text="{mEquipmentDetail>/data/assetIntelligence/assessment/header}" key="rbi" />
+                        <SegmentedButtonItem width="100%" text="{mEquipmentDetail>/data/assetIntelligence/assessment/segmentedBtn/rcm_fleet/header}" key="rcm_fleet" />
+                    </items>
+                </SegmentedButton>
+
+                <SearchField width="100%" value="" placeholder="{i18n>asint.reusable.search.text}" liveChange="onSearch" />
+            </items>
+        </HBox>
+
+		<Table id="idAsintassemt" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar" growing="true" growingThreshold="5"
+		items="{mEquipmentDetail>/data/assetIntelligence/assessment/data/list}" updateFinished="" noDataText="{i18n>asint.reusable.noData.text}"
+        visible="{mEquipmentDetail>/data/assetIntelligence/assessment/segmentedBtn/rbi/isVisible}">
+            <!-- <headerToolbar>
+                <OverflowToolbar>
+					<Title text="{mEquipmentDetail>/data/assetIntelligence/assessment/header}"/>
+                    <ToolbarSpacer/>
+					<SearchField width="30%" value="" placeholder="{i18n>asint.reusable.search.text}" liveChange="onSearch"/>
+                </OverflowToolbar>
+            </headerToolbar> -->
+            <columns>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.assessment.column.text}"/>
+                </Column>
+				<Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.equi.column.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.assessmentTemp.column.text}"/>
+                </Column>
+                <!-- <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.failureMode.column.text}"/>
+                </Column>
+				<Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.valid.column.text}"/>
+                </Column>
+				<Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.base.column.text}"/>
+                </Column>
+				<Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.final.column.text}"/>
+                </Column>
+				<Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.economic.column.text}"/>
+                </Column> -->
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.status.column.text}"/>
+                </Column>
+				<Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.created.column.text}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.published.column.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{mEquipmentDetail>assessmentDisplayId}" text="{mEquipmentDetail>assessmentDesc}" titleActive="true" titlePress="onPressAssetStrategyTitle"/>
+						<ObjectIdentifier title="{mEquipmentDetail>equiName}" text="{mEquipmentDetail>equiDesc}" />
+						<ObjectIdentifier title="{mEquipmentDetail>assessmentTempDisplayId}" text="{mEquipmentDetail>assessmentTempDesc}" />
+						<!-- <Text text=""/>
+						<Text text=""/>
+						<Text text=""/>
+						<Text text=""/>
+						<Text text=""/> -->
+                        <ObjectStatus text="{path: 'mEquipmentDetail>status', formatter: '.formatter.fnGetStatusText'}" state="{path: 'mEquipmentDetail>status', formatter: '.formatter.fnGetStatusType'}"/>
+                        <ObjectIdentifier title="{mEquipmentDetail>createdOn}" text="{mEquipmentDetail>createdBy}" />
+                        <ObjectIdentifier title="{mEquipmentDetail>publishedOn}" text="{mEquipmentDetail>publishedBy}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <table:TreeTable
+            id="idAsintRCM_Fleet"
+            visible="{mEquipmentDetail>/data/assetIntelligence/assessment/segmentedBtn/rcm_fleet/isVisible}"
+            selectionMode="MultiToggle"
+            enableSelectAll="true"
+            rows="{
+                path: 'mEquipmentDetail>/data/assetIntelligence/assessment/segmentedBtn/rcm_fleet/list',
+                parameters: { arrayNames: ['childs'] }
+            }"
+            ariaLabelledBy="title">
+
+            <table:columns>
+
+                <!-- Assessment Column -->
+                <table:Column width="15rem">
+                    <Label text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.rcm_fleet.table.assessment}" />
+                    <table:template>
+                        <ObjectIdentifier
+                            title="{= ${mEquipmentDetail>type} === 'ASSESSMENT' ? ${mEquipmentDetail>assessmentDisplayId} : '' }"
+                            text="{= ${mEquipmentDetail>type} === 'ASSESSMENT' ? ${mEquipmentDetail>assessmentName} : '' }"
+                            titleActive="true"
+                            titlePress="onPressAssessmentLink" />
+                    </table:template>
+                </table:Column>
+
+                <!-- Maintainable Item -->
+                <table:Column width="15rem">
+                    <Label text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.rcm_fleet.table.maintainableItem}" />
+                    <table:template>
+                        <Text text="{= ${mEquipmentDetail>type} === 'MAINTAINABLE_ITEM' ? ${mEquipmentDetail>name} + ' (' + ${mEquipmentDetail>code} + ')' : '' }" />
+                    </table:template>
+                </table:Column>
+
+                <!-- Failure Mode -->
+                <table:Column width="15rem">
+                    <Label text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.rcm_fleet.table.failureMode}" />
+                    <table:template>
+                        <Text text="{= ${mEquipmentDetail>type} === 'FAILURE_MODE' ? ${mEquipmentDetail>name} + ' (' + ${mEquipmentDetail>code} + ')' : '' }" />
+                    </table:template>
+                </table:Column>
+
+                <!-- Failure Scenario -->
+                <table:Column width="16rem">
+                    <Label text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.rcm_fleet.table.failureSecnario}" />
+                    <table:template>
+                        <ExpandableText maxCharacters="50" overflowMode="Popover" class="sapUiTinyMarginBottom sapUiTinyMarginTop" text="{= ${mEquipmentDetail>type} === 'FAILURE_MODE' ? ${mEquipmentDetail>failureScenario} : '' }" />
+                    </table:template>
+                </table:Column>
+                
+                <!-- Failure Effect -->
+                <table:Column width="16rem">
+                    <Label text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.rcm_fleet.table.failureEffect}" />
+                    <table:template>
+                        <Text text="{= ${mEquipmentDetail>type} === 'FAILURE_EFFECT' ? ${mEquipmentDetail>name} + ' (' + ${mEquipmentDetail>code} + ')' : '' }" />
+                    </table:template>
+                </table:Column>
+
+                <!-- Status -->
+                <table:Column width="15rem">
+                    <Label text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.rcm_fleet.table.stauts}" />
+                    <table:template>
+                        <ObjectStatus text="{path: 'mEquipmentDetail>assessmentStatus', formatter: '.formatter.fnGetStatusText'}" state="{path: 'mEquipmentDetail>assessmentStatus', formatter: '.formatter.fnGetStatusType'}"/>
+                    </table:template>
+                </table:Column>
+
+                <!-- Created By -->
+                <table:Column width="15rem">
+                    <Label text="{i18n>asint.equipment.list.table.columnHeader.createdBy}" />
+                    <table:template>
+                        <ObjectIdentifier visible="{= ${mEquipmentDetail>type} === 'ASSESSMENT' ? true : false}" title="{mEquipmentDetail>createdOn}" text="{mEquipmentDetail>createdBy}" />
+                    </table:template>
+                </table:Column>
+
+            </table:columns>
+        </table:TreeTable>
+	</Panel>
+</mvc:View>

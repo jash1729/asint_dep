@@ -1,0 +1,97 @@
+<mvc:View xmlns:core="sap.ui.core"
+	controllerName="com.asint.ais.mi.equipment.controller.detail.AssetIntelligenceHighlight"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:card="sap.f.cards"
+	xmlns:w="sap.ui.integration.widgets" xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:viz.data="sap.viz.ui5.data" id="idAssetIntelligence">
+
+	<Panel id="idAsintStatusPanel5" visible="{= ${mEquipment>/metadata/featureFlag/showAssetIntelligenceHighlight} === '1'}">
+		<f:GridContainer id="grd" inlineBlockLayout="true">
+			<!-- First Card -->
+			<f:Card class="sapUiSmallMarginTop" width="350px" height="200px">
+				<f:header>
+					<card:Header
+						title="{i18n>asint.equipment.detail.tab.assetIntelligence.highLight.card.rca.title}"
+						subtitle="{mEquipmentDetail>/data/assetIntelligence/highlights/sRCAFormatedCardSubTitle}" />
+				</f:header>
+				<f:layoutData>
+					<f:GridContainerItemLayoutData columns="4" />
+				</f:layoutData>
+				<f:content>
+					<VBox justifyContent="Center">
+						<HBox height="35px" alignItems="Start">
+							<Label class="sapUiSmallMarginBegin"
+								text="{i18n>asint.equipment.detail.tab.assetIntelligence.highLight.card.rca.highRiskScore}:" />
+							<HBox class="sapUiTinyMarginBegin" alignItems="Start">
+								<ObjectStatus
+									text=""
+									icon="sap-icon://circle-task-2"
+									state="{mEquipmentDetail>/data/assetIntelligence/highlights/state}"
+									visible="{= ${mEquipmentDetail>/data/assetIntelligence/highlights/state} !== 'None'}" />
+								<VBox>
+									<Text
+										text="{mEquipmentDetail>/data/assetIntelligence/highlights/highestRiskScore}" />
+								</VBox>
+							</HBox>
+						</HBox>
+
+						<HBox height="25px" alignItems="Center">
+							<Label class="sapUiSmallMarginBegin sapUiTinyMarginTop"
+								text="{i18n>asint.equipment.detail.tab.assetIntelligence.highLight.card.rca.criticality}:" />
+							<ObjectStatus class="sapUiTinyMarginBegin sapUiTinyMarginTop"
+								text="{mEquipmentDetail>/data/assetIntelligence/highlights/criticalityCode} ({mEquipmentDetail>/data/assetIntelligence/highlights/criticalityText})"
+								icon=""
+								state="{mEquipmentDetail>/data/assetIntelligence/highlights/state}"
+								visible="{= ${mEquipmentDetail>/data/assetIntelligence/highlights/state} !== 'None'}" />
+						</HBox>
+					</VBox>
+				</f:content>
+			</f:Card>
+
+			<!-- Second Card with VizFrame -->
+			<!-- <f:Card class="sapUiSmallMarginTop" width="350px" height="200px">
+				<f:header>
+					<card:Header
+						title="{i18n>asint.equipment.detail.tab.assetIntelligence.highLight.card.rbi.title}"
+						subtitle="{mEquipmentDetail>/data/assetIntelligence/highlights/sASDFormatedCardSubTitle}" />
+				</f:header>
+				<f:layoutData>
+					<f:GridContainerItemLayoutData columns="4" />
+				</f:layoutData>
+				<f:content>
+					<viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}"
+						height="100%" width="100%" vizType="heatmap">
+						<viz:dataset>
+							<viz.data:FlattenedDataset
+								data="{mEquipmentDetail>/data/assetIntelligence/highlights/assetStrategy}">
+								<viz.data:dimensions>
+									<viz.data:DimensionDefinition name="Risk Type"
+										value="{mEquipmentDetail>Risk Type}" />
+									<viz.data:DimensionDefinition name="Risk Name"
+										value="{mEquipmentDetail>Risk Name}" />
+								</viz.data:dimensions>
+								<viz.data:measures>
+									<viz.data:MeasureDefinition name="Risk Score"
+										value="{mEquipmentDetail>Risk Score}" />
+								</viz.data:measures>
+							</viz.data:FlattenedDataset>
+						</viz:dataset>
+
+						<viz:feeds>
+							<viz.feeds:FeedItem uid="color" type="Measure" values="Risk Score" />
+							<viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+								values="Risk Type" />
+							<viz.feeds:FeedItem uid="categoryAxis2" type="Dimension"
+								values="Risk Name" />
+						</viz:feeds>
+
+						<viz:dependents>
+							<viz:Popover id="idPopOver"></viz:Popover>
+						</viz:dependents>
+					</viz:VizFrame>
+				</f:content>
+			</f:Card> -->
+		</f:GridContainer>
+	</Panel>
+</mvc:View>

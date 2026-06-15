@@ -1,0 +1,56 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns="sap.m" core:require="{ formatMessage: 'sap/base/strings/formatMessage' }"
+	xmlns:u="sap.ui.unified">
+	<Dialog contentWidth="60%" title="{i18n>asint.equipment.detail.tab.maintenance.creeatenoti.title}" draggable="true">
+		<content>
+			<f:SimpleForm id="asdNotificationForm" editable="true">
+				<f:content>
+					<!-- <Label text="{i18n>asint.equipment.detail.notification.form.technicalObject.text}"/>
+					<Input id="asdNotifiTechnicalObject" editable="false" value="{mAssetStrategyDetail>/data/notificationDialog/common/formData/technicalObject/name}" /> -->
+					<Label text="{i18n>asint.equipment.detail.notification.form.equipment.text}"/>
+					<Input editable="false" value="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/selectedObj/technicalObject}" />
+
+					<Label text="{i18n>asint.equipment.detail.notification.form.equipmentDesc.text}"/>
+					<Input editable="false" value="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/selectedObj/technicalObjectDesc}" />		
+					<!-- <Label visible="{= ${mEquipmentDetail>/data/notificationDialog/common/formData/technicalObject/type} === 'FLOC'}" text="{i18n>asint.equipment.detail.notification.form.functionalLocation.text}"/>
+					<Input id="asdNotifiFunctionalLocation" editable="false" visible="{= ${mEquipmentDetail>/data/notificationDialog/common/formData/technicalObject/type} === 'FLOC'}" value="{mEquipmentDetail>/data/notificationDialog/common/formData/technicalObject/name}" />		 -->
+					<Label required="true" text="{i18n>asint.equipment.detail.notification.form.shortDesc.text}"/>
+					<Input value="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/selectedObj/description/short}" change="onNotificationFormChange" 
+						maxLength="36" valueState="{mEquipmentDetail>/metadata/valueState/notificationDialog/ShortDesc}" />
+					
+					<Label required="true" text="{i18n>asint.equipment.detail.notification.form.longDesc.text}"/>
+					<TextArea value="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/selectedObj/description/long}" growing="true" growingMaxLines="7" maxLength="5000" rows="9"
+						change="onNotificationFormChange" valueState="{mEquipmentDetail>/metadata/valueState/notificationDialog/LongDesc}" />
+
+							<Label required="true" text="{i18n>asint.equipment.detail.notification.form.type.text}"/>
+					<Input value="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/selectedObj/notitypeDesc}"  valueHelpOnly="true" showValueHelp="true" 
+					valueHelpRequest="openValueHelpDialog($event,'NTTP','SingleSelectLeft')" />
+					
+					<Label required="true" text="{i18n>asint.equipment.detail.notification.form.priority.text}"/>
+					<Input value="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/selectedObj/notiPriorityDesc}"  valueHelpOnly="true" showValueHelp="true" 
+					valueHelpRequest="openValueHelpDialog($event,'NTPR','SingleSelectLeft')" />
+						
+					<Label required="true" text="{i18n>asint.equipment.detail.notification.form.targetDate.text}"/>
+					<DatePicker value="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/selectedObj/startDate}"
+						valueFormat="yyyy-MM-dd" displayFormat="MMM dd, yyyy"
+						valueState="{mEquipmentDetail>/metadata/valueState/notificationDialog/TargetDate}" class="asintAssetStrategyTargetDate" />
+
+					<Label required="true" text="{i18n>asint.equipment.detail.notification.form.endDate.text}"/>
+					<DatePicker value="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/selectedObj/targetDate}"
+						valueFormat="yyyy-MM-dd" displayFormat="MMM dd, yyyy"
+						valueState="{mEquipmentDetail>/metadata/valueState/notificationDialog/TargetDate}" class="asintAssetStrategyTargetDate" />
+
+					<Label required="false" text="{i18n>asint.equipment.detail.notification.form.breakdown.text}"/>
+					<Switch state="{mEquipmentDetail>/data/tabs/maintenanceservice/recommendations/selectedObj/breakdown}" customTextOn=" " customTextOff=" "></Switch>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<buttons>
+			<Button text="{i18n>asint.reusable.button.confirm.text}" press="onConvertNotification"/>
+			<Button text="{i18n>asint.reusable.button.cancel.text}" press="onCloseNotificationDialog"/>
+			
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,124 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="com.asint.ais.mi.equipment.controller.detail.Classes"
+    xmlns:table="sap.ui.table"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Table id="idAssignmentsClasses" growing="true" growingScrollToLoad="false" growingThreshold="10" mode="MultiSelect"
+		noDataText="{i18n>asint.reusable.noData.text}" items="{path: 'mEquipmentDetail>/data/assignments/Classes/assignedClassListBTP',sorter:{path:'objectTemplate',descending:true, group:'.fnCustomGroupClassTable'}}"
+        selectionChange="onSelectionChangeUnassign">
+        <headerToolbar>
+            <OverflowToolbar design="Transparent">
+                <Title text="{mEquipmentDetail>/data/assignments/Classes/classTableHeader}" level="H2" />
+                <ToolbarSpacer />
+                <SearchField placeholder="{i18n>asint.equipment.tab.classes.search.tooltip.text}" tooltip="{i18n>asint.equipment.tab.classes.search.tooltip.text}" width="20%" liveChange="onSearchClasses"/>
+                <Button type="Emphasized" text="{i18n>asint.reusable.button.assign.text}"
+                    visible="{=${mEquipmentDetail>/data/userRoles/edit}}"
+                    press="onOpenAssignClassDialog" />
+                <Button text="{i18n>asint.reusable.button.unassign.text}"
+                    visible="{=${mEquipmentDetail>/data/userRoles/edit} &amp;&amp; ${mEquipmentDetail>/data/assignments/Classes/isUnassignEnabled}}"
+                    press="onUnassignClasses" />
+                <Button icon="sap-icon://sort" tooltip="{i18n>asint.equipment.tab.sort.text}" press="onSortEquipmentClasses" />
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column popinDisplay="Inline" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.classes.class.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.classes.classDesc.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.classes.status.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.classes.externalSystem.label}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <ObjectIdentifier title="{mEquipmentDetail>displayId}" text="{mEquipmentDetail>classNumber}"/>
+                    <Text text="{mEquipmentDetail>to_description/0/shortDescription}" wrapping="true" wrappingType="Normal" />
+                    <Text text="{mEquipmentDetail>classStatus}"/>
+                    <Text text="{mEquipmentDetail>srcId}"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+    <Table class="sapUiMediumMarginTop" id="idAssignmentsChracteristics" growing="true" growingScrollToLoad="false" growingThreshold="20"
+		noDataText="{i18n>asint.reusable.noData.text}" items="{path: 'mEquipmentDetail>/data/assignments/Chars/allCharsBTP',sorter:{path:'className',descending:true, group:'.fnCustomGroupCharTable'}}">
+        <headerToolbar>
+            <OverflowToolbar design="Transparent">
+                <Title text="{mEquipmentDetail>/data/assignments/Chars/charTableHeader}" level="H2" />
+                <ToolbarSpacer />
+                <SearchField placeholder="{i18n>asint.equipment.tab.chars.search.tooltip.text}" tooltip="{i18n>asint.equipment.tab.chars.search.tooltip.text}" width="20%" liveChange="onSearchCharacteristics"/>
+                <Button visible="{= !${mEquipmentDetail>/data/assignments/Chars/isEditable} &amp;&amp; ${mEquipmentDetail>/data/userRoles/edit}}" text="{i18n>asint.reusable.button.edit.text}" press="onCharValuesEditBtnPress" />
+                <Button visible="{mEquipmentDetail>/data/assignments/Chars/isEditable}" text="{i18n>asint.reusable.button.save.text}" press="onPressCharValuesSave"></Button>
+                <Button text="{i18n>asint.reusable.button.cancel.text}" visible="{mEquipmentDetail>/data/assignments/Chars/isEditable}" press="onCanceCharValuesEdit"></Button>
+                <Button icon="sap-icon://action-settings" tooltip="{i18n>asint.equipment.tab.filter.text}" press="onCharsFilterBtnPress" />
+            </OverflowToolbar>
+        </headerToolbar>
+        <infoToolbar>
+            <OverflowToolbar id="idEquCharInfoBar" visible="false">
+                <Text id="idEquChatFilterInfo" text=""></Text>
+                <!-- <core:HTML id="idEquChatFilterInfo" content=""></core:HTML> -->
+            </OverflowToolbar>
+        </infoToolbar>
+        <columns>
+            <Column popinDisplay="Inline" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.charName.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.charDesc.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.dataType.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.value.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.dimension.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.uom.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.sourceSystme.label}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <ObjectIdentifier title="{mEquipmentDetail>displayId}" text="{mEquipmentDetail>name}"/>
+                    <Text text="{mEquipmentDetail>to_description/0/shortDescription}" wrapping="true" wrappingType="Normal" />
+                    <Text text="{mEquipmentDetail>dataType}"/>
+                    <HBox>
+                        <Text visible="{= !${mEquipmentDetail>/data/assignments/Chars/isEditable} &amp;&amp; ${mEquipmentDetail>renderField} !== 'MultiComboBox' }" text="{parts: ['mEquipmentDetail>charValue', 'mEquipmentDetail>renderField', 'mEquipmentDetail>codeList/to_codeListItem'], formatter: '.formatter.fnFormatCodeListText' }"/>
+                        <HBox visible="{mEquipmentDetail>/data/assignments/Chars/isEditable}">     
+                            <Input visible="{= ${mEquipmentDetail>renderField} === 'Input'}"   editable="{= ${mEquipmentDetail>/data/detail/srcId} === 'BTP' || ${mEquipmentDetail>srcId} === 'BTP' }" value="{mEquipmentDetail>charValue}" type="{mEquipmentDetail>inputType}"></Input>
+                            <DatePicker visible="{= ${mEquipmentDetail>renderField} === 'Date'}" editable="{= ${mEquipmentDetail>/data/detail/srcId} === 'BTP' || ${mEquipmentDetail>srcId} === 'BTP' }" value="{mEquipmentDetail>charValue}" valueFormat="MMM dd, yyyy" displayFormat="MMM dd, yyyy"></DatePicker>
+                            <ComboBox visible="{= ${mEquipmentDetail>renderField} === 'ComboBox'}" editable="{= ${mEquipmentDetail>/data/detail/srcId} === 'BTP' || ${mEquipmentDetail>srcId} === 'BTP' }"  selectedKey="{mEquipmentDetail>charValue}" items="{mEquipmentDetail>codeList/to_codeListItem}" showSecondaryValues="true">
+                                <core:ListItem key="{mEquipmentDetail>code}" text="{mEquipmentDetail>to_description/0/shortDescription}" additionalText="{mEquipmentDetail>code}"></core:ListItem>
+                            </ComboBox>
+                            <MultiComboBox visible="{= ${mEquipmentDetail>renderField} === 'MultiComboBox'}" editable="{= ( ${mEquipmentDetail>/data/detail/srcId} === 'BTP' || ${mEquipmentDetail>srcId} === 'BTP' )}"  selectedKeys="{parts: ['mEquipmentDetail>charValue'], formatter: '.formatter.fnFormatMultiComboBoxValue' }" items="{mEquipmentDetail>codeList/to_codeListItem}" showSecondaryValues="true" selectionFinish="onMultiComboBoxSelectionFinish">
+                                <core:ListItem key="{mEquipmentDetail>code}" text="{mEquipmentDetail>to_description/0/shortDescription}" additionalText="{mEquipmentDetail>code}"></core:ListItem>
+                            </MultiComboBox>
+                        </HBox>
+                        <HBox visible="{=  ${mEquipmentDetail>renderField} === 'MultiComboBox' &amp;&amp; !${mEquipmentDetail>/data/assignments/Chars/isEditable}}">            
+                            <Tokenizer editable="false" renderMode="Narrow" maxWidth="150px" tokens="{mEquipmentDetail>charValue}">
+                                <tokens>
+                                    <Token key="{mEquipmentDetail>}" text="{mEquipmentDetail>}" />
+                                </tokens>
+                            </Tokenizer>
+                        </HBox>
+                    </HBox>
+                    <Text text="{mEquipmentDetail>dimension}"/>
+                    <Text text="{parts: ['mEquipmentDetail>charUom', 'mEquipmentDetail>/metadata/detail/uomList'], formatter: '.formatter.fnFormatUom' }"/>
+                    <Text text="{mEquipmentDetail>srcId}"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</mvc:View>

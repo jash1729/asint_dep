@@ -1,0 +1,8 @@
+<mvc:View controllerName="com.asint.ais.mi.equipment.controller.detail.Documents"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox id="tableContainer"></VBox>
+</mvc:View>

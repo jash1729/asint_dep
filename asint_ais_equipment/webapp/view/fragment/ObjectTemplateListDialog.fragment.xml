@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog title="{i18n>asint.equipment.detail.templates.dialog.title}" class="asintTemplateListDialogWidth">
+        <Table id="idAsintTemplatesTable" class="rbiAssessmentList" sticky="ColumnHeaders,HeaderToolbar"
+            items="{path: 'mEquipmentDetail>/data/templatesData/assignedTemplates'}" growing="true" growingThreshold="10"
+            noDataText="{i18n>asint.equipment.detail.templates.dialog.table.noData.text}">
+            <headerToolbar>
+                <OverflowToolbar design="Transparent">
+                    <Title text="{mEquipmentDetail>/data/templatesData/tableHeader}"/>
+                    <ToolbarSpacer/>
+                    <SearchField width="30%" placeholder="Search by name or description" class="sapUiTinyMarginEnd" liveChange="fnSearchObjectTemplates"/>
+                    <Button text="{i18n>asint.equipment.detail.templates.dialog.table.button.addTemplate.text}" class="sapUiTinyMarginEnd" press="onAddObjectTemplatePress"/>
+                    <Button text="{i18n>asint.equipment.detail.templates.dialog.table.button.removeTemplate.text}" press="onRemoveObjectTemplatePress"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.templates.dialog.table.column.template.text}"/>
+                </Column>
+                <Column hAlign="Begin" demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+                    <Text text="{i18n>asint.equipment.detail.templates.dialog.table.column.type.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{mEquipmentDetail>name}" text="{mEquipmentDetail>description}"/>
+                        <Text text="{parts: [{ path : 'mEquipmentDetail>type' }], formatter : '.formatter.fnGetTemplateType'}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>asint.reusable.button.cancel.text}" press="onCloseObjectTemplateDialog" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -8,7 +8,7 @@ const rootFolder = __dirname; // Replace with the root folder If It isn't workin
 
 const subfolders = [
     "asint_ais_library",
-    "asint_ais_cml_config"    
+    "asint_ais_equipment"    
 ]; // UI folders
 
 const cpus = os.cpus().length;
@@ -22,11 +22,22 @@ let activeProcess = 0;
 function execute(cmd, cwd) {
     return new Promise((resolve, reject) => {
         exec(cmd, { cwd }, (error, stdout, stderr) => {
-            console.log(stdout);
-            console.error(stderr);
-            error ? reject({ cwd, error }) : resolve(cwd);
-        });
 
+            if (stdout) console.log(stdout);
+            if (stderr) console.error(stderr);
+
+            if (error) {
+                reject({
+                    cwd,
+                    message: error.message,
+                    code: error.code,
+                    stdout,
+                    stderr
+                });
+            } else {
+                resolve(cwd);
+            }
+        });
     });
 }
 
@@ -41,8 +52,9 @@ async function processQueue() {
             .then(() => {
                 console.log(`Successfully built ${folder}\n\n----------------------------------------------------------------------------------------------`)
             })
-            .catch((error) => {
-                console.log(`Failed to build ${folder}: ${error}\n\n----------------------------------------------------------------------------------------------`);
+            .catch((err) => {
+                console.error(`Failed to build ${folder}`);
+                console.error(err);
                 failedToBuild.push(folder);
             })
             .finally(() => {

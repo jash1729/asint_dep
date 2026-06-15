@@ -1,0 +1,186 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:c="sap.suite.ui.commons" 
+xmlns:l="sap.ui.layout">
+	<Dialog title="{mEquipmentList>/data/AdvancedFilters/dialogHeader}"  contentWidth="50%">
+        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4"
+			labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+			emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+			<f:content>
+				<Label required="true" text="{i18n>asint.equipment.advancedFilters.create.filterName.text}"/>
+				<Input value="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/FilterName}"/>
+			</f:content>
+		</f:SimpleForm>
+		<f:SimpleForm editable="true" visible="{=!${mEquipmentList>/data/AdvancedFilters/characteristicIsS4}}"  layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4"
+			labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+			emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+			<f:content>
+				<core:Title text="{i18n>asint.equipment.advancedFilters.create.selectChars.text}"/>
+				<Text text="{i18n>asint.equipment.advancedFilters.create.charsSelectInfo.text}"></Text>
+				<Label text="Filter By Characteristic" />
+				<Switch id="idAdvFilterCharTypeSwitch" enabled="{mEquipmentList>/data/AdvancedFilters/characteristicIsS4Toggle}" state="{mEquipmentList>/data/AdvancedFilters/characteristicIsS4}" 
+					change="onCharTypeSwitchChange()" customTextOn="S4" 
+					customTextOff="BTP"/>
+                <Label text="{i18n>asint.equipment.advancedFilters.create.objectTemplate.text}"/>
+				<MultiInput placeholder="{i18n>asint.equipment.advancedFilters.create.selectObjectTemplate.text}" id="idAdvFilterObjTemp" tokenUpdate="onObjectTempTokenUpdate" showValueHelp="true" valueHelpOnly="true" showClearIcon="true" valueHelpRequest="fnHandleAdvFilterObjTempValueHelp"></MultiInput>
+                <Label text="{i18n>asint.equipment.advancedFilters.create.class.text}"/>
+				<MultiInput placeholder="{i18n>asint.equipment.advancedFilters.create.selectClass.text}" id="idAdvFilterClass" tokenUpdate="onClassTokenUpdate" showValueHelp="true" valueHelpOnly="true" showClearIcon="true" valueHelpRequest="fnHandleAdvFilterClassValueHelp"></MultiInput>
+                <Label text="{i18n>asint.equipment.advancedFilters.create.characteristic.text}"/>
+				<MultiInput placeholder="{i18n>asint.equipment.advancedFilters.create.selectCharacteristic.text}" tokenUpdate="onCharacteristicTokenUpdate"  id="idAdvFilterCharacteristic" showValueHelp="true" showClearIcon="true" valueHelpOnly="true" valueHelpRequest="fnHandleAdvFilterCharValueHelp"></MultiInput>
+
+				<core:Title text="{i18n>asint.equipment.advancedFilters.create.expressionBuilder.text}"/>
+                <c:CalculationBuilder id="idCalculationBuilder" allowComparisonOperators="true" allowLogicalOperators="true" allowStringLiterals="true" allowStringConstants="true"
+					layoutType="VisualOnly" expression="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/Expression}"
+					readOnly="{= !${mEquipmentList>/data/userRoles/edit}}" validateFunction="validateFunction"
+					afterValidation="afterValidation" variables="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/Variable}" showInputToolbar="false" disabledDefaultTokens="-">
+					<c:variables>
+						<c:CalculationBuilderVariable key="{mEquipmentList>key}" group="{mEquipmentList>group}" label="{mEquipmentList>text}" items="{path:'mEquipmentList>items', templateShareable:true}">
+							<c:items>
+								<c:CalculationBuilderItem key="{mEquipmentList>key}" />
+							</c:items>
+						</c:CalculationBuilderVariable>
+					</c:variables>
+					<c:groups>
+						<c:CalculationBuilderGroup setSelection="setSelection" title="{i18n>asint.equipment.advancedFilters.create.characteristic.text}"
+							key="TreeData" icon="sap-icon://simulate" description="{i18n>asint.equipment.advancedFilters.calcBuilder.charDesc.text}">
+							<c:customView>
+								<Tree selectionChange="onSelectTreeNode" mode="SingleSelectMaster" items="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/TreeData}"
+									includeItemInSelection="true">
+									<StandardTreeItem title="{mEquipmentList>text}">
+										<customData>
+											<core:CustomData key="{mEquipmentList>key}" value="{mEquipmentList>key}"/>
+										</customData>
+									</StandardTreeItem>
+								</Tree>
+							</c:customView>
+						</c:CalculationBuilderGroup>
+                        <c:CalculationBuilderGroup setSelection="setSelection" title="{i18n>asint.equipment.advancedFilters.calcBuilder.equProp.text}"
+							key="EquipmentProps" icon="sap-icon://BusinessSuiteInAppSymbols/icon-equipment" description="{i18n>asint.equipment.advancedFilters.calcBuilder.equPropDesc.text}">
+							<c:customView>
+								<Tree selectionChange="onSelectEquProp" mode="SingleSelectMaster" items="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/EquipmentProps}"
+									includeItemInSelection="true">
+									<StandardTreeItem title="{mEquipmentList>text}">
+										<customData>
+											<core:CustomData key="{mEquipmentList>key}" value="{mEquipmentList>key}"/>
+										</customData>
+									</StandardTreeItem>
+								</Tree>
+							</c:customView>
+						</c:CalculationBuilderGroup>
+                        <c:CalculationBuilderGroup setSelection="setSelection" title="{i18n>asint.equipment.advancedFilters.calcBuilder.classProp.text}"
+							key="ClassProps" icon="sap-icon://checklist" description="{i18n>asint.equipment.advancedFilters.calcBuilder.classPropDesc.text}">
+							<c:customView>
+								<Tree selectionChange="onSelectEquProp" mode="SingleSelectMaster" items="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/ClassProps}"
+									includeItemInSelection="true">
+									<StandardTreeItem title="{mEquipmentList>text}">
+										<customData>
+											<core:CustomData key="{mEquipmentList>key}" value="{mEquipmentList>key}"/>
+										</customData>
+									</StandardTreeItem>
+								</Tree>
+							</c:customView>
+						</c:CalculationBuilderGroup>
+                        <c:CalculationBuilderGroup setSelection="setSelection" title="{i18n>asint.equipment.advancedFilters.calcBuilder.charProp.text}"
+							key="CharacteristicProps" icon="sap-icon://line-chart-time-axis" description="{i18n>asint.equipment.advancedFilters.calcBuilder.charPropDesc.text}">
+							<c:customView>
+								<Tree selectionChange="onSelectEquProp" mode="SingleSelectMaster" items="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/CharacteristicProps}"
+									includeItemInSelection="true">
+									<StandardTreeItem title="{mEquipmentList>text}">
+										<customData>
+											<core:CustomData key="{mEquipmentList>key}" value="{mEquipmentList>key}"/>
+										</customData>
+									</StandardTreeItem>
+								</Tree>
+							</c:customView>
+						</c:CalculationBuilderGroup>
+					</c:groups>
+				</c:CalculationBuilder>
+			</f:content>
+		</f:SimpleForm>
+		<f:SimpleForm editable="true" visible="{=${mEquipmentList>/data/AdvancedFilters/characteristicIsS4}}" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4"
+			labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+			emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+			<f:content>
+			    <core:Title text="{i18n>asint.equipment.advancedFilters.create.selectChars.text}"/>
+				<Text text="{i18n>asint.equipment.advancedFilters.create.charsSelectInfo.text}"></Text>
+				<Label text="Filter By Characteristic" />
+				<Switch  enabled="{mEquipmentList>/data/AdvancedFilters/characteristicIsS4Toggle}" state="{mEquipmentList>/data/AdvancedFilters/characteristicIsS4}" 
+					change="onCharTypeSwitchChange" customTextOn="S4" 
+					customTextOff="BTP"/>
+				<Label text="{i18n>asint.equipment.advancedFilters.create.class.text}"/>
+				<MultiInput placeholder="{i18n>asint.equipment.advancedFilters.create.selectClass.text}" id="idAdvFilterClassS4" tokenUpdate="onClassTokenUpdate" showValueHelp="true" valueHelpOnly="true" showClearIcon="true" valueHelpRequest="fnHandleAdvFilterClassValueHelp"></MultiInput>
+                <Label text="{i18n>asint.equipment.advancedFilters.create.characteristic.text}"/>
+				<MultiInput placeholder="{i18n>asint.equipment.advancedFilters.create.selectCharacteristic.text}" tokenUpdate="onCharacteristicTokenUpdate"  id="idAdvFilterCharacteristicS4" showValueHelp="true" showClearIcon="true" valueHelpOnly="true" valueHelpRequest="fnHandleAdvFilterCharValueHelp"></MultiInput>
+				<core:Title text="{i18n>asint.equipment.advancedFilters.create.expressionBuilder.text}"/>
+                <c:CalculationBuilder id="idCalculationBuilderS4" allowComparisonOperators="true" allowLogicalOperators="true" allowStringLiterals="true" allowStringConstants="true"
+					layoutType="VisualOnly" expression="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/Expression}"
+					readOnly="{= !${mEquipmentList>/data/userRoles/edit}}" validateFunction="validateFunction"
+					afterValidation="afterValidation" variables="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/Variable}" showInputToolbar="false" disabledDefaultTokens="-">
+					<c:variables>
+						<c:CalculationBuilderVariable key="{mEquipmentList>key}" group="{mEquipmentList>group}" label="{mEquipmentList>text}" items="{path:'mEquipmentList>items', templateShareable:true}">
+							<c:items>
+								<c:CalculationBuilderItem key="{mEquipmentList>key}" />
+							</c:items>
+						</c:CalculationBuilderVariable>
+					</c:variables>
+					<c:groups>
+						<c:CalculationBuilderGroup setSelection="setSelection" title="{i18n>asint.equipment.advancedFilters.create.characteristic.text}"
+							key="TreeData" icon="sap-icon://simulate" description="{i18n>asint.equipment.advancedFilters.calcBuilder.charDesc.text}">
+							<c:customView>
+								<Tree selectionChange="onSelectTreeNode" mode="SingleSelectMaster" items="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/TreeData}"
+									includeItemInSelection="true">
+									<StandardTreeItem title="{mEquipmentList>text}">
+										<customData>
+											<core:CustomData key="{mEquipmentList>key}" value="{mEquipmentList>key}"/>
+										</customData>
+									</StandardTreeItem>
+								</Tree>
+							</c:customView>
+						</c:CalculationBuilderGroup>
+                        <!-- <c:CalculationBuilderGroup setSelection="setSelection" title="{i18n>asint.equipment.advancedFilters.calcBuilder.equProp.text}"
+							key="EquipmentProps" icon="sap-icon://BusinessSuiteInAppSymbols/icon-equipment" description="{i18n>asint.equipment.advancedFilters.calcBuilder.equPropDesc.text}">
+							<c:customView>
+								<Tree selectionChange="onSelectEquProp" mode="SingleSelectMaster" items="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/fleetProps}"
+									includeItemInSelection="true">
+									<StandardTreeItem title="{mEquipmentList>text}">
+										<customData>
+											<core:CustomData key="{mEquipmentList>key}" value="{mEquipmentList>key}"/>
+										</customData>
+									</StandardTreeItem>
+								</Tree>
+							</c:customView>
+						</c:CalculationBuilderGroup> -->
+                        <c:CalculationBuilderGroup setSelection="setSelection" title="{i18n>asint.equipment.advancedFilters.calcBuilder.classProp.text}"
+							key="ClassProps" icon="sap-icon://checklist" description="{i18n>asint.equipment.advancedFilters.calcBuilder.classPropDesc.text}">
+							<c:customView>
+								<Tree selectionChange="onSelectEquProp" mode="SingleSelectMaster" items="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/ClassProps}"
+									includeItemInSelection="true">
+									<StandardTreeItem title="{mEquipmentList>text}">
+										<customData>
+											<core:CustomData key="{mEquipmentList>key}" value="{mEquipmentList>key}"/>
+										</customData>
+									</StandardTreeItem>
+								</Tree>
+							</c:customView>
+						</c:CalculationBuilderGroup>
+                        <c:CalculationBuilderGroup setSelection="setSelection" title="{i18n>asint.equipment.advancedFilters.calcBuilder.charProp.text}"
+							key="CharacteristicProps" icon="sap-icon://line-chart-time-axis" description="{i18n>asint.equipment.advancedFilters.calcBuilder.charPropDesc.text}">
+							<c:customView>
+								<Tree selectionChange="onSelectEquProp" mode="SingleSelectMaster" items="{mEquipmentList>/data/AdvancedFilters/CalcBuilder/CharacteristicProps}"
+									includeItemInSelection="true">
+									<StandardTreeItem title="{mEquipmentList>text}">
+										<customData>
+											<core:CustomData key="{mEquipmentList>key}" value="{mEquipmentList>key}"/>
+										</customData>
+									</StandardTreeItem>
+								</Tree>
+							</c:customView>
+						</c:CalculationBuilderGroup>
+					</c:groups>
+				</c:CalculationBuilder>
+			</f:content>
+		</f:SimpleForm>
+		<buttons>
+			<Button text="{i18n>asint.reusable.button.save.text}" press="onCreateAdvancedFilterConfirm" />
+			<Button text="{i18n>asint.reusable.button.cancel.text}" press="onCloseCreateAdvancedFilter"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

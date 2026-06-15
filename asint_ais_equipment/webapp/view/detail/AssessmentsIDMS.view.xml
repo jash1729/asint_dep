@@ -1,0 +1,93 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="com.asint.ais.mi.equipment.controller.detail.Assessments" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml">
+	<l:VerticalLayout>
+		<l:content>
+			<Table id="idTableIDMSTemplateSegment" growing="true" growingScrollToLoad="false" growingThreshold="5" mode="None"
+				noDataText="No Data" popinLayout="GridLarge" alternateRowColors="true"
+				items="{path: 'mEquipmentDetail>/data/tabs/assessments/idms/template'}">
+				<headerToolbar>
+					<OverflowToolbar design="Transparent">
+						<SegmentedButton id="idIDMSSegment" selectionChange="onSelectIDMSSegment" selectedKey="template">
+							<items>
+								<SegmentedButtonItem text="History" key="history" />
+								<SegmentedButtonItem text="Template" key="template" />
+							</items>
+						</SegmentedButton>
+						<ToolbarSpacer/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column popinDisplay="Inline" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.Assessment}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.TemplateType}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.AnalysisStatus}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.CreatedOn}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{mEquipmentDetail>assesmentName}" text="{mEquipmentDetail>assesmentDesc}" titleActive="true" titlePress="onClickIDMSInspection"/>
+							<Text text="{mEquipmentDetail>templateTypeText}" wrapping="true" wrappingType="Normal"/>
+							<Text text="{mEquipmentDetail>statusText}"/>
+							<Text text="{mEquipmentDetail>createdOn}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<Table id="idTableIDMSHistorySegment" growing="true" growingScrollToLoad="false" growingThreshold="5" mode="None" visible="false"
+				noDataText="No Data" popinLayout="GridLarge" alternateRowColors="true"
+				items="{ path: 'mEquipmentDetail>/data/tabs/assessments/idms/history' }">
+				<headerToolbar>
+					<OverflowToolbar class="asintIDMSEquipmentExtInspectionToolbar" design="Transparent">
+						<VBox width="100%" justifyContent="Center">
+							<SegmentedButton id="idIDMSSegment1" selectionChange="onSelectIDMSSegment" selectedKey="history">
+								<items>
+									<SegmentedButtonItem text="History" key="history"/>
+									<SegmentedButtonItem text="Template" key="template"/>
+								</items>
+							</SegmentedButton>
+						</VBox>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column popinDisplay="Inline" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.Assessment}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.TemplateType}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.AnalysisStatus}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.CreatedOn}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.notification}"/>
+					</Column>
+					<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+						<Text text="{i18n>asint.equipment.tab.assessments.resuable.table.workOrders}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{mEquipmentDetail>assesmentName}" text="{mEquipmentDetail>assesmentDesc}" titleActive="true" titlePress="onClickIDMSInspection"/>
+							<Text text="{mEquipmentDetail>templateTypeText}" wrapping="true" wrappingType="Normal"/>
+							<Text text="{mEquipmentDetail>statusText}"/>
+							<Text text="{mEquipmentDetail>createdOn}"/>
+							<Link text="{mEquipmentDetail>notifications}" enabled="false" press=".fnRemedialNotificationPress"></Link>
+							<Link text="{mEquipmentDetail>workOrders}" enabled="false" press=".fnRemedialWorkOrderPress"></Link>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</l:content>
+	</l:VerticalLayout>
+</mvc:View>

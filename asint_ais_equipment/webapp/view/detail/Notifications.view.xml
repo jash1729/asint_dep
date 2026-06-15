@@ -1,0 +1,126 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="com.asint.ais.mi.equipment.controller.detail.Notification"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:card="sap.f.cards"
+    xmlns:w="sap.ui.integration.widgets">
+	<Table id="notification" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar"
+		growing="true" growingThreshold="5" selectionChange="onRecomendationSelect"
+		items="{mEquipmentDetail>/data/tabs/maintenanceservice/notiificationList}"
+		updateFinished="" noDataText="{i18n>asint.reusable.noData.text}">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="{mEquipmentDetail>/data/tabs/maintenanceservice/notiificationList/tableHeader}" />
+				<!-- <Title text="{mEquipmentDetail>/data/maintenanceOrderTitle}" /> -->
+				<!-- <SegmentedButton id="idReccoSegment1" selectionChange="onSwitchWorkorderSegmentButton" selectedKey="all">
+					<items>
+						<SegmentedButtonItem text="All" key="all"/>
+						<SegmentedButtonItem icon="sap-icon://fob-watch" text="{i18n>asint.reusable.button.inProg.text}" key="In Process"/>
+						<SegmentedButtonItem icon="sap-icon://future" text="{i18n>asint.reusable.button.released.text}" key="Released"/>
+						<SegmentedButtonItem icon="sap-icon://complete" text="{i18n>asint.reusable.button.completed.text}" key="Completed"/>
+					</items>
+				</SegmentedButton> -->
+				<ToolbarSpacer />
+				<HBox renderType="Bare" alignItems="Center">
+					<Text width="90px" text="{i18n>asint.equipment.detail.tab.notification.table.column.breakdown.text}"></Text>
+					<MultiComboBox id="idNotiBreakdownFilter" class="sapUiTinyMarginBegin" width="200px" selectionChange="onSelectBreakDownFilter">
+						<items>
+							<core:Item key="Yes" text="{i18n>asint.reusable.button.yes.text}"/>
+							<core:Item key="No" text="{i18n>asint.reusable.button.no.text}"/>
+						</items>
+					</MultiComboBox>
+				</HBox>
+				<SearchField id="idNotificationsSearch" width="200px" liveChange="onSearch" />
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+			<Column popinDisplay="Inline">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.notification.text}"/>
+			</Column>
+			<Column popinDisplay="Inline">
+				<Text text="{i18n>asint.equipment.field.shortDescription.label}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" >
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.component.text}"/>
+			</Column>
+			<!-- <Column visible="false" popinDisplay="Inline">
+				<Text text="{i18n>asint.equipment.tab.planned.resuable.table.notification.text}"/>
+			</Column> -->
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.equipment.text}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.floc.text}"/>
+			</Column>
+			<!-- <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.recommendation.text}"/>
+			</Column> -->
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.type.text}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.priority.text}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.status.text}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.breakdown.text}"/>
+			</Column>
+			<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.reqStandEndDate.text}"/>
+			</Column>
+			<!-- <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.malfunStandEndDate.text}"/>
+			</Column> -->
+			<!-- <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+				<Text text="{i18n>asint.equipment.detail.tab.notification.table.column.failureMode.text}"/>
+			</Column> -->
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier title="{mEquipmentDetail>name}" text="{mEquipmentDetail>displayId}" titleActive="true" titlePress="onClickNotificationTitle"/>
+					<Text text="{path: 'mEquipmentDetail>to_description/0/shortDescription'}"/>
+					<ObjectIdentifier title="{mEquipmentDetail>componentName}" titleActive="true" titlePress="onTechnicalObjPopover"/>
+					<!-- <Text visible="false" text="{mEquipmentDetail>shortDescription}"/> -->
+					<ObjectIdentifier title="{mEquipmentDetail>equipmentName}" text="{mEquipmentDetail>equipmentDesc}" titleActive="true" titlePress="onClickequipNotification"/>
+					<ObjectIdentifier title="{mEquipmentDetail>functionalLocationName}" text="{mEquipmentDetail>functionalLocationDesc}" titleActive="true" titlePress="onClickequipFuncLoc"/>
+					<!-- <ObjectIdentifier title="{mEquipmentDetail>to_assessment_recommendation/displayId}" text="{mEquipmentDetail>to_assessment_recommendation/shortDescription}" titleActive="true" titlePress="onClickRecommendationNotification"/> -->
+					<!-- <Text text="{path: 'mEquipmentDetail>type' , formatter: '.formatter.fnGetNotificationTypeByCode'}" wrapping="true" wrappingType="Normal"/>
+					<ObjectStatus text="{
+						path: 'mEquipmentDetail>priority',
+						formatter: '.formatter.fnGetPriorityByCode'
+					}" icon="{
+						path: 'mEquipmentDetail>priority',
+						formatter: '.formatter.fnGetPriorityIconByCode'
+					}" state="{
+						path: 'mEquipmentDetail>priority',
+						formatter: '.formatter.fnGetPriorityStateByCode'
+					}"/> -->
+					<!-- <Text text="{path: 'mEquipmentDetail>notificationType' , formatter: '.formatter.formatCategorylibrary'}" /> -->
+					<Text text="{parts:['mEquipmentDetail>notificationType','mEquipmentDetail>type'],formatter:'.formatter.formatCategorylibrary'}" />
+					<ObjectStatus text="{mEquipmentDetail>description}"
+					icon="{
+						path: 'mEquipmentDetail>priority',
+						formatter: '.formatter.fnGetPriorityIconByCode'
+					}" state="{
+						path: 'mEquipmentDetail>priority',
+						formatter: '.formatter.fnGetPriorityStateByCode'
+					}"/>
+					<Text text="{path: 'mEquipmentDetail>status'}"/>
+					<!-- <Text text="{mEquipmentDetail>notificationBreakdown}"/> -->
+					<Switch customTextOn="{i18n>asint.reusable.button.yes.text}" customTextOff="{i18n>asint.reusable.button.no.text}" enabled="false" state="{mEquipmentDetail>breakdown}"/>
+					<!-- <VBox>
+						<Text text="{mEquipmentDetail>notificationReqStartDate}"/>
+						<Text text="{mEquipmentDetail>notificationReqEndDate}"/>
+					</VBox> -->
+					<VBox>
+						<Text text="{path: 'mEquipmentDetail>startDateTime', formatter: '.formatter.formatDate'}"/>
+						<Text text="{path: 'mEquipmentDetail>endDateTime', formatter: '.formatter.formatDate'}"/>
+					</VBox>
+					<!-- <Text text="{mEquipmentDetail>notificationFailureMode}"/> -->
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</mvc:View>

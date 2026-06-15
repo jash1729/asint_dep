@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ViewSettingsDialog confirm="handleSettingsDialogConfirm" filterSearchOperator="Contains" title="{i18n>asint.equipment.tab.chars.filterDialog.filterBy.text}">
+		<sortItems>
+			<ViewSettingsItem text="{i18n>asint.equipment.tab.chars.charName.label}" selected="true" key="displayId"/>
+			<ViewSettingsItem text="{i18n>asint.equipment.tab.chars.charDesc.label}" key="to_description/0/shortDescription"/>
+		</sortItems>
+		<filterItems>
+			<ViewSettingsFilterItem text="{i18n>asint.equipment.tab.chars.filterDialog.objectTemplate.text}" key="byObjectTemplate"
+				multiSelect="true" items="{path: 'mEquipmentDetail>/data/assignments/objectTemplate/templateList'}">
+				<items>
+					<ViewSettingsItem text="{mEquipmentDetail>name}" key="objectTemplateId___EQ___{mEquipmentDetail>ID}"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="{i18n>asint.equipment.tab.chars.filterDialog.class.text}" key="byClass"
+				multiSelect="true" items="{path: 'mEquipmentDetail>/data/assignments/Classes/assignedClassList'}">
+				<items>
+					<ViewSettingsItem text="{mEquipmentDetail>to_description/0/shortDescription}" key="classId___EQ___{mEquipmentDetail>ID}"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="{i18n>asint.equipment.tab.chars.filterDialog.sourceSystme.text}" key="bySource"
+				multiSelect="true" items="{path: 'mEquipmentDetail>/data/assignments/Chars/sourceSystems'}">
+				<items>
+					<ViewSettingsItem text="{mEquipmentDetail>text}" key="srcId___EQ___{mEquipmentDetail>key}"/>
+				</items>
+			</ViewSettingsFilterItem>
+	    </filterItems>
+        <groupItems>
+            <ViewSettingsItem text="{i18n>asint.equipment.tab.chars.filterDialog.class.text}" selected="true" key="className"/>
+            <ViewSettingsItem text="{i18n>asint.equipment.tab.chars.sourceSystme.label}" key="srcId"/>
+        </groupItems>
+</ViewSettingsDialog>
+</core:FragmentDefinition>

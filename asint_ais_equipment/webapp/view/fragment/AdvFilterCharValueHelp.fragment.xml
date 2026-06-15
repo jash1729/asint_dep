@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>asint.equipment.advancedFilters.create.selectCharacteristic.text}" contentHeight="70%" contentWidth="60%">
+        <Table id="idCharValueHelp" mode="MultiSelect" noDataText="{i18n>asint.reusable.noData.text}" items="{path: 'mEquipmentList>/data/AdvancedFilters/Chars/charsList',sorter:{path:'displayId',descending:true}}"
+        	selectionChange="onSelectCharacteristics">
+        <headerToolbar>
+            <OverflowToolbar design="Transparent">
+                <Title text="{mEquipmentList>/data/AdvancedFilters/Chars/tableHeader}" level="H2" />
+                <ToolbarSpacer />
+                <SearchField id="charSearchField" placeholder="{i18n>asint.equipment.tab.classes.search.tooltip.text}" width="30%" liveChange="onSearchCharsValueHelp"/>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column popinDisplay="Inline" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.charName.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.charDesc.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.dataType.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.chars.sourceSystme.label}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <ObjectIdentifier title="{mEquipmentList>displayId}" text="{mEquipmentList>name}"/>
+                    <Text text="{mEquipmentList>to_description/0/shortDescription}" wrapping="true" wrappingType="Normal" />
+                    <Text text="{mEquipmentList>dataType}"/>
+                    <Text text="{mEquipmentList>srcId}"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+        <buttons>
+            <Button text="{i18n>asint.reusable.button.ok.text}" enabled="{mEquipmentList>/data/AdvancedFilters/Chars/isOkEnabled}" press="onConfirmCharacetristicSelection" />
+            <Button text="{i18n>asint.reusable.button.cancel.text}" press="onCloseCharValueHelp" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

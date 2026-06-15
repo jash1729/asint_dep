@@ -1,7 +1,0 @@
-<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:u="sap.ui.unified">
-	<SelectDialog title="Select Value" items="{ path: 'mCMLModel>/data/CMLTabSection/LargeCodeList/LargeData' }"
-		class="sapUiPopupWithPadding" search="onLargeCLValueHelpSearch" confirm="onLargeCLValueHelpClose" cancel="onLargeCLValueHelpClose"
-		growing="true" growingThreshold="10" multiSelect="false">
-		<StandardListItem title="{mCMLModel>code}" description="{mCMLModel>description/short}"/>
-	</SelectDialog>
-</core:FragmentDefinition>

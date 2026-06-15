@@ -1,0 +1,70 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        title="Assign Failure Data Profile"
+        contentWidth="60%"
+        contentHeight="70%">
+        <Table
+            id="idAsintAssignFailureDataProfileTable"
+            mode="MultiSelect"
+            growing="true"
+            growingScrollToLoad="true"
+            growingThreshold="10"
+            noDataText="No Data"
+             items="{
+                path: 'failureDataProfileService>/FailureDataProfileList',
+                parameters : {
+                    countMode:'Inline', 
+                    $select:'*,ID,displayIdNumber',
+                    $filter: 'status eq \'PBD\''
+                }
+            }"    
+        >
+            
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{i18n>asint.equipment.tab.failureDataProfile.title.label}" />
+                    <ToolbarSpacer />
+                    <SearchField
+                        id="idAssignFailureDataProfileSearch"
+                        width="30%"
+                        liveChange="fnSearchFailureDataProfile" />
+                </OverflowToolbar>
+            </headerToolbar>
+
+            <columns>
+                <Column popinDisplay="Inline" vAlign="Middle">
+                    <Text text="{i18n>asint.equipment.tab.failureDataProfile.profileId.label}" />
+                </Column>
+                <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+                    <Text text="{i18n>asint.equipment.tab.failureDataProfile.profileDescription.label}" />
+                </Column>
+
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{failureDataProfileService>displayIdNumber}" />
+                        <Text text="{failureDataProfileService>shortDescription}" />
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    text="{i18n>asint.reusable.button.ok.text}"
+                    press="onAssignFailureDataProfileOkPress" />
+                <Button
+                    text="{i18n>asint.reusable.button.cancel.text}"
+                    press="onCloseFailureDataProfileDialog" />
+            </OverflowToolbar>
+        </footer>
+    </Dialog>
+
+</core:FragmentDefinition>

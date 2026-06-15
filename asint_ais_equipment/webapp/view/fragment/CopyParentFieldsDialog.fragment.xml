@@ -1,0 +1,30 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Dialog
+        title="{i18n>asint.equipment.list.parentasset.dialogue.title}"
+        titleAlignment="Center"
+        contentWidth="35%"
+        draggable="true">
+        <subHeader>
+            <Toolbar>
+                <Label text="{i18n>asint.equipment.list.parentasset.dialogue.subtitle.label}"/>
+            </Toolbar>
+        </subHeader>
+        <List
+            items="{mEquipmentList>/data/parentCopyFields}"
+            mode="None">
+            <items>
+                <CustomListItem>
+                    <CheckBox
+                        text="{mEquipmentList>label}"
+                        selected="{mEquipmentList>selected}"
+                        enabled="{mEquipmentList>enabled}"/>
+                </CustomListItem>
+            </items>
+        </List>
+        <buttons>
+            <Button type="Emphasized" text="Confirm" press="onCopyFieldsConfirm"/>
+            <Button type="Transparent" text="Cancel" press="onCopyFieldsCancel"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

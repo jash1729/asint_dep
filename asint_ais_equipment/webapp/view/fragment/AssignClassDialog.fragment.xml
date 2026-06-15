@@ -1,0 +1,38 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>asint.equipment.tab.classes.assignClasses.Dialog.labeltitle}" contentHeight="70%" contentWidth="60%">
+        <Table id="idAssignClasses" mode="MultiSelect" noDataText="{i18n>asint.reusable.noData.text}" alternateRowColors="true" items="{path: 'mEquipmentDetail>/data/assignments/Classes/totalUnassignedClasses',sorter:{path:'objectTemplate',descending:true, group:true}}"
+        	selectionChange="onSelectClassesForAssign">
+        <headerToolbar>
+            <OverflowToolbar design="Transparent">
+                <Title text="{mEquipmentDetail>/data/assignments/Classes/totalClassesTableHeader}" level="H2" />
+                <ToolbarSpacer />
+                <SearchField placeholder="{i18n>asint.equipment.tab.classes.search.tooltip.text}" value="{mEquipmentDetail>/data/assignments/Classes/searchField}" width="30%" liveChange="onSearchClassesAssignDialog"/>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column popinDisplay="Inline" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.classes.class.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Top">
+                <Text text="{i18n>asint.equipment.tab.classes.classDesc.label}" />
+            </Column>
+            <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet" vAlign="Middle">
+                <Text text="{i18n>asint.equipment.tab.classes.externalSystem.label}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <ObjectIdentifier title="{mEquipmentDetail>displayId}" text="{mEquipmentDetail>classNumber}"/>
+                    <Text text="{mEquipmentDetail>to_description/0/shortDescription}" wrapping="true" wrappingType="Normal" />
+                    <Text text="{mEquipmentDetail>srcId}"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+        <buttons>
+            <Button text="{i18n>asint.reusable.button.ok.text}" enabled="{mEquipmentDetail>/data/assignments/Classes/isOkEnabled}" press="onConfirmAssignClassDialog" />
+            <Button text="{i18n>asint.reusable.button.cancel.text}" press="onCloseAssignDialog" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

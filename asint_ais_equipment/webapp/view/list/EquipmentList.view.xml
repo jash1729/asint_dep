@@ -1,0 +1,1117 @@
+<mvc:View xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:svm="sap.ui.comp.smartvariants"
+    xmlns:table="sap.ui.table" controllerName="com.asint.ais.mi.equipment.controller.list.EquipmentList"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:ui="sap.ui.table"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:cmi="com.asint.ais.library.control.CustomControl"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:ng="sap.suite.ui.commons.networkgraph" displayBlock="true"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <f:DynamicPage>
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <svm:SmartVariantManagement id="idSmartVariantManagement" showExecuteOnSelection="true" />
+                </f:heading>
+                <f:expandedContent>
+                    <Label id="idDynamicPageExpandedContent" text="{i18n>asint.reusable.variantManagement.message.noFiltersActive.text}" />
+                </f:expandedContent>
+                <f:snappedContent>
+                    <Label id="idDynamicPageSnappedContent" text="{i18n>asint.reusable.variantManagement.message.noFiltersActive.text}" />
+                </f:snappedContent>
+                <f:actions>
+					<OverflowToolbar class="asintVariantToolbarBorderClass">
+						<ToolbarSpacer/>
+						<Button type="Emphasized" text="{i18n>asint.equipment.analytics.analyticsMode.btn.title}" press="onPressAnalyticsMode"/>
+					</OverflowToolbar>
+				</f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader>
+                <f:content>
+                    <fb:FilterBar id="idDynamicPagefilterbar" persistencyKey="equipmentList" useToolbar="false" filtersDialogBeforeOpen="onAfterOpen">
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem id="idAdvancedFilterItem" groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="advancedFilter" label="{i18n>asint.equipment.advancedFilters.title.text}">
+                                 <fb:control>
+                                    <ComboBox id="idAdvancedFilterControl" items="{path: 'mEquipmentList>/data/AdvancedFilters/filtersList',sorter:{path:'modifiedAt',descending:true}}" showSecondaryValues="true">
+                                        <core:ListItem key="{mEquipmentList>ID}" text="{mEquipmentList>name}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem  id="idEquipmentInputFilterItem" groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="name" label="{i18n>asint.equipment.field.name.label}">
+                                <fb:control>
+                                    <MultiInput id="idEquipmentInputFilter"
+                                        showValueHelp="true" valueHelpOnly="true"
+                                        selectedItem="{mEquipmentList>/data/filterData/equipmentName}"
+                                        valueHelpRequest="handleEquipmentValueHelp('idEquipmentInputFilter')" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem  groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="equipmentDescription" label="{i18n>asint.equipment.field.description.label.equipment}">
+                                <fb:control>
+                                    <Input  />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem  id="idsubordinateEquipmentInputFilterItem" groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="parentEquipmentName" label="{i18n>asint.equipment.list.table.columnHeader.superordinate}">
+                                <fb:control>
+                                    <MultiInput id="idSuperOrdinateEquipmentInputFilter"
+                                        showValueHelp="true" valueHelpOnly="true"
+                                        valueHelpRequest="handleSupeordianteEquipmentValueHelp" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem  groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="parentEquipmentDescription" label="{i18n>asint.equipment.list.table.columnHeader.superordinate.desc}">
+                                <fb:control>
+                                    <Input/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="category" label="{i18n>asint.equipment.field.category.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiCategory" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'EQUI','MultiSelect')" 
+                                        tokens="{path: 'mEquipmentList>/data/category'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>text}" text="{mEquipmentList>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                    <!-- <Input  value="{mEquipment>/data/category}" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'EQUI')" /> -->
+                                    <!-- <ComboBox id="idCategoryInputFilter" 
+                                            selectedKey="{mEquipment>/data/filterData/selectedCategoryKey}"
+                                            items="{mEquipment>/data/equipmentCategoryArray}" showSecondaryValues="true">
+                                        <items>
+                                            <core:ListItem key="{mEquipment>category}" text="{mEquipment>categoryDesc}" additionalText="{mEquipment>category}"/>
+                                        </items>
+                                    </ComboBox> -->
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="componentType" label="{i18n>asint.equipment.field.componentType.label}">
+                                 <fb:control>
+                                    <MultiComboBox items="{mEquipment>/data/aCombineUniqueComponentType}">
+                                        <items>
+                                            <core:ListItem key="{mEquipment>componentType}" text="{mEquipment>componentType}" />
+                                        </items>
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem  id="idFunctionalInputFilterItem" groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="parentFunctionalLocationName" label="{i18n>asint.equipment.field.functionalLocation.label}">
+                                <fb:control>
+                                    <MultiInput id="idFunctionalInputFilter" showValueHelp="true"
+                                        valueHelpOnly="true"
+                                        selectedItem="{mEquipmentList>/data/filterData/functionalLocationName}"
+                                        valueHelpRequest="handleFunctionalLocationValueHelp('idFunctionalInputFilter')" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <!-- <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="functionalLocationName" label="{i18n>asint.equipment.field.functionalLocationName.label}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem> -->
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="objectType" label="{i18n>asint.equipment.field.objectType.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiObjectType" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'OBTP','MultiSelect')" 
+                                        tokens="{path: 'mEquipmentList>/data/objectType'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>text}" text="{mEquipmentList>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                    <!-- <Input  value="{mEquipment>/data/objectType}" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'OBTP')" /> -->
+
+                                    <!-- <ComboBox id="idObjectTypeInputFilter" selectedKey="{mEquipment>/data/selectedTypeKey}"
+                                            items="{mEquipment>/data/equipmentTypeArray}" showSecondaryValues="true">
+                                        <items>
+                                            <core:ListItem key="{mEquipment>objectType}" text="{mEquipment>objectTypeDesc}" additionalText="{mEquipment>objectType}"  />
+                                        </items>
+                                    </ComboBox> -->
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="abcIndicator" label="{i18n>asint.equipment.field.ABCIndicator.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiABCIndicator" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'ABCIndicator','MultiSelect')" 
+                                        tokens="{path: 'mEquipmentList>/data/abcIndicator'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>text}" text="{mEquipmentList>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                   <!-- <Input  value="{mEquipment>/data/abcIndicator}" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'ABCIndicator')" /> -->
+                                   <!-- <ComboBox id="idObjectTypeABCIndicatorFilter" selectedKey="{mEquipment>/data/selectedAbcIndicatorKey}"
+                                            items="{mEquipment>/data/abcIndicatorArray}" showSecondaryValues="true">
+                                        <items>
+                                            <core:ListItem key="{mEquipment>indicator}" text="{mEquipment>indicatorDesc}" additionalText="{mEquipment>indicator}"  />
+                                        </items>
+                                    </ComboBox> -->
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="srcId" label="{i18n>asint.equipment.field.srcId.label.list}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="parentFunctionalLocationDescription" label="{i18n>asint.equipment.list.table.columnHeader.funclocation.description}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="assetManufacturerName" label="{i18n>asint.equipment.field.assetManufacturerName.label.list}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="planningPlant" label="{i18n>asint.equipment.field.planningPlant.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiPlanningPlant" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'PLPT', 'MultiSelect')" 
+                                     tokens="{path: 'mEquipmentList>/data/planningPlant'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                    <!-- <ComboBox id="idPlanningPlantFilter" selectedKey="{mEquipment>/data/filterplantList}"
+                                            items="{mEquipment>/data/plantList}" showSecondaryValues="true">
+                                        <items>
+                                            <core:ListItem key="{mEquipment>plant}" text="{mEquipment>plantName}" additionalText="{mEquipment>plant}"  />
+                                        </items>
+                                    </ComboBox> -->
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="plantSection" label="{i18n>asint.equipment.field.plantSection.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiPlantSection" valueHelpOnly="true" showValueHelp="true" showClearIcon="true"
+                                        valueHelpRequest="openValueHelp($event ,'PLSC', 'MultiSelect')"
+                                        tokens="{path: 'mEquipmentList>/data/plantSection'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                                        </tokens>
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="location" label="{i18n>asint.equipment.field.location.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiLocation" valueHelpOnly="true" showValueHelp="true" showClearIcon="true"
+                                        valueHelpRequest="openValueHelp($event ,'LOC', 'MultiSelect')"
+                                        tokens="{path: 'mEquipmentList>/data/location'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                                        </tokens>
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="maintenanceWorkCenter" label="{i18n>asint.equipment.field.maintenanceWorkCenter.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiMaintenanceWorkCenter" valueHelpOnly="true" showValueHelp="true" showClearIcon="true"
+                                        valueHelpRequest="openValueHelp($event ,'WCTR', 'MultiSelect')"
+                                        tokens="{path: 'mEquipmentList>/data/maintenanceWorkCenter'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                                        </tokens>
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="plannerGroup" label="{i18n>asint.equipment.field.plannerGroup.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiPlannerGroup" valueHelpOnly="true" showValueHelp="true" showClearIcon="true"
+                                        valueHelpRequest="openValueHelp($event ,'PRGP', 'MultiSelect')"
+                                        tokens="{path: 'mEquipmentList>/data/plannerGroup'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                                        </tokens>
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem id="idClassMultiInputFilterItem" groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="classDetails" label="{i18n>asint.equipment.field.className.label}">
+                                <fb:control>
+                                    <MultiInput id="idClassMultiInputFilter" showValueHelp="true" valueHelpOnly="true"
+                                        valueHelpRequest="onOpenAdvancedFilterDialog(
+                                            'idClassAdvanceFilterDialog',
+                                            'class',
+                                            'classFilterDialog',
+                                            'idClassMultiInputFilter'
+                                        )"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="masterDataAttribution" label="{i18n>asint.equipment.field.mda.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiMda" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'MDA', 'MultiSelect')" 
+                                     tokens="{path: 'mEquipmentList>/data/mda'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="catalogProfile" label="{i18n>asint.equipment.field.catalogProfile.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiCatalogProfile" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'CTPL','MultiSelect')" 
+                                        tokens="{path: 'mEquipmentList>/data/catalogProfile'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>text}" text="{mEquipmentList>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                    <!-- <Input  value="{mEquipment>/data/catalogProfile}" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'CTPL')" /> -->
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="createdAt" label="{i18n>asint.equipment.field.createdOn.label}">
+                                <fb:control>
+                                    <DateRangeSelection customData:dataType="DateTime" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="createdBy" label="{i18n>asint.equipment.field.createdBy.label}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="modifiedAt" label="{i18n>asint.equipment.field.modifiedOn.label}">
+                                <fb:control>
+                                    <DateRangeSelection customData:dataType="DateTime" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="modifiedBy" label="{i18n>asint.equipment.field.modifiedBy.label.list}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="maintenancePlant" label="{i18n>asint.equipment.field.maintenancePlant.label}">
+                                <fb:control>
+                                    <MultiInput id="idEQUIMultiMaintPlant" valueHelpOnly="true" showValueHelp="true" showClearIcon="true" valueHelpRequest="openValueHelp($event ,'PLMT', 'MultiSelect')" 
+                                     tokens="{path: 'mEquipmentList>/data/maintenancePlant'}" tokenUpdate="onRemoveToken">
+                                        <tokens>
+                                            <Token key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                                        </tokens>  
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="isActive" label="{i18n>asint.equipment.field.active.label}">
+                                <fb:control>
+                                    <MultiComboBox>
+                                        <items>
+                                            <core:Item key="Yes" text="Yes"/>
+                                            <core:Item key="No" text="No"/>
+                                        </items>
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="everGreening" label="{i18n>asint.equipment.field.evergreeningStatus.label}">
+                                <fb:control>
+                                    <MultiComboBox>
+                                        <items>
+                                            <core:Item key="Complete" text="Complete"/>
+                                            <core:Item key="Due" text="Due"/>
+                                        </items>
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="userStatus" label="{i18n>asint.equipment.field.userStatus.label}">
+                                <fb:control>
+                                    <MultiInput id="idUserStatusFilter"
+                                        showValueHelp="true" valueHelpOnly="true"
+                                        valueHelpRequest="handleGenericEnumValueHelp('idUserStatusFilter','userStatus')" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="systemStatus" label="{i18n>asint.equipment.field.systemStatus.label}">
+                                <fb:control>
+                                    <MultiInput id="idSystemStatusFilter"
+                                        showValueHelp="true" valueHelpOnly="true"
+                                        valueHelpRequest="handleGenericEnumValueHelp('idSystemStatusFilter','systemStatus')" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="flagComponent" label="{i18n>asint.equipment.field.flagComponent.label}">
+                                <fb:control>
+                                    <MultiComboBox items="{mEquipmentList>/metadata/dropDown/componentFlag}">
+                                        <items>
+                                            <core:ListItem key="{mEquipmentList>key}" text="{mEquipmentList>text}" />
+                                        </items>
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="activationState" label="{i18n>asint.equipment.field.activationState.label}">
+                                <fb:control>
+                                    <MultiComboBox>
+                                        <items>
+                                            <core:Item key="Activated" text="Activated"/>
+                                            <core:Item key="Deactivated" text="Deactivated"/>
+                                        </items>
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="deactivationDate" label="{i18n>asint.equipment.field.deactivationDate.label}">
+                                <fb:control>
+                                    <DateRangeSelection />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="sortField" label="{i18n>asint.equipment.field.sortField.label}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="technicalObjectSortCode" label="{i18n>asint.equipment.field.technicalIdentificationNumber.label}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="equipmentCharacteristics" label="{i18n>asint.equipment.field.characteristicName.label}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="sap.ui.comp.filterbar.FilterBar.INTERNAL_GROUP" groupTitle="Basic" name="charSrcListFilter" label="{i18n>asint.equipment.field.characteristicSrcSystem.label}">
+                                <fb:control>
+                                    <Input />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Page showHeader="false">
+                <f:FlexibleColumnLayout id="idFlexiColLayout" layout="MidColumnFullScreen">
+                <f:beginColumnPages>
+                <NavContainer id="idNavContFlexiColBeginPage" initialPage="idObjectHierarchyPage">
+                <Page id="idObjectHierarchyPage" showHeader="false">
+                    <!-- <ng:Graph id="idNetworkGraph" visible="true" height="80%" enableWheelZoom="false" orientation="TopBottom" nodes="{mEquipmentList>/data/assetHierarchy/nodes}" lines="{mEquipmentList>/data/assetHierarchy/lines}">
+                        <ng:statuses>
+                            <ng:Status key="Information" title="BTP Asset" />
+                            <ng:Status key="Neutral" title="S4 Asset" />
+                        </ng:statuses>
+                        <ng:nodes>
+                            <ng:Node
+                                key="{mEquipmentList>id}"
+                                title="{mEquipmentList>name}"
+                                shape="{mEquipmentList>shape}"
+                                icon="{mEquipmentList>icon}"
+                                attributes="{path:'mEquipmentList>attributes', templateShareable:true}"
+                                showDetailButton="{mEquipmentList>detailbutton}"
+                                showExpandButton="{mEquipmentList>expandbutton}"
+                                status="{mEquipmentList>status}"
+                                press="onHiearchyObjectSelectionChange"
+                            >
+                                <ng:attributes>
+                                    <ng:ElementAttribute label="{mEquipmentList>label}" value="{mEquipmentList>value}" />
+                                </ng:attributes>
+                                <ng:actionButtons>
+                                    <ng:ActionButton icon="sap-icon://show" title="Navigate to detail" press="onNodeNavigate" />
+                                </ng:actionButtons>
+                            </ng:Node>
+                        </ng:nodes>
+                        <ng:lines>
+                            <ng:Line from="{mEquipmentList>from}" to="{mEquipmentList>to}" press="onLinePress" />
+                        </ng:lines>
+                    </ng:Graph> -->
+                </Page>
+                <Page id="idEquiAnalyticsPage" title="{i18n>asint.equipment.list.analytics.page.title}" showHeader="true">
+                    <headerContent>
+                        <Button text="{i18n>asint.equipment.list.analytics.filter.text}" type="Emphasized" press="onAnalyticsFilterPress"></Button>
+                        <Button icon="sap-icon://expand-all" tooltip="{i18n>asint.reusable.button.expandAll.text}" press="onAnalyticsPanelToggleExpand(true)"/>
+                        <Button icon="sap-icon://collapse-all" tooltip="{i18n>asint.reusable.button.collapseAll.text}" press="onAnalyticsPanelToggleExpand(false)"/>
+                        <Button icon="sap-icon://decline" tooltip="{i18n>asint.reusable.close.button}" press="onToggleBeginPage($event,'idEquiAnalyticsPage')"/>
+                    </headerContent>
+                    <content>
+                        <!-- <Panel id="idEquiAnalyticsPanel1" expandable="true" expanded="true" headerText="{i18n>asint.equipment.list.analytics.asd.chart.title}">
+                            <commons:ChartContainer showFullScreen="true" showPersonalization="false" showZoom="true" autoAdjustHeight="false" class="sapUiLargeMarginBottom">
+                                <commons:content>
+                                    <commons:ChartContainerContent>
+                                        <commons:content>
+                                            <viz:Popover id="idEquiAnalyticsVizFramePopover1"/>
+                                            <viz:VizFrame id="idEquiAnalyticsVizFrame1" uiConfig="{applicationSet:'fiori'}" vizType='heatmap' width="100%" selectData="onHeatMapSelectionChange">
+                                                <viz:dataset>
+                                                    <viz.data:FlattenedDataset data="{mEquipmentList>/data/heatMap}">
+                                                        <viz.data:dimensions>
+                                                            <viz.data:DimensionDefinition name="Category" value="{mEquipmentList>expandedCategory}" />
+                                                            <viz.data:DimensionDefinition name="Riskvalue" value="{mEquipmentList>riskValue}" />
+                                                        </viz.data:dimensions>
+                                                        <viz.data:measures>
+                                                            <viz.data:MeasureDefinition name="No of Equipments" value="{mEquipmentList>equicount}" />
+                                                        </viz.data:measures>
+                                                    </viz.data:FlattenedDataset>
+                                                </viz:dataset>
+                                                <viz:feeds>
+                                                    <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Category" />
+                                                    <viz.feeds:FeedItem uid="categoryAxis2" type="Dimension" values="Riskvalue" />
+                                                    <viz.feeds:FeedItem uid="color" type="Measure" values="No of Equipments" />
+                                                </viz:feeds>
+                                            </viz:VizFrame>
+                                        </commons:content>
+                                    </commons:ChartContainerContent>
+                                </commons:content>
+                            </commons:ChartContainer>
+                        </Panel> -->
+                        <Panel id="idEquiAnalyticsPanel2" expandable="true" expanded="true" headerText="{i18n>asint.equipment.list.analytics.criticality.chart.title}">
+                            <commons:ChartContainer showFullScreen="true" showPersonalization="false" showZoom="true" autoAdjustHeight="false" class="sapUiLargeMarginBottom">
+                                <commons:content>
+                                    <commons:ChartContainerContent>
+                                        <commons:content>
+                                            <viz:Popover id="idEquiAnalyticsVizFramePopover2"/>
+                                            <viz:VizFrame id="idEquiAnalyticsVizFrame2" uiConfig="{applicationSet:'fiori'}" vizType='donut' width="100%" selectData="onDonutSelectionChange">
+                                                <viz:dataset>
+                                                    <viz.data:FlattenedDataset data="{mEquipmentList>/data/donut}">
+                                                        <viz.data:dimensions>
+                                                            <viz.data:DimensionDefinition name="code" value="{mEquipmentList>code}" />
+                                                        </viz.data:dimensions>
+                                                        <viz.data:measures>
+                                                            <viz.data:MeasureDefinition name="No of Equipments" value="{mEquipmentList>criticalitycount}" />
+                                                        </viz.data:measures>
+                                                    </viz.data:FlattenedDataset>
+                                                </viz:dataset>
+                                                <viz:feeds>
+                                                    <viz.feeds:FeedItem uid="color" type="Dimension" values="code" />
+                                                    <viz.feeds:FeedItem uid="size" type="Measure" values="No of Equipments" />
+                                                </viz:feeds>
+                                            </viz:VizFrame>
+                                        </commons:content>
+                                    </commons:ChartContainerContent>
+                                </commons:content>
+                            </commons:ChartContainer>
+                        </Panel>
+                        <Panel id="idEquiAnalyticsPanel3" expandable="true" expanded="true" headerText="{i18n>asint.equipment.list.analytics.riskScore.chart.title}">
+                            <commons:ChartContainer showFullScreen="true" showPersonalization="false" showZoom="true" autoAdjustHeight="false" class="sapUiLargeMarginBottom">
+                                <commons:content>
+                                    <commons:ChartContainerContent>
+                                        <commons:content>
+                                            <viz:Popover id="idEquiAnalyticsVizFramePopover3"/>
+                                            <viz:VizFrame id="idEquiVizFrame" uiConfig="{applicationSet:'fiori'}" height='600px' width="100%" vizType='stacked_column' selectData="onStackedColumnSelectionChange"/>
+                                        </commons:content>
+                                    </commons:ChartContainerContent>
+                                </commons:content>
+                            </commons:ChartContainer>
+                        </Panel>
+                    </content>
+                </Page>
+                </NavContainer>
+                </f:beginColumnPages>
+                <f:midColumnPages>
+                    <NavContainer id="idNavContFlexiColMidPage" initialPage="idMTablePage">
+                        <Page id="idMTablePage" showHeader="false">
+                            <content>
+                                <Table id="idEquipmentListMTable" busyIndicatorDelay="0" alternateRowColors="true"
+                                    items="{ 
+                                        path:'masterService>/EquipmentListService(language=\'en\')/Set',
+                                        events:{dataReceived:'.fnOnDataReceived'},
+                                        parameters : {$select: 'equipmentId'},
+                                        sorter:{path:'modifiedAt',descending:true}
+                                    }" growing="true" autoPopinMode="true" contextualWidth="Auto" growingThreshold="20"  growingScrollToLoad="true" sticky="ColumnHeaders,HeaderToolbar" popinLayout="GridSmall" >
+                                    <headerToolbar>
+                                        <OverflowToolbar style="Clear">
+                                            <Title text="{mEquipmentList>/data/listHeader}" busy="{mEquipmentList>/data/tableTiltleBusy}" level="H2" />
+                                            <ToolbarSpacer />
+                                            <Button icon="sap-icon://add" tooltip="{i18n>asint.equipment.list.tooltip.new.equipment}" visible="{mEquipmentList>/data/userRoles/edit}" press="onCreateNewEquipment"  />
+                                            <Button icon="sap-icon://add-filter" tooltip="{i18n>asint.equipment.advancedFilters.title.text}" visible="{= !${mEquipmentList>/data/AdvancedFilters/isCreateBtnVisible}}" press="onPressAdvancedFilters"></Button>
+                                            <Button icon="sap-icon://add-filter" tooltip="{i18n>asint.equipment.advancedFilters.title.text}" visible="{mEquipmentList>/data/AdvancedFilters/isCreateBtnVisible}" press="onPressCreateAdvancedFilter"></Button>
+                                            <Button tooltip="{i18n>asint.equipment.list.hierarchy.icon.tooltip}" press="onToggleBeginPage($event,'idObjectHierarchyPage')"  icon="sap-icon://org-chart" />
+                                            <Button icon="sap-icon://business-objects-experience" tooltip="{i18n>asint.equipment.list.analytics.icon.tooltip}" type="{= ${mEquipmentList>/metadata/flexColLayout/activeBeginPage} === 'idEquiAnalyticsPage'  &amp;&amp; ${device>/system/desktop} ? 'Emphasized' : 'Default' }" press="onToggleBeginPage($event,'idEquiAnalyticsPage')"/>
+                                            <Button icon="sap-icon://action-settings" tooltip="{i18n>asint.equipment.list.tooltip.settings}" id="idTableP13nSettings"  />
+                                            <Button icon="sap-icon://excel-attachment" tooltip="{i18n>asint.equipment.list.tooltip.export}" press="onPressExportExcel" />
+                                        </OverflowToolbar>
+                                    </headerToolbar>
+                                    <columns>
+                                        <Column id="name" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'name',
+                                                    control: '',
+                                                    value1: 'name',
+                                                    value2: 'equipmentDescription',
+                                                    fields: [
+                                                        { i18n: 'asint.equipment.list.table.columnHeader.equipment',path: 'name', sortable: true, groupable: true},
+                                                        { i18n: 'asint.equipment.field.description.label',path: 'equipmentDescription', sortable: false, groupable: false}
+                                                    ]
+                                                }
+                                            }" importance="High" width="14rem">
+                                            <Text customData:tableSettings="name" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.list.table.columnHeader.equipment',
+                                                        value: 'name'
+                                                    },{
+                                                        i18n: 'asint.equipment.field.description.label',
+                                                        value: 'equipmentDescription'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.list.table.columnHeader.equipment}" />
+                                        </Column>
+                                        <Column id="functionalLocation" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'parentFunctionalLocationName',
+                                                    control: '',
+                                                    value1: 'parentFunctionalLocationName',
+                                                    value2: 'parentFunctionalLocationDescription',
+                                                    fields: [
+                                                        {i18n: 'asint.equipment.list.table.columnHeader.funclocation',path: 'parentFunctionalLocationName', sortable: true, groupable: true},
+                                                        {i18n: 'asint.equipment.list.table.columnHeader.funclocation.description',path: 'parentFunctionalLocationDescription', sortable: false, groupable: false}
+                                                    ]
+                                                }
+                                            }" importance="High" minScreenWidth="Tablet" width="14rem">
+                                            <Text customData:tableSettings="" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.list.table.columnHeader.funclocation',
+                                                        value: 'parentFunctionalLocationName'
+                                                    },{
+                                                        i18n: 'asint.equipment.list.table.columnHeader.funclocation.description',
+                                                        value: 'parentFunctionalLocationDescription'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.list.table.columnHeader.funclocation}" />
+                                        </Column>
+                                        <Column id="category" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'category',
+                                                    control: '',
+                                                    value1: 'categoryDescription',
+                                                    value2: 'category'
+                                                }
+                                            }" importance="High" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="category" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.category.label',
+                                                        value: 'category'
+                                                    },{
+                                                        i18n: 'asint.equipment.field.categoryDesc.label',
+                                                         value: 'categoryDescription'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.category.label}" />
+                                        </Column>
+                                        <Column id="objectType" customData:p13nSettings="{
+                                                    metadata: {
+                                                        path: 'objectType',
+                                                        control: '',
+                                                        value1: 'objectTypeDescription',
+                                                        value2: 'objectType'
+                                                    }
+                                                }" minScreenWidth="Tablet">
+                                                <Text customData:tableSettings="objectType" customData:exportSettings="{
+                                                    fields : [
+                                                        {
+                                                            i18n: 'asint.equipment.field.objectType.label',
+                                                            value: 'objectType'
+                                                        },{
+                                                            i18n: 'asint.equipment.field.objectTypeDesc.label',
+                                                            value: 'objectTypeDescription'
+                                                        }
+                                                    ]
+                                                }" text="{i18n>asint.equipment.field.objectType.label}" />
+                                        </Column>
+                                        <Column id="assetManufacturerName" importance="Medium" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'assetManufacturerName',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="assetManufacturerName" text="{i18n>asint.equipment.field.assetManufacturerName.label.list}" />
+                                        </Column>
+                                        <Column id="abcIndicator" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'abcIndicator',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="abcIndicator" customData:valueMaps="{'A': 'Very Critical','B': 'Critical','C':'Less Critical'}" text="{i18n>asint.equipment.field.ABCIndicator.label}" />
+                                        </Column>
+                                        <Column id="idComponenetType" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'componentType',
+                                                    control: 'sap.m.Text',
+                                                    value1: 'componentType'
+                                                }
+                                            }" minScreenWidth="Tablet" visible="true">
+                                                <Text customData:tableSettings="componentType" customData:exportSettings="{
+                                                    fields : [
+                                                        {
+                                                            i18n: 'asint.equipment.field.componentType.label',
+                                                            value: 'componentType'
+                                                        }
+                                                    ]
+                                                }"  text="{i18n>asint.equipment.field.componentType.label}" />
+                                            </Column>
+                                            <Column id="classDetails" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'classDetails',
+                                                    control: 'sap.m.Text',
+                                                    value1: 'classDetails'
+                                                }
+                                            }" minScreenWidth="Tablet" visible="true">
+                                                <Text customData:tableSettings="classDetails" customData:exportSettings="{
+                                                    fields : [
+                                                        {
+                                                            i18n: 'asint.equipment.field.className.label',
+                                                            value: 'classDetails_classDescription'
+                                                        }
+                                                    ]
+                                                }"  text="{i18n>asint.equipment.field.className.label}" />
+                                            </Column>
+                                        <Column id="technicalObjectSortCode" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'technicalObjectSortCode',
+                                                    control: 'sap.m.Text',
+                                                    value1: 'technicalObjectSortCode'
+                                                }
+                                            }" minScreenWidth="Tablet" visible="true" customData:forceHide="{mEquipment>/metadata/featureFlag/hideTechnicalIdField}"> 
+                                                <Text customData:tableSettings="technicalObjectSortCode" customData:exportSettings="{
+                                                    fields : [
+                                                        {
+                                                            i18n: 'asint.equipment.field.technicalIdentificationNumber.label',
+                                                            value: 'technicalObjectSortCode'
+                                                        }
+                                                    ]
+                                                }"  text="{i18n>asint.equipment.field.technicalIdentificationNumber.label}" />
+                                        </Column>
+                                        <Column id="sortField" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'sortField',
+                                                    control: 'sap.m.Text',
+                                                    value1: 'sortField'
+                                                }
+                                            }" minScreenWidth="Tablet" visible="true" customData:forceHide="{mEquipment>/metadata/featureFlag/hideSortField}"> 
+                                                <Text customData:tableSettings="sortField" customData:exportSettings="{
+                                                    fields : [
+                                                        {
+                                                            i18n: 'asint.equipment.field.sortField.label',
+                                                            value: 'sortField'
+                                                        }
+                                                    ]
+                                                }"  text="{i18n>asint.equipment.field.sortField.label}" />
+                                        </Column>
+                                        <Column id="High" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'srcId',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="High" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="srcId"
+                                                customData:exportSettings="{
+                                                    fields : [
+                                                        {
+                                                            i18n: 'asint.equipment.field.srcId.label.list',
+                                                            value: 'srcId'
+                                                        }
+                                                    ]
+                                                }"
+                                                text="{i18n>asint.equipment.field.srcId.label.list}" />
+                                        </Column>
+                                        <Column id="createdAt" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'createdAt',
+                                                    control: '',
+                                                    value1: 'createdAt',
+                                                    value2: 'createdBy',
+                                                    fields: [
+                                                        {i18n: 'asint.equipment.field.createdOn.label', path: 'createdAt', sortable: true, groupable: true},
+                                                        {i18n: 'asint.equipment.field.createdBy.label', path: 'createdBy', sortable: true, groupable: true}
+                                                    ]
+                                                }
+                                            }" importance="High" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="createdAt" customData:dataTypeExport="Date" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.createdOn.label',
+                                                        value: 'createdAt'
+                                                    },{
+                                                        i18n: 'asint.equipment.field.createdBy.label',
+                                                        value: 'createdBy'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.list.table.columnHeader.createdBy}" />
+                                        </Column>
+                                        <Column id="displayId" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'displayId',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="displayId" text="{i18n>asint.equipment.field.displayId.label}" />
+                                        </Column>
+                                        <Column id="planningPlant" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'planningPlant',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="planningPlant" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.planningPlant.label',
+                                                        value: 'planningPlant'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.planningPlant.label}" />
+                                        </Column>
+                                        <Column id="plantSection" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'plantSection',
+                                                    control: 'sap.m.Text',
+                                                    value1: 'plantSection'
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="plantSection" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.plantSection.label',
+                                                        value: 'plantSection'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.plantSection.label}" />
+                                        </Column>
+
+                                        <Column id="location" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'location',
+                                                    control: 'sap.m.Text',
+                                                    value1: 'location'
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="location" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.location.label',
+                                                        value: 'location'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.location.label}" />
+                                        </Column>
+
+                                        <Column id="maintenanceWorkCenter" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'maintenanceWorkCenter',
+                                                    control: 'sap.m.Text',
+                                                    value1: 'maintenanceWorkCenter'
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="maintenanceWorkCenter" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.maintenanceWorkCenter.label',
+                                                        value: 'maintenanceWorkCenter'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.maintenanceWorkCenter.label}" />
+                                        </Column>
+
+                                        <Column id="plannerGroup" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'plannerGroup',
+                                                    control: 'sap.m.Text',
+                                                    value1: 'plannerGroup'
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="plannerGroup" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.plannerGroup.label',
+                                                        value: 'plannerGroup'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.plannerGroup.label}" />
+                                        </Column>
+                                        <Column id="masterDataAttribution" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'masterDataAttribution',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="masterDataAttribution" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.mda.label',
+                                                        value: 'masterDataAttribution'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.mda.label}" />
+                                        </Column>
+
+                                        <Column id="catalogProfile" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'catalogProfile',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="catalogProfile" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.catalogProfile.label',
+                                                        value: 'catalogProfile'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.catalogProfile.label}" />
+                                        </Column>
+                                        <Column id="modifiedAt" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'modifiedAt',
+                                                    control: '',
+                                                    value1: 'modifiedAt',
+                                                    value2: 'modifiedBy',
+                                                    fields: [
+                                                        {'i18n': 'asint.equipment.field.modifiedOn.label','path': 'modifiedAt', sortable: true, groupable: true},
+                                                        {'i18n': 'asint.equipment.field.modifiedBy.label.list','path': 'modifiedBy', sortable: true, groupable: true}
+                                                    ]
+                                                }
+                                            }" importance="High" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="modifiedAt" customData:dataTypeExport="Date" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.modifiedOn.label',
+                                                        value: 'modifiedAt'
+                                                    },{
+                                                        i18n: 'asint.equipment.field.modifiedBy.label.list',
+                                                        value: 'modifiedBy'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.list.table.columnHeader.changedBy}" />
+                                        </Column>
+                                        <Column id="superordinateEquipment" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'parentEquipmentName',
+                                                    control: '',
+                                                    value1: 'parentEquipmentName',
+                                                    value2: 'parentEquipmentDescription',
+                                                    fields: [
+                                                        {'i18n': 'asint.equipment.list.table.columnHeader.superordinate','path': 'parentEquipmentName', sortable: true, groupable: true},
+                                                        {'i18n': 'asint.equipment.list.table.columnHeader.superordinate.desc','path': 'parentEquipmentDescription', sortable: true, groupable: true}
+                                                    ]
+                                                }
+                                            }" importance="High" minScreenWidth="Tablet" visible="false">
+                                            <Text customData:tableSettings="parentEquipmentName" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.list.table.columnHeader.superordinate',
+                                                        value: 'parentEquipmentName'
+                                                    },{
+                                                        i18n: 'asint.equipment.list.table.columnHeader.superordinate.desc',
+                                                        value: 'parentEquipmentDescription'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.list.table.columnHeader.superordinate}" />
+                                        </Column>
+                                        <Column id="maintenancePlant" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'maintenancePlant',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="maintenancePlant" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.maintenancePlant.label',
+                                                        value: 'maintenancePlant'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.maintenancePlant.label}" />
+                                        </Column>
+                                        <Column id="active" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'isActive',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="isActive" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.active.label',
+                                                        value: 'isActive'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.active.label}" />
+                                        </Column>
+                                        <Column id="everGreening" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'everGreening',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="everGreening" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.evergreeningStatus.label',
+                                                        value: 'everGreening'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.evergreeningStatus.label}" />
+                                        </Column>
+                                        <Column id="idUserStatus" customData:p13nSettings="{
+                                            metadata: {
+                                                path: 'userStatus',
+                                                control: '',
+                                                value1: '',
+                                                value2: ''
+                                            }
+                                        }" importance="None" visible="false" minScreenWidth="Tablet">
+                                        <Text customData:tableSettings="userStatus" customData:exportSettings="{
+                                            fields : [
+                                                {
+                                                    i18n: 'asint.equipment.field.userStatus.label',
+                                                    value: 'userStatus'
+                                                }
+                                            ]
+                                        }" text="{i18n>asint.equipment.field.userStatus.label}" />
+                                        </Column>
+                                        <Column id="idsystemStatus" customData:p13nSettings="{
+                                            metadata: {
+                                                path: 'systemStatus',
+                                                control: '',
+                                                value1: '',
+                                                value2: ''
+                                            }
+                                        }" importance="None" visible="false" minScreenWidth="Tablet">
+                                        <Text customData:tableSettings="systemStatus" customData:exportSettings="{
+                                            fields : [
+                                                {
+                                                    i18n: 'asint.equipment.field.systemStatus.label',
+                                                    value: 'systemStatus'
+                                                }
+                                            ]
+                                        }" text="{i18n>asint.equipment.field.systemStatus.label}" />
+                                    </Column>
+                                        <Column id="idComponentFlag" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'flagComponent',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="flagComponent" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.flagComponent.label',
+                                                        value: 'flagComponent'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.flagComponent.label}" />
+                                        </Column>
+                                        <Column id="idActivationState" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'activationState',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="activationState" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.activationState.label',
+                                                        value: 'activationState'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.activationState.label}" />
+                                        </Column>
+                                        <Column id="idDeactivationDate" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'deactivationDate',
+                                                    control: '',
+                                                    value1: '',
+                                                    value2: ''
+                                                }
+                                            }" importance="None" visible="false" minScreenWidth="Tablet">
+                                            <Text customData:tableSettings="deactivationDate" customData:exportSettings="{
+                                                fields : [
+                                                    {
+                                                        i18n: 'asint.equipment.field.deactivationDate.label',
+                                                        value: 'deactivationDate'
+                                                    }
+                                                ]
+                                            }" text="{i18n>asint.equipment.field.deactivationDate.label}" />
+                                        </Column>
+                                            <Column id="failureCount" customData:p13nSettings="{
+                                                metadata: {
+                                                    path: 'failureCount',
+                                                    control: 'sap.m.Text',
+                                                    value1: 'failureCount'
+                                                }
+                                            }" minScreenWidth="Tablet" visible="false">
+                                                <Text customData:tableSettings="failureCount" customData:exportSettings="{
+                                                    fields : [
+                                                        {
+                                                            i18n: 'asint.equipment.field.failureCount.label',
+                                                            value: 'failureCount'
+                                                        }
+                                                    ]
+                                                }"  text="{i18n>asint.equipment.field.failureCount.label}" />
+                                            </Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem type="Navigation" press="onNavToDetail">
+                                            <cells>
+                                                <ObjectIdentifier title="{masterService>name}" text="{masterService>equipmentDescription}" />
+                                                <ObjectIdentifier title="{masterService>parentFunctionalLocationName}" text="{masterService>parentFunctionalLocationDescription}" />
+                                                <Text text="{parts:['masterService>categoryDescription','masterService>category'],formatter:'.formatter.formatCategorylibrary'}" />
+                                                <Text text="{parts:['masterService>objectTypeDescription','masterService>objectType'],formatter:'.formatter.formatCategorylibrary'}" />
+                                                <Text text="{masterService>assetManufacturerName}" />
+                                                <GenericTag text="{masterService>abcIndicator}" visible="{path: 'masterService>abcIndicator', formatter: '.formatter.formatVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                                                    status="{ path: 'masterService>abcIndicator', formatter: '.formatter.formatStatus' ,targetType: 'any'}" 
+                                                    tooltip="{parts: ['masterService>abcIndicator','mEquipment>/data/abcIndicatorArray'],formatter: '.formatter.formatTooltip'}" class="sapUiSmallMarginBottom">
+                                                    <ObjectNumber state="{ path: 'masterService>abcIndicator', formatter: '.formatter.formatStatus' ,targetType: 'any'}" emphasized="false" />
+                                                </GenericTag>
+                                                <Text text="{masterService>componentType}" />
+                                                <ExpandableText maxCharacters="30" overflowMode="Popover" text="{path:'masterService>classDetails',formatter:'.formatter.fnFormatEquipmentClass'}"/>
+                                                
+                                                <Text text="{masterService>technicalObjectSortCode}" />
+                                                <Text text="{masterService>sortField}" />
+                                                <Text text="{masterService>srcId}" />
+                                                <ObjectIdentifier title="{masterService>createdAt}" text="{masterService>createdBy}" />
+                                                <Text text="{masterService>displayId}" />
+                                                <Text text="{masterService>planningPlant}" />
+                                                <Text text="{masterService>plantSection}" />
+                                                <Text text="{masterService>location}" />
+                                                <Text text="{masterService>maintenanceWorkCenter}" />
+                                                <Text text="{masterService>plannerGroup}" />
+
+                                                <Text text="{masterService>masterDataAttribution}" />
+                                                <Text text="{masterService>catalogProfile}" />
+                                                <ObjectIdentifier title="{masterService>modifiedAt}" text="{masterService>modifiedBy}" />
+                                                <ObjectIdentifier title="{masterService>parentEquipmentName}" text="{masterService>parentEquipmentDescription}"/>
+                                                <Text text="{masterService>maintenancePlant}" />
+                                                <Text text="{masterService>isActive}" />
+                                                <ObjectStatus text="{path: 'masterService>everGreening', formatter: '.formatter.fnFormatEvergreeningText'}" state="{path: 'masterService>everGreening', formatter: '.formatter.fnFormatEvergreeningStatus'}"/>
+                                                <Text text="{masterService>userStatus}" />
+                                                <Text text="{masterService>systemStatus}" />
+                                                <Text text="{masterService>flagComponent}" />
+                                                <Text text="{masterService>activationState}" />
+                                                <Text text="{parts: ['masterService>deactivationDate'], formatter:'.formatter.formatDate'}" />
+                                                <!-- <Text text="{path:'masterService>classDetails',formatter:'.formatter.fnFormatEquipmentClass'}"/> -->
+                                                <Text text="{masterService>failureCount}" />
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </content>
+                        </Page>
+                    </NavContainer>
+                </f:midColumnPages>
+            </f:FlexibleColumnLayout>
+            </Page>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

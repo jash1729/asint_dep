@@ -1,0 +1,51 @@
+<mvc:View xmlns:core="sap.ui.core"
+	controllerName="com.asint.ais.mi.equipment.controller.detail.AssetInspection"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+    <Table id="idAsintAssetInspections" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar" growing="true" growingThreshold="5"
+        items="{mEquipmentDetail>/data/assetIntelligence/assetInspection/list}" noDataText="{i18n>asint.reusable.noData.text}">
+        <headerToolbar>
+            <OverflowToolbar>
+                <Title text="{mEquipmentDetail>/data/assetIntelligence/assetInspection/header}"/>
+                <ToolbarSpacer/>
+                <SearchField width="30%" value="" placeholder="{i18n>asint.reusable.search.text}" liveChange="onSearch"/>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column>
+                <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.assessment.column.text}"/>
+            </Column>
+            <Column>
+                <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.equi.column.text}"/>
+            </Column>
+            <Column>
+                <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.assessmentTemp.column.text}"/>
+            </Column>
+            <Column>
+                <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.status.column.text}"/>
+            </Column>
+            <Column>
+                <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.created.column.text}"/>
+            </Column>
+            <Column>
+                <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.published.column.text}"/>
+            </Column>
+            <Column visible="{= ${mEquipment>/metadata/featureFlag/equiRestrictDateOfInspectionCol} === '1' }">
+                <Text text="{i18n>asint.equipment.detail.tab.assetIntelligence.assessment.table.dateOfInspection.column.text}"/>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <ObjectIdentifier title="{mEquipmentDetail>assessmentDisplayId}" text="{mEquipmentDetail>assessmentDesc}" titleActive="true" titlePress="onPressInspectionTitle" />
+                    <ObjectIdentifier title="{mEquipmentDetail>equiName}" text="{mEquipmentDetail>equiDesc}" />
+                    <ObjectIdentifier title="{mEquipmentDetail>assessmentTempDisplayId}" text="{mEquipmentDetail>assessmentTempDesc}" />
+                    <ObjectStatus text="{path: 'mEquipmentDetail>status', formatter: '.formatter.fnGetStatusText'}" state="{path: 'mEquipmentDetail>status', formatter: '.formatter.fnGetStatusType'}"/>
+                    <ObjectIdentifier title="{mEquipmentDetail>createdOn}" text="{mEquipmentDetail>createdBy}" />
+                    <ObjectIdentifier title="{mEquipmentDetail>publishedOn}" text="{mEquipmentDetail>publishedBy}" />
+                    <ObjectIdentifier text="{mEquipmentDetail>dateOfInspection}" />
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</mvc:View>

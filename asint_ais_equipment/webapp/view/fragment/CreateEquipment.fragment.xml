@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.m">
+    <Dialog title="{i18n>asint.equipment.list.dialog.createNewEquipment.title.text}" titleAlignment="Center" contentWidth="30%" draggable="true">
+        <f:SimpleForm editable="true" columnsM="1" columnsL="1" columnsXL="1" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" layout="ResponsiveGridLayout" maxContainerCols="1">
+            <f:content>
+                <Label required="true" text="{i18n>asint.equipment.list.dialog.createNewEquipment.name.label}"/>
+                <Input value="{mEquipmentList>/data/createNewEquipment/name}" />
+                <Label required="true" text="{i18n>asint.equipment.list.dialog.createNewEquipment.description.label}"/>
+                <Input value="{mEquipmentList>/data/createNewEquipment/description}" />
+                <Label text="{i18n>asint.equipment.list.dialog.createNewEquipment.equipmentTemplate.label}"/>
+                <MultiInput
+                id="objectTemplateMultiInput"
+                showValueHelp="true" valueHelpOnly="true" showClearIcon="true"
+                valueHelpRequest="handleObjectTemplateValueHelp" tokenUpdate="onTokenChange" >
+				</MultiInput>
+                <Label required="true" text="{i18n>asint.equipment.list.dialog.createNewEquipment.parentAsset.label}"/>
+                <Input
+				id="parentInput"
+				showSuggestion="true"
+                valueHelpOnly="true"
+				showValueHelp="true" showClearIcon="true" 
+				valueHelpRequest=".onParentAssetHelpRequest">
+				</Input>
+                <Label text="{i18n>asint.equipment.list.dialog.createNewEquipment.componentType.label}"/>
+                <ComboBox items="{mEquipmentList>/data/componentTypes}" selectedKey="{mEquipmentList>/data/createNewEquipment/componentType}"> 
+                    <core:ListItem key="{mEquipmentList>componentType}" text="{mEquipmentList>componentType}" />
+                </ComboBox>
+            </f:content>
+        </f:SimpleForm>
+        <buttons>
+            <Button type="Emphasized" text="{i18n>asint.reusable.button.create.text}" press="onCreateNewEquipmentConfirm"/>
+            <Button type="Transparent" text="{i18n>asint.reusable.close.button}" press="onCreateNewEquipmentClose"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

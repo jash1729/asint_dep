@@ -1,0 +1,941 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="com.asint.ais.mi.equipment.controller.detail.RiskSummary"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:t="sap.ui.table" xmlns:card="sap.f.cards"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+    <!-- <Title text="{i18n>asint.equipment.tab.riskSummary.tableHeader.riskProfileHeader.text}" level="H3"/> -->
+    <f:GridContainer class="sapUiTinyMarginTop" inlineBlockLayout="true">
+        <f:Card class="sapUiSmallMarginTop" width="280px" height="150px">
+            <f:header>
+                <card:Header title="{i18n>asint.equipment.detail.tab.assetIntelligence.highLight.card.rbi.title}" />
+            </f:header>
+            <f:layoutData>
+                <f:GridContainerItemLayoutData columns="4" />
+            </f:layoutData>
+            <f:content>
+                <VBox justifyContent="Center">
+                    <HBox height="35px" alignItems="Center">
+                        <Text class="sapUiSmallMarginBegin"
+                            text="{i18n>asint.equipment.tab.riskSummary.sheRiskAtTodayDate.text}:" />
+                        <GenericTag class="sapUiTinyMarginBegin" text="{mEquipmentDetail>/data/tabs/riskSummary/sheAtToday}" visible="{path: 'mEquipmentDetail>/data/tabs/riskSummary/sheAtToday', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                            status="{ path: 'mEquipmentDetail>/data/tabs/riskSummary/sheAtToday', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                            tooltip="{mEquipmentDetail>/data/tabs/riskSummary/sheAtToday}">
+                        </GenericTag>
+                    </HBox>
+
+                    <HBox class="sapUiTinyMarginTop" height="25px" alignItems="Center">
+                        <Text class="sapUiSmallMarginBegin"
+                            text="{i18n>asint.equipment.tab.riskSummary.finRiskAtTodayDate.text}:" />
+                        <GenericTag class="sapUiTinyMarginBegin customBlue" text="{mEquipmentDetail>/data/tabs/riskSummary/finAtToday}" visible="{path: 'mEquipmentDetail>/data/tabs/riskSummary/finAtToday', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                            status="{ path: 'mEquipmentDetail>/data/tabs/riskSummary/finAtToday', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                            tooltip="{mEquipmentDetail>/data/tabs/riskSummary/finAtToday}">
+                        </GenericTag>
+                    </HBox>
+                </VBox>
+            </f:content>
+        </f:Card>
+    </f:GridContainer>
+    <Table class="sapUiSmallMarginTop" id="idEqipmentRiskProfile" visible="{= ${mEquipment>/metadata/featureFlag/equiRiskSummaryRiskProfile} === '1'}" items="{mEquipmentDetail>/data/tabs/riskSummary/finalRiskData}"
+		noDataText="{i18n>asint.reusable.noData.text}" popinLayout="GridSmall">
+		<headerToolbar>
+			<OverflowToolbar>
+                <Title text="{mEquipmentDetail>/data/tabs/riskSummary/equipmentRiskTableHeader}" level="H2" />
+				<ToolbarSpacer />
+                <Button icon="sap-icon://action-settings" tooltip="{i18n>asint.equipment.list.tooltip.settings}" id="idFinalProfileTableP13nSettings"  />
+				<Button icon="sap-icon://excel-attachment" visible="true" press="onRiskProfileExcelExport" />
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+            <!-- Base G -->
+			<Column id="idProfileSheAtBaseG" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseG',
+                        control: '',
+                        value1: 'sheAtBaseG'
+                    }
+                }" visible="false">
+                <header>
+                    <Label customData:tableSettings="sheAtBaseG" text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseG.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileBaseG" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseG',
+                        control: '',
+                        value1: 'baseG'
+                    }
+                }" visible="false">
+                <header>
+				    <Label customData:tableSettings="baseG" text="{i18n>asint.equipment.tab.riskSummary.column.baseG.text}" wrapping="true"/>
+                </header>
+			</Column>
+
+            <!-- Base F -->
+			<Column id="idProfileSheAtBaseF" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseF',
+                        control: '',
+                        value1: 'sheAtBaseF'
+                    }
+                }" visible="false">
+                <header>
+                    <Label customData:tableSettings="sheAtBaseF" text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseF.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileBaseF" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseF',
+                        control: '',
+                        value1: 'baseF'
+                    }
+                }" visible="false">
+                <header>
+				    <Label customData:tableSettings="baseF" text="{i18n>asint.equipment.tab.riskSummary.column.baseF.text}" wrapping="true"/>
+                </header>
+			</Column>
+
+            <!-- Base E -->
+			<Column id="idProfileSheAtBaseE" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseE',
+                        control: '',
+                        value1: 'sheAtBaseE'
+                    }
+                }">
+                <header>
+                    <Label customData:tableSettings="sheAtBaseE" text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseE.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileFinAtBaseE" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseE',
+                        control: '',
+                        value1: 'finAtBaseE'
+                    }
+                }">
+                <header>
+                    <Label customData:tableSettings="finAtBaseE" text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseE.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileBaseE" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseED',
+                        control: '',
+                        value1: 'baseED'
+                    }
+                }">
+                <header>
+				    <Label customData:tableSettings="baseED" text="{i18n>asint.equipment.tab.riskSummary.column.baseED.text}" wrapping="true"/>
+                </header>
+			</Column>
+
+            <!-- Base D -->
+            <Column id="idProfileSheAtBaseD" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseD',
+                        control: '',
+                        value1: 'sheAtBaseD'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+                    <Label customData:tableSettings="sheAtBaseD" text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseD.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileFinAtBaseD" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseD',
+                        control: '',
+                        value1: 'finAtBaseD'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+                    <Label customData:tableSettings="finAtBaseD" text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseD.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileBaseD" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseDC',
+                        control: '',
+                        value1: 'baseDC'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+				    <Label customData:tableSettings="baseDC" text="{i18n>asint.equipment.tab.riskSummary.column.baseDC.text}" wrapping="true"/>
+                </header>
+			</Column>
+
+            <!-- Base C -->
+            <Column id="idProfileSheAtBaseC" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseC',
+                        control: '',
+                        value1: 'sheAtBaseC'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+                    <Label customData:tableSettings="sheAtBaseC" text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseC.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileFinAtBaseC" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseC',
+                        control: '',
+                        value1: 'finAtBaseC'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+                    <Label customData:tableSettings="finAtBaseC" text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseC.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileBaseC" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseCB',
+                        control: '',
+                        value1: 'baseCB'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+				    <Label customData:tableSettings="baseCB" text="{i18n>asint.equipment.tab.riskSummary.column.baseCB.text}" wrapping="true"/>
+                </header>
+			</Column>
+
+            <!-- Base B -->
+            <Column id="idProfileSheAtBaseB" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseB',
+                        control: '',
+                        value1: 'sheAtBaseB'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+                    <Label customData:tableSettings="sheAtBaseB" text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseB.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileFinAtBaseB" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseB',
+                        control: '',
+                        value1: 'finAtBaseB'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+                    <Label customData:tableSettings="finAtBaseB" text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseB.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileBaseB" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseBA',
+                        control: '',
+                        value1: 'baseBA'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+				    <Label customData:tableSettings="baseBA" text="{i18n>asint.equipment.tab.riskSummary.column.baseBA.text}" wrapping="true"/>
+                </header>
+			</Column>
+
+            <!-- Base A -->
+            <Column id="idProfileSheAtBaseA" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseA',
+                        control: '',
+                        value1: 'sheAtBaseA'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+                    <Label customData:tableSettings="sheAtBaseA" text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseA.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <Column id="idProfileFinAtBaseA" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseA',
+                        control: '',
+                        value1: 'finAtBaseA'
+                    }
+                }" demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+                    <Label customData:tableSettings="finAtBaseA" text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseA.text}" wrapping="true"></Label>
+                </header>
+            </Column>
+            <!-- <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+                <header>
+				    <Label design="Bold" customData:tableSettings="Athereafter" text="{i18n>asint.equipment.tab.riskSummary.column.Athereafter.text}" wrapping="true"/>
+                </header>
+			</Column> -->
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseG}" visible="{path: 'mEquipmentDetail>sheAtBaseG', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseG', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseG}">
+                    </GenericTag>
+                    <Text text="{mEquipmentDetail>baseG}" />
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseF}" visible="{path: 'mEquipmentDetail>sheAtBaseF', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseF', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseF}">
+                    </GenericTag>
+                    <Text text="{mEquipmentDetail>baseF}" />
+					<GenericTag text="{mEquipmentDetail>sheAtBaseE}" visible="{path: 'mEquipmentDetail>sheAtBaseE', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseE', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseE}">
+                    </GenericTag>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseE}" visible="{path: 'mEquipmentDetail>finAtBaseE', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseE', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseE}">
+                    </GenericTag>
+                    <Text text="{mEquipmentDetail>baseED}" />
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseD}" visible="{path: 'mEquipmentDetail>sheAtBaseD', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseD', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseD}">
+                    </GenericTag>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseD}" visible="{path: 'mEquipmentDetail>finAtBaseD', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseD', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseD}">
+                    </GenericTag>
+                    <Text text="{mEquipmentDetail>baseDC}" />
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseC}" visible="{path: 'mEquipmentDetail>sheAtBaseC', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseC', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseC}">
+                    </GenericTag>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseC}" visible="{path: 'mEquipmentDetail>finAtBaseC', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseC', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseC}">
+                    </GenericTag>
+                    <Text text="{mEquipmentDetail>baseCB}" />
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseB}" visible="{path: 'mEquipmentDetail>sheAtBaseB', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseB', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseB}">
+                    </GenericTag>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseB}" visible="{path: 'mEquipmentDetail>finAtBaseB', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseB', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseB}">
+                    </GenericTag>
+                    <Text text="{mEquipmentDetail>baseBA}" />
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseA}" visible="{path: 'mEquipmentDetail>sheAtBaseA', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseA', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseA}">
+                    </GenericTag>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseA}" visible="{path: 'mEquipmentDetail>finAtBaseA', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseA', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseA}">
+                    </GenericTag>
+                    <!-- <Text text="{mEquipmentDetail>Athereafter}" /> -->
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+
+    <!-- <Title class="sapUiSmallMarginTop" text="{i18n>asint.equipment.tab.riskSummary.tabHeader.equipment.text}" level="H2"/> -->
+    <t:TreeTable class="sapUiSmallMarginTop"
+        id="idComponentRiskTable"
+        rows="{path:'mEquipmentDetail>/data/tabs/riskSummary/componentsTreeTableData', parameters: {arrayNames:['componentsData']}}"
+        selectionMode="None"
+        enableSelectAll="false"
+        ariaLabelledBy="title"
+        visibleRowCount="{mEquipmentDetail>/data/tabs/riskSummary/visibleRowCount}" threshold="10" fixedColumnCount="2"
+        visible="{= ${mEquipment>/metadata/featureFlag/equiRiskSummaryComponent} === '1'}"
+        rowActionCount="1" visibleRowCountMode="Fixed" minAutoRowCount="30" columnFreeze="1">
+        <t:extension>
+            <OverflowToolbar style="Clear">
+                <Title text="{mEquipmentDetail>/data/tabs/riskSummary/componentRiskTableHeader}" level="H2" />
+                <ToolbarSpacer />
+                <SearchField class="sapUiMediumMarginBegin" placeholder="{i18n>asint.equipment.tab.riskSummary.search.placeholder.text}"
+                    tooltip="{i18n>asint.equipment.tab.riskSummary.search.placeholder.text}"
+                    liveChange="onSearchComponentsRisk" width="14rem" />
+                <Button icon="sap-icon://action-settings" tooltip="{i18n>asint.equipment.list.tooltip.settings}" id="idRiskProfileTableP13nSettings"  />
+                <Button icon="sap-icon://excel-attachment"
+                    id="idExcelExport" visible="true" press="onPressComponentsExport" />
+            </OverflowToolbar>
+        </t:extension>
+        <t:columns>
+            <t:Column id="idParentEquName" width="7rem" customData:exportProperty="parentEquipmentName" customData:p13nSettings="{
+                    metadata: {
+                        path: 'parentEquipmentName',
+                        control: '',
+                        value1: 'parentEquipmentName'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.equipment.text}" wrapping="true" />
+                <t:template>
+                    <!-- <ObjectIdentifier title="{mEquipmentDetail>parentEquipmentName}" text="{mEquipmentDetail>parentEquipmentDesc}" /> -->
+                    <Text text="{mEquipmentDetail>parentEquipmentName}" />
+                </t:template>
+            </t:Column>
+            <t:Column id="idEquiName" width="7rem" customData:exportProperty="equipmentName" customData:p13nSettings="{
+                    metadata: {
+                        path: 'equipmentName',
+                        control: '',
+                        value1: 'equipmentName'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.component_MaintainableItem.text}" wrapping="true" />
+                <t:template>
+                    <!-- <ObjectIdentifier title="{mEquipmentDetail>equipmentName}" text="{mEquipmentDetail>equipmentDesc}" /> -->
+                    <Text text="{mEquipmentDetail>equipmentName}" />
+                </t:template>
+            </t:Column>
+            <t:Column id="idFailureMode" width="8rem" customData:exportProperty="section" customData:p13nSettings="{
+                    metadata: {
+                        path: 'section',
+                        control: '',
+                        value1: 'section'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.damageMechanisms_failureMode.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>section}" />
+                </t:template>
+            </t:Column>
+
+            <!-- Base G -->
+            <t:Column id="idSheAtBaseG" width="5rem" customData:exportProperty="sheAtBaseG" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseG',
+                        control: '',
+                        value1: 'sheAtBaseG'
+                    }
+                }" visible="false">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseG.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseG}" visible="{path: 'mEquipmentDetail>sheAtBaseG', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseG', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseG}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idBaseG" width="5rem" customData:exportProperty="baseG" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseG',
+                        control: '',
+                        value1: 'baseG'
+                    }
+                }" visible="false">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.baseG.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>baseG}" />
+                </t:template>
+            </t:Column>
+
+            <!-- Base F -->
+            <t:Column id="idSheAtBaseF" width="5rem" customData:exportProperty="sheAtBaseF" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseF',
+                        control: '',
+                        value1: 'sheAtBaseF'
+                    }
+                }" visible="false">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseF.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseF}" visible="{path: 'mEquipmentDetail>sheAtBaseF', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseF', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseF}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idBaseF" width="5rem" customData:exportProperty="baseF" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseF',
+                        control: '',
+                        value1: 'baseF'
+                    }
+                }" visible="false">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.baseF.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>baseF}" />
+                </t:template>
+            </t:Column>
+
+            <!-- Base E -->
+            <t:Column id="idSheAtBaseE" width="5rem" customData:exportProperty="sheAtBaseE" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseE',
+                        control: '',
+                        value1: 'sheAtBaseE'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseE.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseE}" visible="{path: 'mEquipmentDetail>sheAtBaseE', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseE', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseE}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idFinAtBaseE" width="5rem" customData:exportProperty="finAtBaseE" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseE',
+                        control: '',
+                        value1: 'finAtBaseE'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseE.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseE}" visible="{path: 'mEquipmentDetail>finAtBaseE', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseE', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseE}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idBaseED" width="5rem" customData:exportProperty="baseED" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseED',
+                        control: '',
+                        value1: 'baseED'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.baseED.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>baseED}" />
+                </t:template>
+            </t:Column>
+
+            <!-- Base D -->
+            <t:Column id="idSheAtBaseD" width="5rem" customData:exportProperty="sheAtBaseD" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseD',
+                        control: '',
+                        value1: 'sheAtBaseD'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseD.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseD}" visible="{path: 'mEquipmentDetail>sheAtBaseD', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseD', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseD}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idFinAtBaseD" width="5rem" customData:exportProperty="finAtBaseD" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseD',
+                        control: '',
+                        value1: 'finAtBaseD'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseD.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseD}" visible="{path: 'mEquipmentDetail>finAtBaseD', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseD', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseD}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idBaseDC" width="5rem" customData:exportProperty="baseDC" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseDC',
+                        control: '',
+                        value1: 'baseDC'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.baseDC.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>baseDC}" />
+                </t:template>
+            </t:Column>
+
+            <!-- Base C -->
+            <t:Column id="idSheAtBaseC" width="5rem" customData:exportProperty="sheAtBaseC" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseC',
+                        control: '',
+                        value1: 'sheAtBaseC'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseC.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseC}" visible="{path: 'mEquipmentDetail>sheAtBaseC', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseC', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseC}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idFinAtBaseC" width="5rem" customData:exportProperty="finAtBaseC" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseC',
+                        control: '',
+                        value1: 'finAtBaseC'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseC.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseC}" visible="{path: 'mEquipmentDetail>finAtBaseC', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseC', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseC}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idBaseCB" width="5rem" customData:exportProperty="baseCB" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseCB',
+                        control: '',
+                        value1: 'baseCB'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.baseCB.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>baseCB}" />
+                </t:template>
+            </t:Column>
+
+            <!-- Base B -->
+            <t:Column id="idSheAtBaseB" width="5rem" customData:exportProperty="sheAtBaseB" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseB',
+                        control: '',
+                        value1: 'sheAtBaseB'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseB.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseB}" visible="{path: 'mEquipmentDetail>sheAtBaseB', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseB', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseB}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idFinAtBaseB" width="5rem" customData:exportProperty="finAtBaseB" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseB',
+                        control: '',
+                        value1: 'finAtBaseB'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseB.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseB}" visible="{path: 'mEquipmentDetail>finAtBaseB', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseB', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseB}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idBaseBA" width="5rem" customData:exportProperty="baseBA" customData:p13nSettings="{
+                    metadata: {
+                        path: 'baseBA',
+                        control: '',
+                        value1: 'baseBA'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.baseBA.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>baseBA}" />
+                </t:template>
+            </t:Column>
+
+            <!-- Base A -->
+            <t:Column id="idSheAtBaseA" width="5rem" customData:exportProperty="sheAtBaseA" customData:p13nSettings="{
+                    metadata: {
+                        path: 'sheAtBaseA',
+                        control: '',
+                        value1: 'sheAtBaseA'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.sheAtBaseA.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>sheAtBaseA}" visible="{path: 'mEquipmentDetail>sheAtBaseA', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtBaseA', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtBaseA}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <t:Column id="idFinAtBaseA" width="5rem" customData:exportProperty="finAtBaseA" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finAtBaseA',
+                        control: '',
+                        value1: 'finAtBaseA'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finAtBaseA.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>finAtBaseA}" visible="{path: 'mEquipmentDetail>finAtBaseA', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtBaseA', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtBaseA}">
+                    </GenericTag>
+                </t:template>
+            </t:Column>
+            <!-- <t:Column id="idBaseA" width="13rem" customData:exportProperty="Athereafter" customData:p13nSettings="{
+                    metadata: {
+                        path: 'Athereafter',
+                        control: '',
+                        value1: 'Athereafter'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.Athereafter.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>Athereafter}" />
+                </t:template>
+            </t:Column> -->
+            <!-- <t:Column width="13rem">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.sheAtDueDate.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>sheAtDueDate}" visible="{path: 'mEquipmentDetail>sheAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheAtDueDate}">
+                    </GenericTag>
+                </t:template>
+            </t:Column> -->
+            <!-- <t:Column width="13rem">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finAtDueDate.text}" wrapping="true" />
+                <t:template>
+                    <GenericTag text="{mEquipmentDetail>finAtDueDate}" visible="{path: 'mEquipmentDetail>finAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finAtDueDate}">
+                    </GenericTag>
+                </t:template>
+            </t:Column> -->
+            <t:Column width="6rem" customData:exportProperty="finConsequenceBaseA" id="idFinConBaseA" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finConsequenceBaseA',
+                        control: '',
+                        value1: 'finConsequenceBaseA'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finConsequenceBaseA.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finConsequenceBaseA}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="5rem" customData:exportProperty="finPOFBaseA" id="idFinPofBaseA" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finPOFBaseA',
+                        control: '',
+                        value1: 'finPOFBaseA'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finPOFBaseA.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finPOFBaseA}" />
+                </t:template>
+            </t:Column>
+            <t:Column width="6rem" customData:exportProperty="finConsequenceBaseB" id="idFinConBaseB" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finConsequenceBaseB',
+                        control: '',
+                        value1: 'finConsequenceBaseB'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finConsequenceBaseB.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finConsequenceBaseB}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="5rem" customData:exportProperty="finPOFBaseB" id="idFinPofBaseB" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finPOFBaseB',
+                        control: '',
+                        value1: 'finPOFBaseB'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finPOFBaseB.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finPOFBaseB}" />
+                </t:template>
+            </t:Column>
+            <t:Column width="5rem" customData:exportProperty="finConsequenceBaseC" id="idFinConBaseC" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finConsequenceBaseC',
+                        control: '',
+                        value1: 'finConsequenceBaseC'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finConsequenceBaseC.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finConsequenceBaseC}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="5rem" customData:exportProperty="finPOFBaseC" id="idFinPofBaseC" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finPOFBaseC',
+                        control: '',
+                        value1: 'finPOFBaseC'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finPOFBaseC.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finPOFBaseC}" />
+                </t:template>
+            </t:Column>
+            <t:Column width="5rem" customData:exportProperty="finConsequenceBaseD" id="idFinConBaseD" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finConsequenceBaseD',
+                        control: '',
+                        value1: 'finConsequenceBaseD'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finConsequenceBaseD.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finConsequenceBaseD}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="5rem" customData:exportProperty="finPOFBaseD" id="idFinPofBaseD" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finPOFBaseD',
+                        control: '',
+                        value1: 'finPOFBaseD'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finPOFBaseD.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finPOFBaseD}" />
+                </t:template>
+            </t:Column>
+            <t:Column width="5rem" customData:exportProperty="finConsequenceBaseE" id="idFinConBaseE" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finConsequenceBaseE',
+                        control: '',
+                        value1: 'finConsequenceBaseE'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finConsequenceBaseE.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finConsequenceBaseE}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="5rem" customData:exportProperty="finPOFBaseE" id="idFinPofBaseE" customData:p13nSettings="{
+                    metadata: {
+                        path: 'finPOFBaseE',
+                        control: '',
+                        value1: 'finPOFBaseE'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.finPOFBaseE.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>finPOFBaseE}" />
+                </t:template>
+            </t:Column>
+            <t:Column width="5rem" customData:exportProperty="nextReviewDate" id="idNextReviewDate" customData:p13nSettings="{
+                    metadata: {
+                        path: 'nextReviewDate',
+                        control: '',
+                        value1: 'nextReviewDate'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.nextReviewDate.text}" wrapping="true" />
+                <t:template>
+                    <Text text="{mEquipmentDetail>nextReviewDate}" />
+                </t:template>
+            </t:Column>
+            <t:Column width="7rem" customData:exportProperty="assessment" id="idAssessment" customData:p13nSettings="{
+                    metadata: {
+                        path: 'assessment',
+                        control: '',
+                        value1: 'assessment'
+                    }
+                }">
+                <Label text="{i18n>asint.equipment.tab.riskSummary.column.assessment.text}" wrapping="true" />
+                <t:template>
+                    <!-- <Text text="{mEquipmentDetail>assessment}" /> -->
+                    <Link text="{mEquipmentDetail>assessment}" press="onPressAssessmentLinkRiskSummary" />
+                </t:template>
+            </t:Column>
+        </t:columns>
+    </t:TreeTable>
+
+    <Table id="idComponentRecommendations" growing="true" growingThreshold="5" popinLayout="GridSmall"
+        items="{mEquipmentDetail>/data/tabs/riskSummary/recommendationsList}" updateFinished="" noDataText="{i18n>asint.reusable.noData.text}">
+        <headerToolbar>
+            <OverflowToolbar>
+                <Title text="{mEquipmentDetail>/data/tabs/riskSummary/recommendationTableHeader}" />
+                <ToolbarSpacer />
+                <SearchField width="14rem" placeholder="{i18n>asint.reusable.search.text}" liveChange="onSearchRecommendation" />
+                <Button icon="sap-icon://excel-attachment" press="onPressComponentsRecommendationExport" />
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column>
+                <header>
+                    <Label customData:tableSettings="parentObjectName" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.equipment.text}"></Label>
+                </header>
+            </Column>
+            <Column>
+                <header>
+                    <Label customData:tableSettings="equipmentName" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.component_MaintainableItem.text}"></Label>
+                </header>
+            </Column>
+            <Column>
+                <header>
+                    <Label customData:tableSettings="sectionName" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.damageMechanisms_failureMode.text}"></Label>
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <Label customData:tableSettings="recoDisplayId" wrapping="true" text="{i18n>asint.equipment.detail.tab.assetIntelligence.recommendation.table.recommendation.column.text}"></Label>
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <Label customData:tableSettings="dueDate" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.dueDate.text}"></Label>
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <Label customData:tableSettings="sheRiskAtDueDate" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.sheAtDueDate.text}"></Label>
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <Label customData:tableSettings="finRiskAtDueDate" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.finAtDueDate.text}"></Label>
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <Label customData:tableSettings="sheMRAtDueDate" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.sheMRAtDueDate.text}"></Label>
+                </header>
+            </Column>
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <Label customData:tableSettings="finMRAtDueDate" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.finMRAtDueDate.text}"></Label>
+                </header>
+            </Column>
+            <!-- <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <Label customData:tableSettings="mitigationLevel" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.mitigationLevel.text}"></Label>
+                </header>
+            </Column> -->
+            <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                <header>
+                    <Label customData:tableSettings="recoStatusDesc" wrapping="true" text="{i18n>asint.equipment.tab.riskSummary.column.recoStatus.text}"></Label>
+                </header>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <ObjectIdentifier title="{mEquipmentDetail>equipmentName}" text="{mEquipmentDetail>equipmentDescription}" />
+                    <ObjectIdentifier title="{mEquipmentDetail>componentMaintainableItem}" text="{mEquipmentDetail>componentMaintainableItemDesc}" />
+                    <!-- <Text text="{mEquipmentDetail>componentMaintainableItem}" /> -->
+                    <Text text="{mEquipmentDetail>sectionName}" />
+                    <ObjectIdentifier titleActive="true" titlePress="onRecommendationLinkPress"
+                        title="{mEquipmentDetail>recoDisplayId}" text="{mEquipmentDetail>recoDesc}" />
+                    <Text text="{mEquipmentDetail>dueDate}" />
+                    <GenericTag text="{mEquipmentDetail>sheRiskAtDueDate}" visible="{path: 'mEquipmentDetail>sheRiskAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheRiskAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheRiskAtDueDate}">
+                    </GenericTag>
+                    <GenericTag text="{mEquipmentDetail>finRiskAtDueDate}" visible="{path: 'mEquipmentDetail>finRiskAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finRiskAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finRiskAtDueDate}">
+                    </GenericTag>
+                    <GenericTag text="{mEquipmentDetail>sheMRAtDueDate}" visible="{path: 'mEquipmentDetail>sheMRAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>sheMRAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>sheMRAtDueDate}">
+                    </GenericTag>
+                    <GenericTag text="{mEquipmentDetail>finMRAtDueDate}" visible="{path: 'mEquipmentDetail>finMRAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.fnFormatGenericTagVisible' ,targetType: 'any'}" design="StatusIconHidden"  
+                        status="{ path: 'mEquipmentDetail>finMRAtDueDate', formatter: 'com.asint.ais.mi.equipment.model.localFormatter.formatRiskGenericTagColor' ,targetType: 'any'}" 
+                        tooltip="{mEquipmentDetail>finMRAtDueDate}">
+                    </GenericTag>
+                    <!-- <Text text="{mEquipmentDetail>mitigationLevel}" /> -->
+                    <ObjectStatus
+                        text="{path: 'mEquipmentDetail>recommendationStatus',formatter: '.formatter.fnRecoStatusFormatter'}"
+                        state="{path: 'mEquipmentDetail>recommendationStatus',formatter: '.formatter.fnRecoStatusColorFormatter'}" />
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</mvc:View>

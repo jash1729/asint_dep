@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog title="{mEquipmentDetail>/data/TemplateTableData/Title}" class="asintAddRemoveTempDialogWidth">
+        <Table id="idAsintAddRemoveTemplatesTable" class="rbiAssessmentList" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar"
+            items="{path: 'mEquipmentDetail>/data/TemplateTableData/TemplatesList'}" growing="true" growingThreshold="10"
+            noDataText="{i18n>asint.equipment.detail.templates.dialog.table.noData.text}" selectionChange="onTemplateSelect">
+            <headerToolbar>
+                <OverflowToolbar design="Transparent">
+                    <Title text="{mEquipmentDetail>/data/TemplateTableData/TableHeader}"/>
+                    <ToolbarSpacer/>
+                    <SearchField width="30%" liveChange="fnSearchAddRemoveTemplates"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column hAlign="Begin">
+                    <Text text="{i18n>asint.equipment.detail.templates.dialog.table.column.template.text}"/>
+                </Column>
+                <Column hAlign="Begin" demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+                    <Text text="{i18n>asint.equipment.detail.templates.dialog.table.column.type.text}"/>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{mEquipmentDetail>name}" text="{mEquipmentDetail>description}"/>
+                        <Text text="{parts: [{ path : 'mEquipmentDetail>type' }], formatter : '.formatter.fnGetTemplateType'}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>asint.reusable.button.ok.text}" enabled="{mEquipmentDetail>/data/TemplateTableData/IsOkEnabled}" press="onRemoveTemplate" />
+            <Button text="{i18n>asint.reusable.button.cancel.text}" press="onCloseAddRemoveTemplateDialog" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,73 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="com.asint.ais.mi.equipment.controller.detail.MaintenanceAndService"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:card="sap.f.cards"
+    xmlns:w="sap.ui.integration.widgets">
+    <Panel id="idAsintRecommendationPanel">
+        <Table id="idAsintMaintenance" sticky="ColumnHeaders,HeaderToolbar,InfoToolbar"
+            growing="true" growingThreshold="5"
+            items="{mEquipmentDetail>/data/maintenanceOrder}"
+            updateFinished="" noDataText="{i18n>asint.reusable.noData.text}">
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{mEquipmentDetail>/data/maintenanceOrderTitle}" />
+                    <!-- <SegmentedButton id="idWorkorderSegment" selectionChange="onSwitchWorkorderSegmentButton" selectedKey="all">
+                        <items>
+                            <SegmentedButtonItem text="All" key="all"/>
+                            <SegmentedButtonItem icon="sap-icon://fob-watch" text="{i18n>asint.reusable.button.inProg.text}" key="In Progress"/>
+                            <SegmentedButtonItem icon="sap-icon://future" text="{i18n>asint.reusable.button.released.text}" key="Released"/>
+                            <SegmentedButtonItem icon="sap-icon://complete" text="{i18n>asint.reusable.button.completed.text}" key="Completed"/>
+                        </items>
+					</SegmentedButton> -->
+                    <ToolbarSpacer />
+                    <SearchField width="200px" liveChange="onSearch" />
+                    <Button visible="false" icon="sap-icon://sort"
+                        tooltip="{i18n>asint.equipment.tab.sort.targetDate.text}"
+                        press="onSortRecommendationTable" />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.maintenance.table.name.column.text}" />
+                </Column>
+                <Column>
+                    <Text
+                        text="{i18n>asint.equipment.field.shortDescription.label}" />
+                </Column>
+                <Column>
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.maintenance.table.type.column.text}" />
+                </Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.maintenance.table.priority.column.text}" />
+                </Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.maintenance.table.status.column.text}" />
+                </Column>
+                <Column minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+                    <Text
+                        text="{i18n>asint.equipment.detail.tab.maintenance.table.basicStartDate.column.text}" />
+                </Column>
+                <Column demandPopin="true" popinDisplay="Inline" minScreenWidth="Tablet">
+					<Text text="{i18n>asint.equipment.tab.planned.resuable.table.totalCost.text}"/>
+				</Column>
+            </columns>
+            <items>
+                 <ColumnListItem highlight ="{= ${mEquipmentDetail>maintenanceOrderMaster/status} === 'Completed' ? 'Success' : 'None' }">
+                    <cells>
+                        <ObjectIdentifier title="{mEquipmentDetail>maintenanceOrderMaster/name}" titleActive="true" text="{mEquipmentDetail>maintenanceOrderMaster/displayId}" titlePress="onMaintenanceOrderTitlePress"/>
+                        <Text text="{path: 'mEquipmentDetail>maintenanceOrderMaster/to_description/0/shortDescription'}"/>
+                        <Text text="{path:'mEquipmentDetail>maintenanceOrderMaster/orderType',formatter:'.formatter.fnGetEquipmentTypeByCode'}" />
+                        <ObjectStatus text="{parts:[{path: 'mEquipmentDetail>maintenanceOrderMaster/priority'},{path : 'mEquipmentDetail>maintenanceOrderMaster/orderType'}], formatter: '.formatter.fnGetPriorityByCode'}" icon="{path: 'mEquipmentDetail>maintenanceOrderMaster/priority',formatter: '.formatter.fnGetPriorityIconByCode'}" state="{path: 'mEquipmentDetail>maintenanceOrderMaster/priority',formatter: '.formatter.fnGetPriorityStateByCode'}"/>
+                        <Text text="{path: 'mEquipmentDetail>maintenanceOrderMaster/status'}"/>
+                        <ObjectIdentifier title="{ path: 'mEquipmentDetail>maintenanceOrderMaster/basicStartDateTime', formatter : '.formatter.formatDate'}" titleActive="false" text="{ path: 'mEquipmentDetail>maintenanceOrderMaster/basicEndDateTime', formatter : '.formatter.formatDate'}" />
+						<Text text="{parts:['mEquipmentDetail>maintenanceOrderMaster/totalActualCost','mEquipmentDetail>maintenanceOrderMaster/totalActualCostCurr'],formatter:'.formatter.formatTotalActualCost'}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Panel>
+</mvc:View>
